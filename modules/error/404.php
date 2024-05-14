@@ -9,6 +9,7 @@ $data = [
 ];
 layouts('header', $data);
 ?>
+<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
 <body id="body">
 	<section class="page-404">
 		<div class="container">
