@@ -33,7 +33,7 @@ $data = [
       <div class="col-md-6 col-md-offset-3">
         <div class="block text-center">
           <a class="logo" href="index.html">
-            <img src="images/logo.png" alt="">
+            <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/avata.png" alt="" style="height: 20vh;">
           </a>
           <h2 class="text-center">Welcome Back</h2>
           <form class="text-left clearfix" action="index.html" >

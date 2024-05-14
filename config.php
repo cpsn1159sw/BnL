@@ -4,7 +4,7 @@
     const _CODE = 'true';
 
     // thiết lập host 
-    define('_WEB_HOST', 'http://'. $_SERVER['HTTP_HOST']. '/Project1');
+    define('_WEB_HOST', 'http://'. $_SERVER['HTTP_HOST']. '/BnL');
     define('_WEB_HOST_TEMPLATES', _WEB_HOST. '/templates');
 
     // thiết lập path
