@@ -9,7 +9,19 @@ $data = [
 ];
 layouts('header', $data);
 ?>
+  <!-- Themefisher Icon font -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
+  
+  <!-- Animate css -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
+  
 <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
+
 <body id="body">
 	<section class="page-404">
 		<div class="container">
