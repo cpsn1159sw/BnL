@@ -38,7 +38,7 @@ $data = [
               <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/avata.png" alt="" style="height: 20vh;">
             </a>
             <h2 class="text-center">Welcome Back</h2>
-            <form class="text-left clearfix" action="index.html" >
+            <form class="text-left clearfix" action="" method="post">
               <div class="form-group">
                 <input type="email" class="form-control"  placeholder="Email">
               </div>
