@@ -25,7 +25,6 @@ $data = [
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
 
-</head>
 
 <body id="body">
 
