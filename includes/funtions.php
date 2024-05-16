@@ -74,7 +74,12 @@ function filter() {
         // return $_GET;
         if(!empty($_GET)) {
             foreach($_GET as $key => $value) {
-                $filterArr[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                $key = strip_tags($key);
+                if(is_array($value)) {
+                    $filterArr[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+                } else {
+                    $filterArr[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                }
             }
         }
     }
@@ -84,7 +89,12 @@ function filter() {
         // return $_POST;
         if(!empty($_POST)) {
             foreach($_POST as $key => $value) {
-                $filterArr[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                $key = strip_tags($key);
+                if(is_array($value)) {
+                    $filterArr[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+                } else {
+                    $filterArr[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                }
             }
         }
     }
@@ -92,3 +102,20 @@ function filter() {
     return $filterArr;
 }
 
+// Hàm kiểm tra email 
+function isEmail($email) {
+    $checkEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
+    return $checkEmail;
+}
+
+// Hàm kiểm tra số nguyên INT 
+function isNumberInt($number) {
+    $checkNumber = filter_var($number, FILTER_VALIDATE_INT);
+    return $checkNumber;
+}
+
+// Hàm kiểm tra số thực FLOAT 
+function isNumberFloat($number) {
+    $checkNumber = filter_var($number, FILTER_VALIDATE_FLOAT);
+    return $checkNumber;
+}
