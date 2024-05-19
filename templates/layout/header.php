@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title><?php echo !empty($data['pageTitle']) ? $data['pageTitle'] : 'BnL - Home'; ?></title>
   <meta charset="utf-8">
   <!-- Mobile Specific Metas
   ================================================== -->
@@ -199,15 +200,25 @@
 						<li class="dropdown ">
 							<a href=" ">Sale</a>
 						</li><!-- / Sale -->
-
+						<!-- Login -->
+						<li class="dropdown dropdown-slide">
+							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
+								role="button" aria-haspopup="true" aria-expanded="false">Utility <span
+									class="tf-ion-ios-arrow-down"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="?module=user&action=login">Login Page</a></li>
+								<li><a href="?module=user&action=signup">Signup Page</a></li>
+								<li><a href="?module=user&action=forgot">Forget Password</a></li>
+							</ul>
+						</li><!-- / Login -->
 						<!-- About -->
 						<li class="dropdown ">
-							<a href=" ">About</a>
+							<a href="?module=public&action=about">About</a>
 						</li><!-- / About -->
 
 						<!-- Contact -->
 						<li class="dropdown ">
-							<a href=" ">Contact</a>
+							<a href="?module=public&action=contact">Contact</a>
 						</li><!-- / Contact -->
 
 						<!-- Shop -->
@@ -218,27 +229,4 @@
 			</div><!-- / .container -->
 		</nav>
 	</section>
-  </body>
-</head>
-</html>
 
-    
-    <!-- Main jQuery -->
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.1 -->
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Bootstrap Touchpin -->
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
-    <!-- Instagram Feed Js -->
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/instafeed/instafeed.min.js"></script>
-    <!-- Video Lightbox Plugin -->
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
-    <!-- Count Down Js -->
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/syo-timer/build/jquery.syotimer.min.js"></script>
-
-    <!-- slick Carousel -->
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.min.js"></script>
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-animation.min.js"></script>
-
-    <!-- Main Js File -->
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/js/script.js"></script>

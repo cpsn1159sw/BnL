@@ -5,6 +5,7 @@
         die('Access denied...');
     }
 ?>
+  <title>BnL - Not Found</title>
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
   <!-- bootstrap.min css -->
@@ -28,7 +29,7 @@
 					</a>
 					<h1>404</h1>
 					<h2>Page Not Found</h2>
-					<a href="?" class="btn btn-main"><i class="tf-ion-android-arrow-back"></i> Go Home</a>
+					<a href="?module=public&action=home" class="btn btn-main"><i class="tf-ion-android-arrow-back"></i> Go Home</a>
 				</div>
 			</div>
 		</div>

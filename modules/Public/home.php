@@ -1,4 +1,13 @@
-<?php layouts("header");?>
+<?php 
+// Chặn truy cập hợp lệ
+if(!defined('_CODE')) {
+    die('Access denied...');
+}
+$data = [
+    'pageTitle' => 'BnL - Home'
+];
+    layouts('header',$data);
+?>
 <body id="body">
 <div class="hero-slider">
   <div class="slider-item th-fullpage hero-area" style="background-image: url(images/slider/slider-1.jpg);">
@@ -359,55 +368,7 @@
 		</div>
 	</div>
 </section>
-
-
-<!--
-Start Call To Action
-==================================== -->
-
-<footer class="footer section text-center">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<ul class="social-media">
-					<li>
-						<a href="https://www.facebook.com/themefisher">
-							<i class="tf-ion-social-facebook"></i>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.instagram.com/themefisher">
-							<i class="tf-ion-social-instagram"></i>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.twitter.com/themefisher">
-							<i class="tf-ion-social-twitter"></i>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.pinterest.com/themefisher/">
-							<i class="tf-ion-social-pinterest"></i>
-						</a>
-					</li>
-				</ul>
-				<ul class="footer-menu text-uppercase">
-					<li>
-						<a href="contact.html">CONTACT</a>
-					</li>
-					<li>
-						<a href="shop.html">SHOP</a>
-					</li>
-					<li>
-						<a href="pricing.html">Pricing</a>
-					</li>
-					<li>
-						<a href="contact.html">PRIVACY POLICY</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</footer>
+<?php layouts('footer'); ?>
 </body>
+</head>
 </html>
