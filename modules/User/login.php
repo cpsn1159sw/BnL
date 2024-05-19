@@ -4,9 +4,6 @@
     if(!defined('_CODE')) {
         die('Access denied...');
     }
-$data = [
-    'pageTitle' => 'BnL - Đăng nhập'
-];
 ?>
 
     <title>BnL - Đăng nhập</title>
@@ -51,7 +48,7 @@ $data = [
                 <button type="submit" class="btn btn-main text-center" >Login</button>
               </div>
             </form>
-            <p class="mt-20">New in this site ?<a href="?module=user&action=signin"> Create New Account</a></p>
+            <p class="mt-20">New in this site ?<a href="?module=user&action=signup"> Create New Account</a></p>
           </div>
         </div>
       </div>

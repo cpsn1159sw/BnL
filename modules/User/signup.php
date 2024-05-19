@@ -3,9 +3,6 @@
     if(!defined('_CODE')) {
         die('Access denied...');
     }
-$data = [
-    'pageTitle' => 'BnL - Đăng ký'
-];
 ?>
 
     <title>BnL - Đăng ký</title>

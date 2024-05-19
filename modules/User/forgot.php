@@ -4,9 +4,6 @@
     if(!defined('_CODE')) {
         die('Access denied...');
     }
-$data = [
-    'pageTitle' => 'BnL - Quên mật khẩu'
-];
 ?>
 
     <title>BnL - Quên mật khẩu</title>

@@ -4,10 +4,6 @@
     if(!defined('_CODE')) {
         die('Access denied...');
     }
-$data = [
-    'pageTitle' => 'Not Found'
-];
-layouts('header', $data);
 ?>
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
@@ -28,7 +24,7 @@ layouts('header', $data);
 			<div class="row">
 				<div class="col-md-12">
 					<a href="?">
-						<img src="<?php echo _WEB_HOST_TEMPLATES; ?>/images/logo/title.png" alt="site logo" style="width: 20%;">
+						<img src="<?php echo _WEB_HOST_TEMPLATES; ?>/images/logo/titleBnL.png" alt="site logo" style="width: 20%;">
 					</a>
 					<h1>404</h1>
 					<h2>Page Not Found</h2>
