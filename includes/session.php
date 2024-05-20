@@ -11,20 +11,16 @@ function setSession($key, $value) {
 
 // Hàm đọc session
 function getSession($key = '') {
-    if (!empty($key)) {
-        if (isset($_SESSION[$key])) {
-            return $_SESSION[$key];
-        } else {
-            return null;
-        }
+    if (!empty($key) && isset($_SESSION[$key])) {
+        return $_SESSION[$key];
     } else {
-        return $_SESSION;
+        return null;
     }
 }
 
 // Hàm xóa session hoặc session key
 function removeSession($key = '') {
-    if (!empty($key)) {
+    if (!empty($key) && isset($_SESSION[$key])) {
         unset($_SESSION[$key]);
     } else {
         session_destroy();

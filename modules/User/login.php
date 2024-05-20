@@ -30,7 +30,7 @@
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
           <div class="block text-center margin-0">
-            <a class="logo" href="../public/home">
+            <a class="logo" href="/BnL/public/home">
               <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/BnL_logo.png" alt="" style="height: 20vh;">
             </a>
             <h2 class="text-center">Welcome Back</h2>

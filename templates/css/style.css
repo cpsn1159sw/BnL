@@ -2285,6 +2285,12 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
   margin: 0;
 }
 
+.er {
+  color:#D8000C;
+  font-size: 90%;
+  font-style: italic;
+}
+
 .error {
   display: none;
   padding: 10px;

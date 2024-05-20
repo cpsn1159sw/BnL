@@ -5,7 +5,7 @@ if (!defined('_CODE')) {
 }
 
 // Bao gồm tệp connect.php để khởi tạo đối tượng PDO
-require_once dirname(__FILE__) . '/connect.php';
+require_once 'connect.php';
 
 // Hàm query sử dụng đối tượng PDO
 function query($sql, $data = [], $check = false) {

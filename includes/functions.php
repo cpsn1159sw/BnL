@@ -69,9 +69,8 @@ function isPost() {
 
 function filter() {
     $filterArr = [];
+
     if(isGet()) {
-        // Xử lý dữ liệu trước khi hiển thị ra 
-        // return $_GET;
         if(!empty($_GET)) {
             foreach($_GET as $key => $value) {
                 $key = strip_tags($key);
@@ -85,15 +84,13 @@ function filter() {
     }
 
     if(isPost()) {
-        // Xử lý dữ liệu trước khi hiển thị ra 
-        // return $_POST;
         if(!empty($_POST)) {
             foreach($_POST as $key => $value) {
                 $key = strip_tags($key);
                 if(is_array($value)) {
-                    $filterArr[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
+                    $filterArr[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
                 } else {
-                    $filterArr[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                    $filterArr[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
                 }
             }
         }
@@ -151,6 +148,17 @@ function getSmg($smg, $type = 'success') {
 }
 
 // Hàm chuyển hướng 
-function redirect($path) {
+function redirect($path='index.php') {
+    header("location: $path");
+    exit;
+}
 
+// Hàm thông báo lỗi 
+function form_error($fileName, $beforeHtml = '', $afterHtml = '', $errors) {
+    return (!empty($errors[$fileName])) ? $beforeHtml.reset($errors[$fileName]).$afterHtml : null;
+}
+
+// Hàm hiển thị dữ liệu cũ 
+function old_data($fileName, $oldData, $default = null) {
+    return (!empty($oldData[$fileName])) ? $oldData[$fileName] : $default;
 }

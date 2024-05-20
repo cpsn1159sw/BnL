@@ -10,61 +10,67 @@ if (isPost()) {
 
     // Validate fullname
     if (empty($filterAll['fullname'])) {
-        $errors['fullname']['required'] = 'Họ và tên bắt buộc phải nhập.';
+        $errors['fullname']['required'] = '*Họ và tên bắt buộc phải nhập.';
     } else {
         if (strlen($filterAll['fullname']) < 5) {
-            $errors['fullname']['min'] = 'Họ và tên phải có ít nhất 5 kí tự.';
+            $errors['fullname']['min'] = '*Họ và tên phải có ít nhất 5 kí tự.';
         }
     }
 
     // Validate email
     if (empty($filterAll['email'])) {
-        $errors['email']['required'] = 'Email bắt buộc phải nhập.';
+        $errors['email']['required'] = '*Email bắt buộc phải nhập.';
     } else {
         $email = $filterAll['email'];
         $sql = "SELECT id FROM customer WHERE email = '$email'";
         if (countRows($sql) > 0) {
-            $errors['email']['unique'] = 'Email đã tồn tại.';
+            $errors['email']['unique'] = '*Email đã tồn tại.';
         }
     }
 
     // Validate phonenumber
     if (empty($filterAll['phone'])) {
-        $errors['phone']['required'] = 'Số điện thoại bắt buộc phải nhập.';
+        $errors['phone']['required'] = '*Số điện thoại bắt buộc phải nhập.';
     } else {
         if (!isPhone($filterAll['phone'])) {
-            $errors['phone']['isPhone'] = 'Số điện thoại không hợp lệ.';
+            $errors['phone']['isPhone'] = '*Số điện thoại không hợp lệ.';
         }
     }
 
     // Validate password
     if (empty($filterAll['password'])) {
-        $errors['password']['required'] = 'Mật khẩu bắt buộc phải nhập.';
+        $errors['password']['required'] = '*Mật khẩu bắt buộc phải nhập.';
     } else {
         if (strlen($filterAll['password']) < 8) {
-            $errors['password']['min'] = 'Mật khẩu phải có ít nhất 8 kí tự.';
+            $errors['password']['min'] = '*Mật khẩu phải có ít nhất 8 kí tự.';
         }
     }
 
     // Validate password confirm
     if (empty($filterAll['cf-password'])) {
-        $errors['cf-password']['required'] = 'Bạn phải nhập lại mật khẩu.';
+        $errors['cf-password']['required'] = '*Bạn phải nhập lại mật khẩu.';
     } else {
         if ($filterAll['cf-password'] !== $filterAll['password']) {
-            $errors['cf-password']['match'] = 'Mật khẩu nhập lại không đúng.';
+            $errors['cf-password']['match'] = '*Mật khẩu nhập lại không đúng.';
         }
     }
 
     if (empty($errors)) {
         setFlashData('smg', 'Đăng kí thành công!');
         setFlashData('smg_type', 'success');
+  //      redirect('/BnL/user/signup');
     } else {
         setFlashData('smg', 'Vui lòng kiểm tra lại thông tin!');
         setFlashData('smg_type', 'danger');
+        setFlashData('errors', $errors);
+        setFlashData('old', $filterAll);
+        redirect('signup');
     }
 }
 $smg = getFlashData('smg');
 $smg_type = getFlashData('smg_type');
+$errors = getFlashData('errors');
+$old = getFlashData('old');
 ?>
 
     <title>BnL - Đăng ký</title>
@@ -90,7 +96,7 @@ $smg_type = getFlashData('smg_type');
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
           <div class="block text-center margin-0">
-            <a class="logo" href="../public/home">
+            <a class="logo" href="/BnL/public/home">
               <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/BnL_logo.png" alt="" style="height: 20vh;">
             </a>
             <h2 class="text-center">Create Your Account</h2>
@@ -98,25 +104,42 @@ $smg_type = getFlashData('smg_type');
               if(!empty($smg)) {
                 getSmg($smg, $smg_type);
               }
+              echo '<pre>'; print_r($errors); echo '</pre>';
             ?>
             <form class="text-left clearfix" action="" method="post">
               <div class="form-group">
-                <input name="fullname" type="text" class="form-control"  placeholder="Họ và tên">
+                <input name="fullname" type="text" class="form-control"  placeholder="Họ và tên" value="<?php echo old_data('fullname', $old) ?>">
+                <?php 
+                  // echo (!empty($errors['fullname'])) ? '<span class="er">'.reset($errors['fullname']).'</span>' : null;
+                  echo form_error('fullname', '<span class="er">', '</span>', $errors);
+                ?>
               </div>
               <div class="form-group">
                 <input name="address" type="text" class="form-control"  placeholder="Address">
               </div>
               <div class="form-group">
-                <input name="email" type="email" class="form-control"  placeholder="Email">
+                <input name="email" type="email" class="form-control"  placeholder="Email" value="<?php echo old_data('email', $old)?>">
+                <?php 
+                  echo form_error('email', '<span class="er">', '</span>', $errors);
+                ?>
               </div>
               <div class="form-group">
-                <input name="phone" type="text" class="form-control"  placeholder="Phone Number">
+                <input name="phone" type="text" class="form-control"  placeholder="Phone Number" value="<?php echo old_data('phone', $old) ?>">
+                <?php 
+                  echo form_error('phone', '<span class="er">', '</span>', $errors);
+                ?>
               </div>
               <div class="form-group">
                 <input name="password" type="password" class="form-control"  placeholder="Password">
+                <?php 
+                  echo form_error('password', '<span class="er">', '</span>', $errors);
+                ?>
               </div>
               <div class="form-group">
                 <input name="cf-password" type="password" class="form-control"  placeholder="Confirm password">
+                <?php 
+                  echo form_error('cf-password', '<span class="er">', '</span>', $errors);
+                ?>
               </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-main text-center">Sign In</button>
