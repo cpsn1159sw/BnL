@@ -1,49 +1,54 @@
-<!-- Các hàm liên quan đến Session hay Cookies -->
 <?php
 // Chặn truy cập hợp lệ
-    if(!defined('_CODE')) {
-        die('Access denied...');
-    }
+if (!defined('_CODE')) {
+    die('Access denied...');
+}
 
 // Hàm gán session
 function setSession($key, $value) {
-    return $_SESSION[$key] = $value;
+    $_SESSION[$key] = $value;
 }
 
 // Hàm đọc session
-function getSession($key='') {
-    if(!empty($key)) {
-        return $_SESSION;
-    } else {
-        if(isset($_SESSION[$key])) {
+function getSession($key = '') {
+    if (!empty($key)) {
+        if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
+        } else {
+            return null;
         }
+    } else {
+        return $_SESSION;
     }
 }
 
-// Hàm xóa session
-function removeSession($key='') {
-    if(!empty($key)) {
-        session_destroy();
-        return true;
+// Hàm xóa session hoặc session key
+function removeSession($key = '') {
+    if (!empty($key)) {
+        unset($_SESSION[$key]);
     } else {
-        if(isset($_SESSION[$key])) {
-            unset($_SESSION[$key]);
-            return true;
-        }
+        session_destroy();
     }
 }
 
 // Hàm gán flash data
 function setFlashData($key, $value) {
-    $key = 'flash_'. $key;
-    return setSession($key, $value);
+    $key = 'flash_' . $key;
+    setSession($key, $value);
+    // Set a flag to indicate it's flash data
+    setSession($key . '_is_flash', true);
 }
 
-// Hàm đọc flash data
+// Hàm đọc flash data và xóa nó sau khi đọc
 function getFlashData($key) {
-    $key = 'flash_'. $key;
+    $key = 'flash_' . $key;
     $data = getSession($key);
-    removeSession($key);
-    return $data;
+    if (!empty($data) && getSession($key . '_is_flash')) {
+        removeSession($key);
+        removeSession($key . '_is_flash');
+        return $data;
+    } else {
+        return null;
+    }
 }
+?>

@@ -206,19 +206,19 @@
 								role="button" aria-haspopup="true" aria-expanded="false">Utility <span
 									class="tf-ion-ios-arrow-down"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="?module=user&action=login">Login Page</a></li>
-								<li><a href="?module=user&action=signup">Signup Page</a></li>
-								<li><a href="?module=user&action=forgot">Forget Password</a></li>
+								<li><a href="user/login">Login Page</a></li>
+								<li><a href="user/signup">Signup Page</a></li>
+								<li><a href="user/forgot">Forget Password</a></li>
 							</ul>
 						</li><!-- / Login -->
 						<!-- About -->
 						<li class="dropdown ">
-							<a href="?module=public&action=about">About</a>
+							<a href="about">About</a>
 						</li><!-- / About -->
 
 						<!-- Contact -->
 						<li class="dropdown ">
-							<a href="?module=public&action=contact">Contact</a>
+							<a href="contact">Contact</a>
 						</li><!-- / Contact -->
 
 						<!-- Shop -->

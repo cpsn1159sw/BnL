@@ -29,9 +29,9 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
-          <div class="block text-center">
-            <a class="logo" href="index.html">
-              <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/avata.png" alt="" style="height: 20vh;">
+          <div class="block text-center margin-0">
+            <a class="logo" href="../public/home">
+              <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/BnL_logo.png" alt="" style="height: 20vh;">
             </a>
             <h2 class="text-center">Welcome Back</h2>
             <form class="text-left clearfix" action="" method="post">
@@ -42,13 +42,13 @@
                 <input type="password" class="form-control" placeholder="Password">
               </div>
               <div class="form-group">
-                <p><a href="?module=user&action=forgot">forgot password</a></p>
+                <p><a href="forgot">forgot password</a></p>
               </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-main text-center" >Login</button>
               </div>
             </form>
-            <p class="mt-20">New in this site ?<a href="?module=user&action=signup"> Create New Account</a></p>
+            <p class="mt-20">New in this site ?<a href="signup"> Create New Account</a></p>
           </div>
         </div>
       </div>

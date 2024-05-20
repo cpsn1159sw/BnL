@@ -41,7 +41,7 @@
                         <button type="submit" class="btn btn-main text-center">Request password reset</button>
                         </div>
                     </form>
-                    <p class="mt-20"><a href="?module=user&action=login">Back to log in</a></p>
+                    <p class="mt-20"><a href="login">Back to log in</a></p>
                     </div>
                 </div>
             </div>

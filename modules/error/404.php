@@ -29,7 +29,7 @@
 					</a>
 					<h1>404</h1>
 					<h2>Page Not Found</h2>
-					<a href="?module=public&action=home" class="btn btn-main"><i class="tf-ion-android-arrow-back"></i> Go Home</a>
+					<a href="index.php" class="btn btn-main"><i class="tf-ion-android-arrow-back"></i> Go Home</a>
 				</div>
 			</div>
 		</div>

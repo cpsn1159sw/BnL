@@ -119,3 +119,38 @@ function isNumberFloat($number) {
     $checkNumber = filter_var($number, FILTER_VALIDATE_FLOAT);
     return $checkNumber;
 }
+
+// Hàm kiểm tra số điện thoại
+function isPhone($phone) {
+    $checkZero = false;
+
+    // Điều kiện 1: Số đầu tiên là 0
+    if($phone[0] == '0') {
+        $checkZero = true;
+        $phone = substr($phone,1);
+    }
+
+    // Điều kiện 2: Độ dài của số điện thoại là 9 số
+    $checkNumber = false;
+    if(isNumberInt($phone) && (strlen($phone) == 9)) {
+        $checkNumber = true;
+    }
+
+    if($checkZero && $checkNumber) {
+        return true;
+    }
+
+    return false;
+}
+
+// Tạo thông báo lỗi 
+function getSmg($smg, $type = 'success') {
+    echo '<div class="alert alert-'.$type.'">';
+    echo $smg;
+    echo '</div>';
+}
+
+// Hàm chuyển hướng 
+function redirect($path) {
+
+}
