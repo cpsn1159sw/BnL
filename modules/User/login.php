@@ -1,9 +1,42 @@
-
 <?php
 // Chặn truy cập hợp lệ
     if(!defined('_CODE')) {
         die('Access denied...');
     }
+
+    if (isPost()) {
+      $filterAll = filter();
+      
+      if (!empty(trim($filterAll['email'])) && !empty(trim($filterAll['password']))) {
+          // Kiểm tra đăng nhập
+          $email = $filterAll['email'];
+          $password = $filterAll['password'];
+
+          // Truy vấn lấy thông tin đăng nhập theo email trong bảng customer 
+          $customerQuery = oneRow("SELECT password FROM customer WHERE email = '$email'");
+
+          if (!empty($customerQuery)) {
+              $passwordHash = $customerQuery['password'];
+              if (password_verify($password, $passwordHash)) {
+                  echo 'Mật khẩu đúng.';
+                  // Thực hiện hành động khi mật khẩu đúng
+              } else {
+                setFlashData('smg', 'Mật khẩu không chính xác!');
+                setFlashData('smg_type', 'danger');
+              }
+          } else {
+            setFlashData('smg', 'Email không tồn tại!');
+            setFlashData('smg_type', 'danger');
+          }
+      } else {
+          setFlashData('smg', 'Vui lòng nhập email và mật khẩu!');
+          setFlashData('smg_type', 'danger');
+      }
+      redirect('login');
+    }
+  
+  $smg = getFlashData('smg');
+  $smg_type = getFlashData('smg_type');
 ?>
 
     <title>BnL - Đăng nhập</title>
@@ -34,12 +67,17 @@
               <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/BnL_logo.png" alt="" style="height: 20vh;">
             </a>
             <h2 class="text-center">Welcome Back</h2>
+            <?php 
+              if(!empty($smg)) {
+                getSmg($smg, $smg_type);
+              }
+            ?>
             <form class="text-left clearfix" action="" method="post">
               <div class="form-group">
-                <input type="email" class="form-control"  placeholder="Email">
+                <input name="email" type="email" class="form-control"  placeholder="Email">
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password">
+                <input name="password" type="password" class="form-control" placeholder="Password">
               </div>
               <div class="form-group">
                 <p><a href="forgot">forgot password</a></p>

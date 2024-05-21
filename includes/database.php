@@ -4,9 +4,6 @@ if (!defined('_CODE')) {
     die('Access denied...');
 }
 
-// Bao gồm tệp connect.php để khởi tạo đối tượng PDO
-require_once 'connect.php';
-
 // Hàm query sử dụng đối tượng PDO
 function query($sql, $data = [], $check = false) {
     global $conn;
@@ -72,28 +69,27 @@ function delete($table, $condition = '') {
 
 // Lấy nhiều dòng dữ liệu 
 function getRows($sql) {
-    $result = query($sql, [], true);
+    $result = query($sql, '', true);
     if (is_object($result)) {
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        $dataFetch = $result->fetchAll(PDO::FETCH_ASSOC);
     }
-    return [];
+    return $dataFetch;
 }
 
 // Lấy một dòng dữ liệu 
 function oneRow($sql) {
-    $result = query($sql, [], true);
+    $result = query($sql, '', true);
     if (is_object($result)) {
-        return $result->fetch(PDO::FETCH_ASSOC);
+        $dataFetch =  $result->fetch(PDO::FETCH_ASSOC);
     }
-    return [];
+    return $dataFetch;
 }
 
 // Đếm số dòng dữ liệu 
 function countRows($sql) {
-    $result = query($sql, [], true);
+    $result = query($sql, '', true);
     if (!empty($result)) {
         return $result->rowCount();
     }
-    return 0;
 }
 ?>

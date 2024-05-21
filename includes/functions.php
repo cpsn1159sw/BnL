@@ -5,17 +5,17 @@
         die('Access denied...');
     }
 
-//Import PHPMailer classes into the global namespace
-//These must be at the top of your script, not inside a function
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
 function layouts($layoutName, $data=[]) {
     if(file_exists(_WEB_PATH_TEMPLATES . '/layout/'. $layoutName. '.php')) {
         require_once _WEB_PATH_TEMPLATES . '/layout/'. $layoutName. '.php';
     }
 }
+
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 // Hàm gửi mail 
 function sendMail($to, $subject, $content) {
@@ -30,21 +30,33 @@ function sendMail($to, $subject, $content) {
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $mail->Username   = 'cskhbandl@gmail.com';                     //SMTP username
-        $mail->Password   = '@12345678@';                               //SMTP password
+        $mail->Password   = 'xmyxxyqpsemuvufz';                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('from@example.com', 'Mailer');
+        $mail->setFrom($to, 'BnL');
         $mail->addAddress($to);     //Add a recipient
 
         //Content
+        $mail->CharSet = 'UTF-8';
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = $subject;
         $mail->Body = $content;
 
-        $mail->send();
-        echo 'Message has been sent';
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+
+        $senMail = $mail->send();
+        // echo 'Gữi thành công';
+        if($senMail) {
+            return $senMail;
+        }
 
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

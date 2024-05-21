@@ -56,9 +56,51 @@ if (isPost()) {
     }
 
     if (empty($errors)) {
-        setFlashData('smg', 'Đăng kí thành công!');
-        setFlashData('smg_type', 'success');
-  //      redirect('/BnL/user/signup');
+      $activeToken = sha1(uniqid().time());
+      $dataInsert = [
+        'fullname' => $filterAll['fullname'],
+        'address' => $filterAll['address'],
+        'email' => $filterAll['email'],
+        'phone' => $filterAll['phone'],
+        'password' => password_hash(($filterAll['password']), PASSWORD_DEFAULT),
+        'activeToken' => $activeToken,
+        'create_at' => date('Y-m-d H:i:s')
+      ];
+
+      $insertStatus = insert('customer', $dataInsert); // NHỚ ĐỔI LẠI TÊN BẲNG customer SAU NÀY 
+      if($insertStatus) {
+        // Tạo link kích hoạt tài khoản
+        $linkActive = _WEB_HOST . '?module=user&action=active&token='. $activeToken;
+
+        // Soạn tin gữi mail
+        $subject = 'Kích hoạt tài khoản BnLer';
+        $content = 'Xin chào '.$filterAll['fullname']. ',' .'<br>' .'
+
+        Cảm ơn bạn đã đăng ký tài khoản tại BnL.' .'<br>' .'
+        
+        Để hoàn tất quá trình đăng ký và kích hoạt tài khoản của bạn, vui lòng nhấp vào liên kết dưới đây:' .'<br>'
+        
+        .$linkActive .'<br>' .'
+        
+        Nếu bạn không đăng ký tài khoản tại BnL, vui lòng bỏ qua email này.' .'<br>' .'
+        
+        Cảm ơn bạn,' .'<br>' .'
+        Đội ngũ hỗ trợ CSKH BnL';
+
+        // Gữi mail
+        $senMail = sendMail($filterAll['email'], $subject, $content);
+        if($senMail) {
+          setFlashData('smg', 'Đăng kí thành công, vui lòng kiểm tra email để kích hoạt tài khoản!!!');
+          setFlashData('smg_type', 'success');
+        } else {
+          setFlashData('smg', 'Hệ thống đang gặp sự cố, vui lòng thử lại sau!');
+          setFlashData('smg_type', 'danger');
+        }
+      } else {
+        setFlashData('smg', 'Đăng kí không thành công!');
+        setFlashData('smg_type', 'danger');
+      }
+       redirect('/BnL/user/signup');
     } else {
         setFlashData('smg', 'Vui lòng kiểm tra lại thông tin!');
         setFlashData('smg_type', 'danger');
@@ -104,7 +146,6 @@ $old = getFlashData('old');
               if(!empty($smg)) {
                 getSmg($smg, $smg_type);
               }
-              echo '<pre>'; print_r($errors); echo '</pre>';
             ?>
             <form class="text-left clearfix" action="" method="post">
               <div class="form-group">
