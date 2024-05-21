@@ -146,30 +146,23 @@
 									<!-- Nam -->
 									<div class="col-sm-3 col-xs-12">
 										<ul>
-											<li class=" ">Nam</li>
+											<li class=" ">Nữ</li>
 											<li role=" " class="divider"></li>
 											<li><a href=" ">Áo thun</a></li>
-											<li><a href=" ">Áo sơ mi</a></li>
-											<li><a href=" ">Áo len & Cadigan</a></li>
-											<li><a href=" ">Áo nỉ & Hoodie</a></li>
-											<li><a href=" ">Quần Short</a></li>
-											<li><a href=" ">Quần Tây</a></li>
-											<li><a href=" ">Quần Jean</a></li>
+											<li><a href=" ">Bra Tops</a></li>
+											<li><a href=" ">Đầm & Jumpsuit</a></li>
+											<li><a href=" ">Váy ngắn</a></li>
 										</ul>
 									</div>
 
 									<!-- Nữ -->
 									<div class="col-sm-3 col-xs-12">
 										<ul>
-											<li class=" ">Nữ</li>
+											<li class=" ">Túi sách</li>
 											<li role=" " class="divider"></li>
-											<li><a href=" ">Áo thun</a></li>
-											<li><a href=" ">Bra Tops</a></li>
-											<li><a href=" ">Áo sơ mi & áo kiểu</a></li>
-											<li><a href=" ">Đầm & Jumpsuit</a></li>
-											<li><a href=" ">Váy ngắn</a></li>
-											<li><a href=" ">Quần Jean</a></li>
-											<li><a href=" ">Quần Ống Rộng</a></li>
+											<li><a href=" ">Túi Tote</a></li>
+											<li><a href=" ">Túi Satchel</a></li>
+											<li><a href=" ">Balo nữ</a></li>
 										</ul>
 									</div>
 
@@ -180,9 +173,6 @@
 											<li role=" " class="divider"></li>
 											<li><a href=" ">Kính mát</a></li>
 											<li><a href=" ">Bông tai</a></li>
-											<li><a href=" ">Thắt lưng</a></li>
-											<li><a href=" ">Cà vạt</a></li>
-											<li><a href=" ">Ví</a></li>
 										</ul>
 									</div>
 

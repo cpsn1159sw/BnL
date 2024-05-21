@@ -6,13 +6,12 @@ USE db_shop;
 
 CREATE TABLE Administrator (
     AdminID INT PRIMARY KEY AUTO_INCREMENT,
-    Account VARCHAR(100) UNIQUE NOT NULL,
-    Password VARCHAR(100) NOT NULL,
-    FullName VARCHAR(100),
-    Email VARCHAR(100),
-    Phone VARCHAR(20),
+    FullName VARCHAR(100) NOT NULL,
     Address VARCHAR(255),
-    Role VARCHAR(10) DEFAULT 'Admin' CHECK (Role IN ('Admin', 'Staff'))
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Phone VARCHAR(20) UNIQUE NOT NULL,
+    Password VARCHAR(100) NOT NULL,
+    Role VARCHAR(20) CHECK (Role IN ('Admin'))
 );
 
 CREATE TABLE Categories (

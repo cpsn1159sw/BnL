@@ -183,7 +183,7 @@ $old = getFlashData('old');
                 ?>
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-main text-center">Sign In</button>
+                <button type="submit" class="btn btn-main text-center">Sign Up</button>
               </div>
             </form>
             <p class="mt-20">Already hava an account ?<a href="login"> Login</a></p>
