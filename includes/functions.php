@@ -174,3 +174,5 @@ function form_error($fileName, $beforeHtml = '', $afterHtml = '', $errors) {
 function old_data($fileName, $oldData, $default = null) {
     return (!empty($oldData[$fileName])) ? $oldData[$fileName] : $default;
 }
+
+// Hàm trạng thái đăng nhập

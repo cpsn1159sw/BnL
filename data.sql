@@ -11,7 +11,7 @@ CREATE TABLE Administrator (
     Email VARCHAR(100) UNIQUE NOT NULL,
     Phone VARCHAR(20) UNIQUE NOT NULL,
     Password VARCHAR(100) NOT NULL,
-    Role VARCHAR(20) CHECK (Role IN ('Admin'))
+    Role VARCHAR(20)
 );
 
 CREATE TABLE Categories (
