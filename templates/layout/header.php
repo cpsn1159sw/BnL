@@ -39,7 +39,7 @@
 				<div class="col-md-4 col-xs-12 col-sm-4">
 					<!-- Site Logo -->
 					<div class="logo text-center">
-						<a href=" ">
+						<a href="/BnL/Public/home">
 							<img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/titleBnL.png" style="height: 20vh;" alt="">
 						</a>
 					</div>
