@@ -73,7 +73,7 @@ if (isPost()) {
         $linkActive = _WEB_HOST . '?module=user&action=active&token='. $activeToken;
 
         // Soạn tin gữi mail
-        $subject = 'Kích hoạt tài khoản BnLer';
+        $subject = 'Kích hoạt tài khoản BnL';
         $content = 'Xin chào '.$filterAll['fullname']. ',' .'<br>' .'
 
         Cảm ơn bạn đã đăng ký tài khoản tại BnL.' .'<br>' .'

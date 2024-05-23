@@ -18,11 +18,11 @@
             $updateStatus = update('customer', $dataUpdate, "id = $customerId");
 
             if($updateStatus) {
-                setFlashData('msg', 'Kích hoạt tài khoản thành công bạn đã có thể đăng nhập ngay bây giờ!');
-                setFlashData('msg_type', 'success');
+                setFlashData('smg', 'Kích hoạt tài khoản thành công bạn đã có thể đăng nhập ngay bây giờ!');
+                setFlashData('smg_type', 'success');
             } else {
-                setFlashData('msg', 'Kích hoạt tài khoản không thành công, vui lòng liên CSKH BnL!');
-                setFlashData('msg_type', 'danger');
+                setFlashData('smg', 'Kích hoạt tài khoản không thành công, vui lòng liên CSKH BnL!');
+                setFlashData('smg_type', 'danger');
             }
             
             redirect('/BnL/user/login');
@@ -33,3 +33,16 @@
         getSmg('Liên kết không tồn tại hoặc đã hết hạn!', 'danger');
     }
 ?>
+  <!-- Themefisher Icon font -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
+  
+  <!-- Animate css -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">

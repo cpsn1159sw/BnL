@@ -25,6 +25,9 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
 
+  <!-- Dashboard -->
+  <script src="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css"></script>
+
   <body id="body">
 	<!-- Start Top Header Bar -->
 	<section class="top-header">
@@ -137,7 +140,7 @@
 
 						<!-- Pages -->
 						<li class="dropdown full-width dropdown-slide">
-							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
+							<a href="/BnL/public/shop" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
 								role="button" aria-haspopup="true" aria-expanded="false">Shop <span
 									class="tf-ion-ios-arrow-down"></span></a>
 							<div class="dropdown-menu">
@@ -148,10 +151,10 @@
 										<ul>
 											<li class=" ">Nữ</li>
 											<li role=" " class="divider"></li>
-											<li><a href=" ">Áo thun</a></li>
-											<li><a href=" ">Bra Tops</a></li>
-											<li><a href=" ">Đầm & Jumpsuit</a></li>
-											<li><a href=" ">Váy ngắn</a></li>
+											<li><a href="/BnL/public/">Áo thun</a></li>
+											<li><a href="/BnL/public/">Bra Tops</a></li>
+											<li><a href="/BnL/public/">Đầm & Jumpsuit</a></li>
+											<li><a href="/BnL/public/">Váy ngắn</a></li>
 										</ul>
 									</div>
 
@@ -160,9 +163,9 @@
 										<ul>
 											<li class=" ">Túi sách</li>
 											<li role=" " class="divider"></li>
-											<li><a href=" ">Túi Tote</a></li>
-											<li><a href=" ">Túi Satchel</a></li>
-											<li><a href=" ">Balo nữ</a></li>
+											<li><a href="/BnL/public/">Túi Tote</a></li>
+											<li><a href="/BnL/public/">Túi Satchel</a></li>
+											<li><a href="/BnL/public/">Balo nữ</a></li>
 										</ul>
 									</div>
 
@@ -171,8 +174,8 @@
 										<ul>
 											<li class=" ">Phụ kiện</li>
 											<li role=" " class="divider"></li>
-											<li><a href=" ">Kính mát</a></li>
-											<li><a href=" ">Bông tai</a></li>
+											<li><a href="/BnL/public/">Kính mát</a></li>
+											<li><a href="/BnL/public/">Nón</a></li>
 										</ul>
 									</div>
 

@@ -171,7 +171,7 @@ $data = [
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="product-single.html">Strayhorn SP</a></h4>
+						<h4><a href=" ">Strayhorn SP</a></h4> 
 						<p class="price">$230</p>
 					</div>
 				</div>
@@ -257,7 +257,7 @@ $data = [
 			<div class="col-md-4">
 				<div class="product-item">
 					<div class="product-thumb">
-						<span class="bage">Sale</span>
+						<span class="page">Sale</span>
 						<img class="img-responsive" src="images/shop/products/product-7.jpg" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
@@ -368,7 +368,7 @@ $data = [
 		</div>
 	</div>
 </section>
-<?php layouts('footer'); ?>
 </body>
+<?php layouts('footer'); ?>
 </head>
 </html>
