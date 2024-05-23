@@ -151,7 +151,7 @@
 										<ul>
 											<li class=" ">Nữ</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/">Áo thun</a></li>
+											<li><a href="/BnL/public/T-shirt">Áo thun</a></li>
 											<li><a href="/BnL/public/">Bra Tops</a></li>
 											<li><a href="/BnL/public/">Đầm & Jumpsuit</a></li>
 											<li><a href="/BnL/public/">Váy ngắn</a></li>
