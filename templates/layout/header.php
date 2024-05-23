@@ -135,7 +135,7 @@
 
 						<!-- Home -->
 						<li class="dropdown ">
-							<a href=" ">Home</a>
+							<a href="/BnL/Public/home">Home</a>
 						</li><!-- / Home -->
 
 						<!-- Pages -->
