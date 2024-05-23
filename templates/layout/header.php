@@ -191,7 +191,7 @@
 						
 						<!-- Sale -->
 						<li class="dropdown ">
-							<a href=" ">Sale</a>
+							<a href="/BnL/public/sale">Sale</a>
 						</li><!-- / Sale -->
 						<!-- Login -->
 						<li class="dropdown dropdown-slide">
