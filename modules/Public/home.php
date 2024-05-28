@@ -3,10 +3,16 @@
 if(!defined('_CODE')) {
     die('Access denied...');
 }
+
 $data = [
     'pageTitle' => 'BnL - Home'
 ];
-    layouts('header',$data);
+
+if(!isLogin()) {
+	layouts('header', $data);
+} else {
+	layouts('header_login', $data);
+}
 ?>
 <body id="body">
 <div class="hero-slider">

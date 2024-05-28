@@ -608,12 +608,11 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 .top-header .dropdown-menu {
   left: auto;
-  right: 0;
-  max-width: 300px;
+  right: 0px;
+  min-width: 250px;
 }
-@media (max-width: 480px) {
+@media (max-width: 770px) {
   .top-header .dropdown-menu {
-    right: 0;
     left: 0;
     max-width: 100%;
   }

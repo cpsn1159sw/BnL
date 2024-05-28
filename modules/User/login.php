@@ -4,6 +4,10 @@
         die('Access denied...');
     }
 
+    if(isLogin()) {
+      redirect('/BnL/public/home');
+    }
+
     if (isPost()) {
       $filterAll = filter();
       
@@ -13,23 +17,43 @@
           $password = $filterAll['password'];
 
           // Truy vấn lấy thông tin đăng nhập theo email trong bảng customer 
-          $customerQuery = oneRow("SELECT password FROM customer WHERE email = '$email'");
+          $customerQuery = oneRow("SELECT id, password FROM customer WHERE email = '$email' AND status = 1");
 
           if (!empty($customerQuery)) {
               $passwordHash = $customerQuery['password'];
+              $customerId = $customerQuery['id'];
               if (password_verify($password, $passwordHash)) {
-                  echo 'Mật khẩu đúng.';
-                  // Thực hiện hành động khi mật khẩu đúng
+                // Tạo token login
+                $tokenLogin = sha1(uniqid().time());
+
+                // insert vào bảng loginTokenC
+                $dataInsert = [
+                  'customerID' => $customerId,
+                  'token' => $tokenLogin,
+                  'create_at' => date('y-m-d H:i:s')
+                ];
+
+                $insertStatus = insert('logintokenC', $dataInsert);
+                if($insertStatus) {
+                  // Insert thành công 
+
+                  // Lưu tokenLogin vào session
+                  setSession('logintokenC', $tokenLogin);
+                  redirect('/BnL/public/home');
+                } else {
+                  setFlashData('smg', 'Unable to login, please try again later!');
+                  setFlashData('smg_type', 'danger');
+                }
               } else {
-                setFlashData('smg', 'Mật khẩu không chính xác!');
+                setFlashData('smg', 'Incorrect password!');
                 setFlashData('smg_type', 'danger');
               }
           } else {
-            setFlashData('smg', 'Email không tồn tại!');
+            setFlashData('smg', 'Email does not exist or the account has not been activated!');
             setFlashData('smg_type', 'danger');
           }
       } else {
-          setFlashData('smg', 'Vui lòng nhập email và mật khẩu!');
+          setFlashData('smg', 'Please enter your email and password!');
           setFlashData('smg_type', 'danger');
       }
       redirect('login');
@@ -39,7 +63,7 @@
   $smg_type = getFlashData('smg_type');
 ?>
 
-    <title>BnL - Đăng nhập</title>
+    <title>BnL - Login</title>
 
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">

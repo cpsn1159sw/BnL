@@ -10,48 +10,48 @@ if (isPost()) {
 
     // Validate fullname
     if (empty($filterAll['fullname'])) {
-        $errors['fullname']['required'] = '*Họ và tên bắt buộc phải nhập.';
+        $errors['fullname']['required'] = '*Please enter your full name.';
     } else {
         if (strlen($filterAll['fullname']) < 5) {
-            $errors['fullname']['min'] = '*Họ và tên phải có ít nhất 5 kí tự.';
+            $errors['fullname']['min'] = '*Full name must be at least 5 characters.';
         }
     }
 
     // Validate email
     if (empty($filterAll['email'])) {
-        $errors['email']['required'] = '*Email bắt buộc phải nhập.';
+        $errors['email']['required'] = '*Please enter your email.';
     } else {
         $email = $filterAll['email'];
         $sql = "SELECT id FROM customer WHERE email = '$email'";
         if (countRows($sql) > 0) {
-            $errors['email']['unique'] = '*Email đã tồn tại.';
+            $errors['email']['unique'] = '*Email already exists.';
         }
     }
 
     // Validate phonenumber
     if (empty($filterAll['phone'])) {
-        $errors['phone']['required'] = '*Số điện thoại bắt buộc phải nhập.';
+        $errors['phone']['required'] = '*Please enter your phone number.';
     } else {
         if (!isPhone($filterAll['phone'])) {
-            $errors['phone']['isPhone'] = '*Số điện thoại không hợp lệ.';
+            $errors['phone']['isPhone'] = '*The phone number is invalid.';
         }
     }
 
     // Validate password
     if (empty($filterAll['password'])) {
-        $errors['password']['required'] = '*Mật khẩu bắt buộc phải nhập.';
+        $errors['password']['required'] = '*Please enter your password.';
     } else {
         if (strlen($filterAll['password']) < 8) {
-            $errors['password']['min'] = '*Mật khẩu phải có ít nhất 8 kí tự.';
+            $errors['password']['min'] = '*The password must be at least 8 characters.';
         }
     }
 
     // Validate password confirm
     if (empty($filterAll['cf-password'])) {
-        $errors['cf-password']['required'] = '*Bạn phải nhập lại mật khẩu.';
+        $errors['cf-password']['required'] = '*You must re-enter your password.';
     } else {
         if ($filterAll['cf-password'] !== $filterAll['password']) {
-            $errors['cf-password']['match'] = '*Mật khẩu nhập lại không đúng.';
+            $errors['cf-password']['match'] = '*The re-entered password is incorrect.';
         }
     }
 
@@ -73,36 +73,36 @@ if (isPost()) {
         $linkActive = _WEB_HOST . '?module=user&action=active&token='. $activeToken;
 
         // Soạn tin gữi mail
-        $subject = 'Kích hoạt tài khoản BnL';
-        $content = 'Xin chào '.$filterAll['fullname']. ',' .'<br>' .'
-
-        Cảm ơn bạn đã đăng ký tài khoản tại BnL.' .'<br>' .'
+        $subject = 'Activate your BnL account';
+        $content = 'Hello '.$filterAll['fullname']. ',' .'<br>' .'
         
-        Để hoàn tất quá trình đăng ký và kích hoạt tài khoản của bạn, vui lòng nhấp vào liên kết dưới đây:' .'<br>'
-        
+        Thank you for registering an account with BnL.' .'<br>' .'
+                
+        To complete the registration process and activate your account, please click the link below:' .'<br>'
+                
         .$linkActive .'<br>' .'
-        
-        Nếu bạn không đăng ký tài khoản tại BnL, vui lòng bỏ qua email này.' .'<br>' .'
-        
-        Cảm ơn bạn,' .'<br>' .'
-        Đội ngũ hỗ trợ CSKH BnL';
+                
+        If you did not sign up for a BnL account, please disregard this email.' .'<br>' .'
+                
+        Thank you,' .'<br>' .'
+        BnL Customer Support Team';
 
         // Gữi mail
         $senMail = sendMail($filterAll['email'], $subject, $content);
         if($senMail) {
-          setFlashData('smg', 'Đăng kí thành công, vui lòng kiểm tra email để kích hoạt tài khoản!!!');
+          setFlashData('smg', 'Sign up successful! Please check your email to activate your account!');
           setFlashData('smg_type', 'success');
         } else {
-          setFlashData('smg', 'Hệ thống đang gặp sự cố, vui lòng thử lại sau!');
+          setFlashData('smg', 'The system is experiencing issues. Please try again later!');
           setFlashData('smg_type', 'danger');
         }
       } else {
-        setFlashData('smg', 'Đăng kí không thành công!');
+        setFlashData('smg', 'Sign up unsuccessful!');
         setFlashData('smg_type', 'danger');
       }
        redirect('/BnL/user/signup');
     } else {
-        setFlashData('smg', 'Vui lòng kiểm tra lại thông tin!');
+        setFlashData('smg', 'Please check the information again!');
         setFlashData('smg_type', 'danger');
         setFlashData('errors', $errors);
         setFlashData('old', $filterAll);
@@ -115,7 +115,7 @@ $errors = getFlashData('errors');
 $old = getFlashData('old');
 ?>
 
-    <title>BnL - Đăng ký</title>
+    <title>BnL - Sign up</title>
 
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
@@ -156,7 +156,7 @@ $old = getFlashData('old');
                 ?>
               </div>
               <div class="form-group">
-                <input name="address" type="text" class="form-control"  placeholder="Address">
+                <input name="address" type="text" class="form-control"  placeholder="Address" value="<?php echo old_data('address', $old) ?>">
               </div>
               <div class="form-group">
                 <input name="email" type="email" class="form-control"  placeholder="Email" value="<?php echo old_data('email', $old)?>">
@@ -186,7 +186,7 @@ $old = getFlashData('old');
                 <button type="submit" class="btn btn-main text-center">Sign Up</button>
               </div>
             </form>
-            <p class="mt-20">Already hava an account ?<a href="login"> Login</a></p>
+            <p class="mt-20">Already have an account ?<a href="login"> Login</a></p>
           </div>
         </div>
       </div>

@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title><?php echo !empty($data['pageTitle']) ? $data['pageTitle'] : 'BnL - Home'; ?></title>
-  <meta charset="utf-8">
-  <!-- Mobile Specific Metas
+	<title><?php echo !empty($data['pageTitle']) ? $data['pageTitle'] : 'BnL - Home'; ?></title>
+	<meta charset="utf-8">
+	<!-- Mobile Specific Metas
   ================================================== -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Construction Html5 Template">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="author" content="Themefisher">
-  <meta name="generator" content="Themefisher Constra HTML Template v1.0">
-  
-  <!-- Themefisher Icon font -->
-  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
-  <!-- bootstrap.min css -->
-  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
-  
-  <!-- Animate css -->
-  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
-  <!-- Slick Carousel -->
-  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
-  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
-  
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Construction Html5 Template">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+	<meta name="author" content="Themefisher">
+	<meta name="generator" content="Themefisher Constra HTML Template v1.0">
 
-  <!-- Dashboard -->
-  <script src="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css"></script>
+	<!-- Themefisher Icon font -->
+	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
+	<!-- bootstrap.min css -->
+	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
 
-  <body id="body">
+	<!-- Animate css -->
+	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
+	<!-- Slick Carousel -->
+	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
+	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
+
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
+
+	<!-- Dashboard -->
+	<script src="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css"></script>
+
+<body id="body">
 	<!-- Start Top Header Bar -->
 	<section class="top-header">
 		<div class="container">
@@ -51,8 +52,7 @@
 					<!-- Cart -->
 					<ul class="top-menu text-right list-inline">
 						<li class="dropdown cart-nav dropdown-slide">
-							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-									class="tf-ion-android-cart"></i>Cart</a>
+							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="tf-ion-android-cart"></i>Cart</a>
 							<div class="dropdown-menu cart-dropdown">
 								<!-- Cart Item -->
 								<div class="media">
@@ -99,14 +99,26 @@
 
 						<!-- Search -->
 						<li class="dropdown search dropdown-slide">
-							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-									class="tf-ion-ios-search-strong"></i> Search</a>
+							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="tf-ion-ios-search-strong"></i> Search</a>
 							<ul class="dropdown-menu search-dropdown">
 								<li>
 									<form action="post"><input type="search" class="form-control" placeholder="Search..."></form>
 								</li>
 							</ul>
 						</li><!-- / Search -->
+						<!-- Login -->
+						<li class="dropdown dropdown-slide">
+							<?php
+							$customerQuery = oneRow("SELECT customer.email
+                            FROM customer
+                            INNER JOIN logintokenC ON customer.id = logintokenC.customerid
+                            WHERE logintokenC.token = '" . getSession('logintokenC') . "'");
+							$email =  $customerQuery['email'];
+							$parts = explode("@", $email);
+							$username = $parts[0];
+							echo 'Hi, ' . $username;
+							?>
+						</li>
 					</ul><!-- / .nav .navbar-nav .navbar-right -->
 				</div>
 			</div>
@@ -119,8 +131,7 @@
 			<div class="container">
 				<div class="navbar-header">
 					<h2 class="menu-title">Main Menu</h2>
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-						aria-expanded="false" aria-controls="navbar">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -140,14 +151,11 @@
 
 						<!-- Pages -->
 						<li class="dropdown full-width dropdown-slide">
-							<a href="/BnL/public/shop" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-								role="button" aria-haspopup="true" aria-expanded="false">Shop <span
-									class="tf-ion-ios-arrow-down"></span></a>
+							<a href="/BnL/public/shop" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Shop <span class="tf-ion-ios-arrow-down"></span></a>
 							<div class="dropdown-menu">
 								<div class="row">
-
-																		<!-- Women -->
-																		<div class="col-sm-3 col-xs-12">
+									<!-- Women -->
+									<div class="col-sm-3 col-xs-12">
 										<ul>
 											<li class=" ">Women</li>
 											<li role=" " class="divider"></li>
@@ -188,20 +196,19 @@
 								</div><!-- / .row -->
 							</div><!-- / .dropdown-menu -->
 						</li><!-- / Pages -->
-						
+
 						<!-- Sale -->
 						<li class="dropdown ">
 							<a href=" ">Sale</a>
 						</li><!-- / Sale -->
 						<!-- Login -->
 						<li class="dropdown dropdown-slide">
-							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-								role="button" aria-haspopup="true" aria-expanded="false">Utility <span
-									class="tf-ion-ios-arrow-down"></span></a>
+							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Utility <span class="tf-ion-ios-arrow-down"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="/BnL/user/login">Login Page</a></li>
 								<li><a href="/BnL/user/signup">Signup Page</a></li>
 								<li><a href="/BnL/user/forgot">Forget Password</a></li>
+								<li><a href="/BnL/user/logout">Logout</a></li>
 							</ul>
 						</li><!-- / Login -->
 						<!-- About -->
@@ -222,4 +229,3 @@
 			</div><!-- / .container -->
 		</nav>
 	</section>
-

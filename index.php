@@ -26,4 +26,5 @@ if(file_exists($path)) {
 } else {
     require_once('modules/error/404.php');
 }
+
 ?>

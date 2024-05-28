@@ -18,19 +18,19 @@
             $updateStatus = update('customer', $dataUpdate, "id = $customerId");
 
             if($updateStatus) {
-                setFlashData('smg', 'Kích hoạt tài khoản thành công bạn đã có thể đăng nhập ngay bây giờ!');
+                setFlashData('smg', 'Account activation successful. You can now log in!');
                 setFlashData('smg_type', 'success');
             } else {
-                setFlashData('smg', 'Kích hoạt tài khoản không thành công, vui lòng liên CSKH BnL!');
+                setFlashData('smg', 'Account activation failed. Please contact BnL Customer Support!');
                 setFlashData('smg_type', 'danger');
             }
             
             redirect('/BnL/user/login');
         } else {
-            getSmg('Liên kết không tồn tại hoặc đã hết hạn!', 'danger');
+            getSmg('The link does not exist or has expired!', 'danger');
         }
     } else {
-        getSmg('Liên kết không tồn tại hoặc đã hết hạn!', 'danger');
+        getSmg('The link does not exist or has expired!', 'danger');
     }
 ?>
 <!-- Themefisher Icon font -->

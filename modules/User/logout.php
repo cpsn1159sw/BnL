@@ -4,3 +4,10 @@
     if(!defined('_CODE')) {
         die('Access denied...');
     }
+
+    if(isLogin()) {
+        $token = getSession('logintokenc');
+        delete('logintokenc', "token='$token'");
+        removeSession('logintokenc');
+        redirect('/BnL/public/home');
+    }
