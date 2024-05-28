@@ -135,7 +135,7 @@
 
 						<!-- Home -->
 						<li class="dropdown ">
-							<a href=" ">Home</a>
+							<a href="/BnL/Public/home">Home</a>
 						</li><!-- / Home -->
 
 						<!-- Pages -->
@@ -151,7 +151,7 @@
 										<ul>
 											<li class=" ">Women</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/">T-shirts</a></li>
+											<li><a href="/BnL/public/">Áo thun</a></li>
 											<li><a href="/BnL/public/">Bra Tops</a></li>
 											<li><a href="/BnL/public/">Dresses & Jumpsuits</a></li>
 											<li><a href="/BnL/public/">Short Skirts</a></li>
@@ -191,7 +191,7 @@
 						
 						<!-- Sale -->
 						<li class="dropdown ">
-							<a href=" ">Sale</a>
+							<a href="/BnL/public/sale">Sale</a>
 						</li><!-- / Sale -->
 						<!-- Login -->
 						<li class="dropdown dropdown-slide">

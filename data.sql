@@ -13,7 +13,14 @@ CREATE TABLE Administrator (
     Password VARCHAR(100) NOT NULL,
     Role VARCHAR(20)
 );
-
+CREATE TABLE logintokenA (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    AdminID INT NOT NULL,
+    Token VARCHAR(100) DEFAULT NULL,
+    Create_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Update_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (AdminID) REFERENCES Administrator(AdminID)
+);
 CREATE TABLE Categories (
     CategoryID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL
@@ -22,7 +29,7 @@ CREATE TABLE Categories (
 CREATE TABLE Customer (
     CustomerID INT PRIMARY KEY AUTO_INCREMENT,
     FullName VARCHAR(100) NOT NULL,
-    Address VARCHAR(255)NOT NULL,
+    Address VARCHAR(255) NOT NULL,
     Email VARCHAR(100) UNIQUE NOT NULL,
     Phone VARCHAR(20) UNIQUE NOT NULL,
     Password VARCHAR(100) NOT NULL,
@@ -33,15 +40,22 @@ CREATE TABLE Customer (
     Update_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE `logintoken` (
-    ID int(11) PRIMARY KEY AUTO_INCREMENT,
-    CustomerID int(11) NOT NULL,
-    Token varchar(100) DEFAULT NULL,
-	Create_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE logintokenC (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT NOT NULL,
+    Token VARCHAR(100) DEFAULT NULL,
+    Create_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     Update_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	FOREIGN KEY (CustomerID) REFERENCES Customer (CustomerID)
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
-
+CREATE TABLE Feedback (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT NOT NULL,
+    message TEXT NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 CREATE TABLE Products (
     ProductID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL,
@@ -49,7 +63,6 @@ CREATE TABLE Products (
     CategoryID INT,
     Price DECIMAL(18, 2),
     Size VARCHAR(20),
-    Color VARCHAR(50),
     StockQuantity INT,
     FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
 );
@@ -58,54 +71,50 @@ CREATE TABLE Orders (
     OrderID INT PRIMARY KEY AUTO_INCREMENT,
     CustomerID INT,
     OrderDate DATETIME,
-    TotalAmount DECIMAL(18, 2),
+    Status VARCHAR(50),
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
 
-CREATE TABLE Revenue (
-    RevenueID INT PRIMARY KEY AUTO_INCREMENT,
-    OrderID INT,
-    Date DATE,
-    Amount DECIMAL(18, 2),
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
-);
-
-CREATE TABLE Feedback (
-    FeedbackID INT PRIMARY KEY AUTO_INCREMENT,
-    CustomerID INT,
-    ProductID INT,
-    Rating INT,
-    Comment TEXT,
-    Date DATE,
-    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
-);
-
 CREATE TABLE OrderDetails (
-    OrderDetailID INT PRIMARY KEY AUTO_INCREMENT,
     OrderID INT,
     ProductID INT,
     Quantity INT,
     UnitPrice DECIMAL(18, 2),
+    TotalAmount DECIMAL(18, 2),
+    PRIMARY KEY (OrderID, ProductID),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
+CREATE TABLE Exchange (
+    ExchangeID INT PRIMARY KEY AUTO_INCREMENT,
+    OrderDetailID INT,
+    ProductID INT,
+    Comment TEXT,
+    ImageLink VARCHAR(255),
+    FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
 -- Adding CHECK constraints
-ALTER TABLE Revenue
-ADD CONSTRAINT CHECK (Amount >= 0);
 
 ALTER TABLE Products
-ADD CONSTRAINT CHECK (Price > 0);
+ADD CONSTRAINT chk_price CHECK (Price > 0);
 
 ALTER TABLE Products
-ADD CONSTRAINT CHECK (StockQuantity >= 0);
+ADD CONSTRAINT chk_stockquantity CHECK (StockQuantity >= 0);
 
 ALTER TABLE Orders
-ADD CONSTRAINT CHECK (TotalAmount > 0);
+ADD CONSTRAINT chk_status CHECK (Status IN ('Delivered', 'Cancelled', 'Pending'));
 
 ALTER TABLE OrderDetails
-ADD CONSTRAINT CHECK (UnitPrice > 0);
+ADD CONSTRAINT chk_unitprice CHECK (UnitPrice > 0);
 
 ALTER TABLE OrderDetails
-ADD CONSTRAINT CHECK (Quantity > 0);
+ADD CONSTRAINT chk_quantity CHECK (Quantity > 0);
+
+ALTER TABLE Feedback
+ADD CONSTRAINT fk_user
+FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
