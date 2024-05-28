@@ -178,16 +178,16 @@ function old_data($fileName, $oldData, $default = null) {
 // Hàm trạng thái đăng nhập
 function isLogin() {
     $checkLogin = false;
-    if(getSession('logintokenC')) {
-        $tokenLogin = getSession('logintokenC');
+    if(getSession('logintokenc')) {
+        $tokenLogin = getSession('logintokenc');
     
         // kiểm tra token trong database 
-        $queryToken = oneRow("SELECT CustomerID FROM logintokenC WHERE token = '$tokenLogin'");
+        $queryToken = oneRow("SELECT CustomerID FROM logintokenc WHERE token = '$tokenLogin'");
     
         if(!empty($queryToken)) {
             $checkLogin = true;
         } else {
-            removeSession('logintokenC');
+            removeSession('logintokenc');
         }
     }
     return $checkLogin;

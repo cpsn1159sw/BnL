@@ -111,8 +111,8 @@
 							<?php
 							$customerQuery = oneRow("SELECT customer.email
                             FROM customer
-                            INNER JOIN logintokenC ON customer.id = logintokenC.customerid
-                            WHERE logintokenC.token = '" . getSession('logintokenC') . "'");
+                            INNER JOIN logintokenc ON customer.customerid = logintokenc.customerid
+                            WHERE logintokenc.token = '" . getSession('logintokenc') . "'");
 							$email =  $customerQuery['email'];
 							$parts = explode("@", $email);
 							$username = $parts[0];
@@ -205,8 +205,7 @@
 						<li class="dropdown dropdown-slide">
 							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Utility <span class="tf-ion-ios-arrow-down"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="/BnL/user/login">Login Page</a></li>
-								<li><a href="/BnL/user/signup">Signup Page</a></li>
+								<li><a href="/BnL/user/reset_login">Reset Password</a></li>
 								<li><a href="/BnL/user/forgot">Forget Password</a></li>
 								<li><a href="/BnL/user/logout">Logout</a></li>
 							</ul>

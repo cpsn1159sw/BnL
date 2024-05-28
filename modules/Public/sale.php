@@ -6,7 +6,13 @@ if(!defined('_CODE')) {
 $data = [
     'pageTitle' => 'Sale'
 ];
-    layouts('header',$data);
+
+if(!isLogin()) {
+	layouts('header', $data);
+} else {
+	layouts('header_login', $data);
+}
+
 ?>
 <!-- Page Header -->
 <body class="body">

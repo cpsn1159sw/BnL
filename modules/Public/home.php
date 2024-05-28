@@ -12,7 +12,9 @@ if(!isLogin()) {
 	layouts('header', $data);
 } else {
 	layouts('header_login', $data);
+
 }
+
 ?>
 <body id="body">
 <div class="hero-slider">

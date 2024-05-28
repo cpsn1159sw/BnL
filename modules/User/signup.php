@@ -22,7 +22,7 @@ if (isPost()) {
         $errors['email']['required'] = '*Please enter your email.';
     } else {
         $email = $filterAll['email'];
-        $sql = "SELECT id FROM customer WHERE email = '$email'";
+        $sql = "SELECT customerid FROM customer WHERE email = '$email'";
         if (countRows($sql) > 0) {
             $errors['email']['unique'] = '*Email already exists.';
         }
@@ -85,7 +85,7 @@ if (isPost()) {
         If you did not sign up for a BnL account, please disregard this email.' .'<br>' .'
                 
         Thank you,' .'<br>' .'
-        BnL Customer Support Team';
+        BnL Customer Support Team!';
 
         // Gữi mail
         $senMail = sendMail($filterAll['email'], $subject, $content);

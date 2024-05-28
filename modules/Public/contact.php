@@ -6,7 +6,13 @@ if(!defined('_CODE')) {
 $data = [
     'pageTitle' => 'Contact'
 ];
-    layouts('header',$data);
+
+if(!isLogin()) {
+	layouts('header', $data);
+} else {
+	layouts('header_login', $data);
+}
+
 ?>
 <section class="page-header">
 	<div class="container">

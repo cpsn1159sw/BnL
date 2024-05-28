@@ -4,11 +4,11 @@
         die('Access denied...');
     }
     
-// Thông tin kết nối 
-const _HOST = 'localhost';
-const _DB = 'db_shop';
-const _USER = 'root';
-const _PASS = '';
+    if(!isLogin()) {
+        layouts('header', $data);
+    } else {
+        layouts('header_login', $data);
+    }
 ?>
 
 <!DOCTYPE html>

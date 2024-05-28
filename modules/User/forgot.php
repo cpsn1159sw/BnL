@@ -9,9 +9,9 @@ if (isPost()) {
     $filterAll = filter();
     if (!empty($filterAll['email'])) {
         $email = $filterAll['email'];
-        $emailQuery = oneRow("SELECT id FROM customer WHERE email = '$email' AND status = 1");
+        $emailQuery = oneRow("SELECT customerid FROM customer WHERE email = '$email' AND status = 1");
         if (!empty($emailQuery)) {
-            $customerId = $emailQuery['id'];
+            $customerId = $emailQuery['customerid'];
 
             //Tạo forgot token 
             $forgotToken = sha1(uniqid() . time());
@@ -20,7 +20,7 @@ if (isPost()) {
                 'forgotToken' => $forgotToken
             ];
 
-            $updateStatus = update('customer', $dataUpdate, "id=$customerId");
+            $updateStatus = update('customer', $dataUpdate, "customerid=$customerId");
             if ($updateStatus) {
                 // Tạo link reset, khôi phục mật khẩu 
                 $linkReset = _WEB_HOST . '?module=user&action=reset&token=' . $forgotToken;

@@ -4,10 +4,6 @@
         die('Access denied...');
     }
 
-    if(isLogin()) {
-      redirect('/BnL/public/home');
-    }
-
     if (isPost()) {
       $filterAll = filter();
       
@@ -17,11 +13,11 @@
           $password = $filterAll['password'];
 
           // Truy vấn lấy thông tin đăng nhập theo email trong bảng customer 
-          $customerQuery = oneRow("SELECT id, password FROM customer WHERE email = '$email' AND status = 1");
+          $customerQuery = oneRow("SELECT customerID, password FROM customer WHERE email = '$email' AND status = 1");
 
           if (!empty($customerQuery)) {
               $passwordHash = $customerQuery['password'];
-              $customerId = $customerQuery['id'];
+              $customerId = $customerQuery['customerID'];
               if (password_verify($password, $passwordHash)) {
                 // Tạo token login
                 $tokenLogin = sha1(uniqid().time());
@@ -33,12 +29,12 @@
                   'create_at' => date('y-m-d H:i:s')
                 ];
 
-                $insertStatus = insert('logintokenC', $dataInsert);
+                $insertStatus = insert('logintokenc', $dataInsert);
                 if($insertStatus) {
                   // Insert thành công 
 
                   // Lưu tokenLogin vào session
-                  setSession('logintokenC', $tokenLogin);
+                  setSession('logintokenc', $tokenLogin);
                   redirect('/BnL/public/home');
                 } else {
                   setFlashData('smg', 'Unable to login, please try again later!');

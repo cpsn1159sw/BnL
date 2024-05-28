@@ -8,14 +8,14 @@
     $token = filter()['token'];
     if(!empty($token)) {
         // Truy vấn để kiểm tra token vs database
-        $tokenQuery = oneRow("SELECT id FROM customer WHERE activeToken = '$token'");
+        $tokenQuery = oneRow("SELECT customerid FROM customer WHERE activeToken = '$token'");
         if(!empty($tokenQuery)) {
-            $customerId = $tokenQuery['id'];
+            $customerId = $tokenQuery['customerid'];
             $dataUpdate = [
                 'status' => '1',
                 'activeToken' => null
             ];
-            $updateStatus = update('customer', $dataUpdate, "id = $customerId");
+            $updateStatus = update('customer', $dataUpdate, "customerid = $customerId");
 
             if($updateStatus) {
                 setFlashData('smg', 'Account activation successful. You can now log in!');

@@ -146,12 +146,13 @@
 							<div class="dropdown-menu">
 								<div class="row">
 
-																		<!-- Women -->
-																		<div class="col-sm-3 col-xs-12">
+								<!-- Women -->
+									<div class="col-sm-3 col-xs-12">
 										<ul>
 											<li class=" ">Women</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/">Áo thun</a></li>
+											<li><a href="/BnL/public/">T-Shirt</a></li>
+											<li><a href="/BnL/public/">Shirts & Blouse</a></li>
 											<li><a href="/BnL/public/">Bra Tops</a></li>
 											<li><a href="/BnL/public/">Dresses & Jumpsuits</a></li>
 											<li><a href="/BnL/public/">Short Skirts</a></li>
