@@ -3438,7 +3438,8 @@ input[type="button"].btn-block {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 0.5rem 1rem; }
+  padding: 0.5rem 1rem; 
+}
   .navbar > .container,
   .navbar > .container-fluid {
     display: -webkit-box;
@@ -8190,6 +8191,7 @@ h1, h2, h3, h4, h5,
 
 .navbar {
   padding: 15px 10px;
+  padding-right: 30px;
   background: #fff;
   border: none;
   border-radius: 0;

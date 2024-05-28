@@ -4,7 +4,7 @@ if (!defined('_CODE')) {
   die('Access denied...');
 }
 
-if (!isLoginA() || role() != 'Admin') {
+if (!isLoginA() || (role() != 'Admin' && role() != 'Staff')) {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
   getSmg($smg, $smg_type);
@@ -42,7 +42,7 @@ if (!isLoginA() || role() != 'Admin') {
     <nav id="sidebar" class="active">
       <h1><a href="/BnL/public/home" target="_blank" class="logo">BnL</a></h1>
       <ul class="list-unstyled components mb-5">
-        <li class="active">
+        <li class="">
           <a href="dashboard"><span class="tf-ion-ios-home"></span> Home</a>
         </li>
         <li class="">
@@ -54,7 +54,7 @@ if (!isLoginA() || role() != 'Admin') {
         <li class="">
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
         </li>
-        <li class="">
+        <li class="active">
           <a href="feedback"><span class="tf-ion-android-chat"></span> Feedback</a>
         </li>
         <li class="">
@@ -79,7 +79,7 @@ if (!isLoginA() || role() != 'Admin') {
               <div class="ml-auto">
                 <ul class="nav navbar-nav">
                   <li class="dropdown dropdown-slide">
-                    <?php 
+                  <?php 
                       $adminQuery = oneRow("SELECT administrator.email, administrator.role
                       FROM administrator
                       INNER JOIN logintokena ON administrator.adminid = logintokena.adminid
@@ -90,10 +90,10 @@ if (!isLoginA() || role() != 'Admin') {
                       $username = $parts[0];
                       echo $username. ' ('. $role . ')';	
                     ?>
-                  <span class="tf-ion-ios-arrow-down"></span>
+                    <span class="tf-ion-ios-arrow-down"></span>
                     <ul class="dropdown-menu ml-0">
-                      <li><a href="/BnL/admin/create">Create Account</a></li>
-                      <li><a href="/BnL/admin/reset">Reset Password</a></li>
+                      <li><a href="/BnL/admin/create">Create</a></li>
+                      <li><a href="/BnL/admin/reset">Reset</a></li>
                       <li><a href="/BnL/admin/logout">Logout</a></li>
                     </ul>
                   </li>

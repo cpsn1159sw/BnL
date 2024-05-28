@@ -4,6 +4,14 @@ if (!defined('_CODE')) {
     die('Access denied...');
 }
 
+// Kiểm tra vai trò đăng nhập
+if (!isLoginA() || role() != 'Admin') {
+  setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
+  setFlashData('smg_type', 'danger');
+  getSmg($smg, $smg_type);
+  redirect('/BnL/admin/logout');
+}
+
 if (isPost()) {
     $filterAll = filter();
     $errors = []; // Mảng chứa các lỗi
@@ -22,7 +30,7 @@ if (isPost()) {
         $errors['email']['required'] = '*Please enter your email.';
     } else {
         $email = $filterAll['email'];
-        $sql = "SELECT customerid FROM customer WHERE email = '$email'";
+        $sql = "SELECT adminID FROM administrator WHERE email = '$email'";
         if (countRows($sql) > 0) {
             $errors['email']['unique'] = '*Email already exists.';
         }
@@ -46,17 +54,13 @@ if (isPost()) {
         }
     }
 
-    // Validate password confirm
-    if (empty($filterAll['cf-password'])) {
-        $errors['cf-password']['required'] = '*You must re-enter your password.';
-    } else {
-        if ($filterAll['cf-password'] !== $filterAll['password']) {
-            $errors['cf-password']['match'] = '*The re-entered password is incorrect.';
-        }
-    }
+    // Validate role
+    if (empty($filterAll['role'])) {
+        $errors['role']['required'] = '*Please enter your role.';
+    } 
 
-    // Validate address
-    if (empty($filterAll['address'])) {
+     // Validate address
+     if (empty($filterAll['address'])) {
       $errors['address']['required'] = '*Please enter your address.';
     } 
 
@@ -68,50 +72,21 @@ if (isPost()) {
         'email' => $filterAll['email'],
         'phone' => $filterAll['phone'],
         'password' => password_hash(($filterAll['password']), PASSWORD_DEFAULT),
-        'activeToken' => $activeToken,
-        'create_at' => date('Y-m-d H:i:s')
+        'role' => $filterAll['role']
       ];
 
-      $insertStatus = insert('customer', $dataInsert); // NHỚ ĐỔI LẠI TÊN BẲNG customer SAU NÀY 
+      $insertStatus = insert('administrator', $dataInsert); // NHỚ ĐỔI LẠI TÊN BẲNG customer SAU NÀY 
       if($insertStatus) {
-        // Tạo link kích hoạt tài khoản
-        $linkActive = _WEB_HOST . '?module=user&action=active&token='. $activeToken;
-
-        // Soạn tin gữi mail
-        $subject = 'Activate your BnL account';
-        $content = 'Hello '.$filterAll['fullname']. ',' .'<br>' .'
-        
-        Thank you for registering an account with BnL.' .'<br>' .'
-                
-        To complete the registration process and activate your account, please click the link below:' .'<br>'
-                
-        .$linkActive .'<br>' .'
-                
-        If you did not sign up for a BnL account, please disregard this email.' .'<br>' .'
-                
-        Thank you,' .'<br>' .'
-        BnL Customer Support Team!';
-
-        // Gữi mail
-        $senMail = sendMail($filterAll['email'], $subject, $content);
-        if($senMail) {
-          setFlashData('smg', 'Sign up successful! Please check your email to activate your account!');
-          setFlashData('smg_type', 'success');
-        } else {
-          setFlashData('smg', 'The system is experiencing issues. Please try again later!');
-          setFlashData('smg_type', 'danger');
-        }
-      } else {
-        setFlashData('smg', 'Sign up unsuccessful!');
-        setFlashData('smg_type', 'danger');
+        setFlashData('smg', 'Create unsuccessful!');
+        setFlashData('smg_type', 'success');
       }
-       redirect('/BnL/user/signup');
+       redirect('/BnL/admin/login');
     } else {
         setFlashData('smg', 'Please check the information again!');
         setFlashData('smg_type', 'danger');
         setFlashData('errors', $errors);
         setFlashData('old', $filterAll);
-        redirect('signup');
+        redirect('/BnL/admin/create');
     }
 }
 $smg = getFlashData('smg');
@@ -120,7 +95,7 @@ $errors = getFlashData('errors');
 $old = getFlashData('old');
 ?>
 
-    <title>BnL - Sign up</title>
+    <title>BnL - Create</title>
 
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
@@ -143,10 +118,7 @@ $old = getFlashData('old');
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
           <div class="block text-center margin-0">
-            <a class="logo" href="/BnL/public/home">
-              <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/BnL_logo.png" alt="" style="height: 20vh;">
-            </a>
-            <h2 class="text-center">Create Your Account</h2>
+            <h2 class="text-center">Create Account</h2>
             <?php 
               if(!empty($smg)) {
                 getSmg($smg, $smg_type);
@@ -164,7 +136,6 @@ $old = getFlashData('old');
                 <input name="address" type="text" class="form-control"  placeholder="Address" value="<?php echo old_data('address', $old) ?>">
               </div>
               <?php 
-                  // echo (!empty($errors['fullname'])) ? '<span class="er">'.reset($errors['fullname']).'</span>' : null;
                   echo form_error('address', '<span class="er">', '</span>', $errors);
                 ?>
               <div class="form-group">
@@ -186,16 +157,15 @@ $old = getFlashData('old');
                 ?>
               </div>
               <div class="form-group">
-                <input name="cf-password" type="password" class="form-control"  placeholder="Confirm password">
+                <input name="role" type="text" class="form-control"  placeholder="Role" value="<?php echo old_data('role', $old) ?>">
                 <?php 
-                  echo form_error('cf-password', '<span class="er">', '</span>', $errors);
+                  echo form_error('role', '<span class="er">', '</span>', $errors);
                 ?>
               </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-main text-center">Sign Up</button>
               </div>
             </form>
-            <p class="mt-20">Already have an account ?<a href="login"> Login</a></p>
           </div>
         </div>
       </div>

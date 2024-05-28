@@ -175,7 +175,7 @@ function old_data($fileName, $oldData, $default = null) {
     return (!empty($oldData[$fileName])) ? $oldData[$fileName] : $default;
 }
 
-// Hàm trạng thái đăng nhập
+// Hàm trạng thái đăng nhập của customer
 function isLogin() {
     $checkLogin = false;
     if(getSession('logintokenc')) {
@@ -191,4 +191,51 @@ function isLogin() {
         }
     }
     return $checkLogin;
+}
+
+// Hàm trạng thái đăng nhập của admin
+function isLoginA() {
+    $checkLogin = false;
+    if(getSession('logintokena')) {
+        $tokenLogin = getSession('logintokena');
+    
+        // kiểm tra token trong database 
+        $queryToken = oneRow("SELECT adminid FROM logintokena WHERE token = '$tokenLogin'");
+    
+        if(!empty($queryToken)) {
+            $checkLogin = true;
+        } else {
+            removeSession('logintokena');
+        }
+    }
+    return $checkLogin;
+}
+
+// Hàm kiểm tra role
+function role(){
+    $checkRole = '';
+    if(getSession('logintokena')) {
+        $tokenLogin = getSession('logintokena');
+    
+        // Kiểm tra token trong database 
+        $queryToken = oneRow("SELECT adminID FROM logintokena WHERE token = '$tokenLogin'");
+    
+        if(!empty($queryToken)) {
+            // Lấy adminID từ kết quả truy vấn
+            $adminID = $queryToken['adminID'];
+
+            // Thực hiện truy vấn để lấy vai trò từ bảng administrator
+            $queryRole = oneRow("SELECT Role FROM administrator WHERE adminID = '$adminID'");
+            
+            // Kiểm tra xem truy vấn có trả về dữ liệu không trước khi truy cập vào kết quả
+            if (!empty($queryRole)) {
+                $checkRole = $queryRole['Role'];
+            } else {
+                removeSession('logintokena');
+            }
+        } else {
+            removeSession('logintokena');
+        }
+    }
+    return $checkRole;
 }
