@@ -12,27 +12,33 @@ if (!isLoginA() || role() != 'Admin') {
 }
 
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>Sidebar 07</title>
+  <title>BnL - Home</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="BnL">
 
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css">
-
+  
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
-
+  
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
 
+  <!-- Animate css -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
+  
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
+  
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
-
 
 </head>
 
@@ -77,7 +83,7 @@ if (!isLoginA() || role() != 'Admin') {
                 </button>
 
               <div class="ml-auto">
-                <ul class="nav navbar-nav">
+              <ul class="nav navbar-nav">
                   <li class="dropdown dropdown-slide">
                     <?php 
                       $adminQuery = oneRow("SELECT administrator.email, administrator.role
@@ -91,7 +97,7 @@ if (!isLoginA() || role() != 'Admin') {
                       echo $username. ' ('. $role . ')';	
                     ?>
                   <span class="tf-ion-ios-arrow-down"></span>
-                    <ul class="dropdown-menu ml-0">
+                    <ul class="dropdown-menu">
                       <li><a href="/BnL/admin/create">Create Account</a></li>
                       <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
                       <li><a href="/BnL/admin/logout">Logout</a></li>
@@ -99,18 +105,19 @@ if (!isLoginA() || role() != 'Admin') {
                   </li>
                 </ul>
               </div>
-
           </nav>
         </div>
 
 <!-- Nội dung của dashboard -->
       <h2 class="mb-4">Sidebar #07</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+     
+    
+    
+    
+    
     </div>
   </div>
 </body>
 
-</html>
-
 <?php layouts('footer_dashboard'); ?>
+</html>

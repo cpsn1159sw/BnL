@@ -16,23 +16,29 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff')) {
 <html lang="en">
 
 <head>
-  <title>Sidebar 07</title>
+  <title>BnL - Customers</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="BnL">
 
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css">
-
+  
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
-
+  
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
 
+  <!-- Animate css -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
+  
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
+  
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
-
 
 </head>
 
@@ -92,8 +98,8 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff')) {
                     ?>
                     <span class="tf-ion-ios-arrow-down"></span>
                     <ul class="dropdown-menu ml-0">
-                      <li><a href="/BnL/admin/create">Create</a></li>
-                      <li><a href="/BnL/admin/reset_login">Reset</a></li>
+                      <li><a href="/BnL/admin/create">Create Account</a></li>
+                      <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
                       <li><a href="/BnL/admin/logout">Logout</a></li>
                     </ul>
                   </li>

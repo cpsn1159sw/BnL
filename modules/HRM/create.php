@@ -42,6 +42,12 @@ if (isPost()) {
     } else {
         if (!isPhone($filterAll['phone'])) {
             $errors['phone']['isPhone'] = '*The phone number is invalid.';
+        } else {
+          $phone = $filterAll['phone'];
+          $query = "SELECT adminID FROM administrator WHERE phone = '$phone'";
+          if (countRows($query) > 0) {
+              $errors['phone']['unique'] = '*This phone already exists.';
+          }
         }
     }
 
@@ -79,14 +85,19 @@ if (isPost()) {
       if($insertStatus) {
         setFlashData('smg', 'Create unsuccessful!');
         setFlashData('smg_type', 'success');
+        redirect('/BnL/admin/hrm');
+      } else {
+        setFlashData('smg', 'The system is experiencing issues. Please try again later!');
+        setFlashData('smg_type', 'danger');
+        redirect('/BnL/hrm/create');
       }
-       redirect('/BnL/admin/login');
+
     } else {
         setFlashData('smg', 'Please check the information again!');
         setFlashData('smg_type', 'danger');
         setFlashData('errors', $errors);
         setFlashData('old', $filterAll);
-        redirect('/BnL/admin/create');
+        redirect('/BnL/hrm/create');
     }
 }
 $smg = getFlashData('smg');
@@ -118,7 +129,10 @@ $old = getFlashData('old');
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
           <div class="block text-center margin-0">
-            <h2 class="text-center">Create Account</h2>
+            <h2 class="text-center">
+              <div class="text-left">
+                <a href="/BnL/admin/hrm" class=""><i class=" tf-ion-arrow-left-c">Back</i></a>
+              </div>Create Account</h2>
             <?php 
               if(!empty($smg)) {
                 getSmg($smg, $smg_type);
@@ -157,7 +171,12 @@ $old = getFlashData('old');
                 ?>
               </div>
               <div class="form-group">
-                <input name="role" type="text" class="form-control"  placeholder="Role" value="<?php echo old_data('role', $old) ?>">
+                <select name="role" id="" class="form-control">
+                  <option value="" disabled selected>Role</option>
+                  <option value="Staff" <?php echo (old_data('role', $old) == "Staff") ? 'selected' : false;?>>Staff</option>
+                  <option value="Shipper" <?php echo (old_data('role', $old) == "Shipper") ? 'selected' : false;?>>Shipper</option>
+                  <option value="Admin" <?php echo (old_data('role', $old) == "Admin") ? 'selected' : false;?>>Admin</option>
+                </select>
                 <?php 
                   echo form_error('role', '<span class="er">', '</span>', $errors);
                 ?>
@@ -166,7 +185,6 @@ $old = getFlashData('old');
                 <button type="submit" class="btn btn-main text-center">Create</button>
               </div>
             </form>
-            <p class="mt-10"><a href="dashboard">Back to dashboard</a></p>
           </div>
         </div>
       </div>

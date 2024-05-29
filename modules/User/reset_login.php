@@ -59,7 +59,7 @@
                 if ($updateStatus) {
                     setFlashData('smg', 'Password changed successfully!');
                     setFlashData('smg_type', 'success');
-                    redirect('/BnL/user/login');
+                    redirect('/BnL/user/logout');
                 }
             } else {
                 setFlashData('smg', 'Please check your information again!');

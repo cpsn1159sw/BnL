@@ -4,6 +4,10 @@
         die('Access denied...');
     }
 
+    if(isLoginA()) {
+      redirect('/BnL/admin/dashboard');
+    } else {
+
     if (isPost()) {
       $filterAll = filter();
       
@@ -59,7 +63,7 @@
       }
       redirect('/BnL/admin/login');
     }
-  
+  }
   $smg = getFlashData('smg');
   $smg_type = getFlashData('smg_type');
 ?>

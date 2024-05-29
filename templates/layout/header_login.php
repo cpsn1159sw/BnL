@@ -28,8 +28,10 @@
 
 	<!-- Main Stylesheet -->
 	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
+	
+</head>
 
-<body id="body">
+<header id="body">
 	<!-- Start Top Header Bar -->
 	<section class="top-header">
 		<div class="container">
@@ -228,3 +230,4 @@
 			</div><!-- / .container -->
 		</nav>
 	</section>
+</header>

@@ -3438,8 +3438,7 @@ input[type="button"].btn-block {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 0.5rem 1rem; 
-}
+  padding: 0.5rem 1rem; }
   .navbar > .container,
   .navbar > .container-fluid {
     display: -webkit-box;
@@ -8191,7 +8190,7 @@ h1, h2, h3, h4, h5,
 
 .navbar {
   padding: 15px 10px;
-  padding-right: 30px;
+  padding-right: 20px;
   background: #fff;
   border: none;
   border-radius: 0;
@@ -8217,7 +8216,7 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 270px;
   max-width: 270px;
-  background: #28a745;
+  background: #4cae4c;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -8281,7 +8280,7 @@ h1, h2, h3, h4, h5,
         color: #fff; }
     #sidebar ul li.active > a {
       background: transparent;
-      color: black; }
+      color: #000; }
   @media (max-width: 991.98px) {
     #sidebar {
       min-width: 80px;

@@ -6,10 +6,8 @@
   <!-- Mobile Specific Metas
   ================================================== -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Construction Html5 Template">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="author" content="Themefisher">
-  <meta name="generator" content="Themefisher Constra HTML Template v1.0">
+  <meta name="author" content="BnL">
   
   <!-- Favicon -->
   <link rel="" type="" href="">
@@ -28,7 +26,9 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
 
-  <body id="body">
+</head>
+
+  <header id="body">
 	<!-- Start Top Header Bar -->
 	<section class="top-header">
 		<div class="container">
@@ -223,4 +223,5 @@
 			</div><!-- / .container -->
 		</nav>
 	</section>
+  </header>
 

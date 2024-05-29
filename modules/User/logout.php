@@ -9,5 +9,5 @@
         $token = getSession('logintokenc');
         delete('logintokenc', "token='$token'");
         removeSession('logintokenc');
-        redirect('/BnL/public/home');
+        redirect('/BnL/user/login');
     }

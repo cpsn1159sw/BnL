@@ -11,16 +11,18 @@ if (!isLoginA() || role() != 'Admin') {
   redirect('/BnL/admin/logout');
 }
 
+$smg = getFlashData('smg');
+$smg_type = getFlashData('smg_type');
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>Sidebar 07</title>
+  <title>BnL - HRM</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="BnL">
 
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css">
 
@@ -30,9 +32,15 @@ if (!isLoginA() || role() != 'Admin') {
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
 
+  <!-- Animate css -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
+
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
+  <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
+
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
-
 
 </head>
 
@@ -68,45 +76,107 @@ if (!isLoginA() || role() != 'Admin') {
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-     <div class="container-fluid">
+      <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            
-                <button type="button" id="sidebarCollapse" class="btn btn-success">
-                  <i class="tf-ion-navicon-round"></i>
-                  <span class="sr-only">Toggle Menu</span>
-                </button>
 
-              <div class="ml-auto">
-                <ul class="nav navbar-nav">
-                  <li class="dropdown dropdown-slide">
-                  <?php 
-                      $adminQuery = oneRow("SELECT administrator.email, administrator.role
+          <button type="button" id="sidebarCollapse" class="btn btn-success">
+            <i class="tf-ion-navicon-round"></i>
+            <span class="sr-only">Toggle Menu</span>
+          </button>
+
+          <div class="ml-auto">
+            <ul class="nav navbar-nav">
+              <li class="dropdown dropdown-slide">
+                <?php
+                $adminQuery = oneRow("SELECT administrator.email, administrator.role
                       FROM administrator
                       INNER JOIN logintokena ON administrator.adminid = logintokena.adminid
                       WHERE logintokena.token = '" . getSession('logintokena') . "'");
-                      $email =  $adminQuery['email'];
-                      $role = $adminQuery['role'];
-                      $parts = explode("@", $email);
-                      $username = $parts[0];
-                      echo $username. ' ('. $role . ')';	
-                    ?>
-                    <span class="tf-ion-ios-arrow-down"></span>
-                    <ul class="dropdown-menu ml-0">
-                      <li><a href="/BnL/admin/create">Create</a></li>
-                      <li><a href="/BnL/admin/reset_login">Reset</a></li>
-                      <li><a href="/BnL/admin/logout">Logout</a></li>
-                    </ul>
-                  </li>
+                $email =  $adminQuery['email'];
+                $role = $adminQuery['role'];
+                $parts = explode("@", $email);
+                $username = $parts[0];
+                echo $username . ' (' . $role . ')';
+                ?>
+                <span class="tf-ion-ios-arrow-down"></span>
+                <ul class="dropdown-menu ml-0">
+                  <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
+                  <li><a href="/BnL/admin/forgot">Forgot Password</a></li>
+                  <li><a href="/BnL/admin/logout">Logout</a></li>
                 </ul>
-              </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
 
-          </nav>
-        </div>
+      <!-- Nội dung của dashboard -->
+ 
+      <h2 class="mb-4">Human Resources Management</h2>
+      <?php 
+              if(!empty($smg)) {
+                getSmg($smg, $smg_type);
+              }
+            ?>
+      <p><a href="/BnL/hrm/create" target="_blank" class="btn btn-success">Add account <span class="tf-ion-plus"></span></a></p>
+      <form action="post" class="mt-3 mb-lg-2"><input type="search" class="form-control" placeholder="Search..."></form>
+      <table class="table table-bordered">
+        <?php
+        // Truy vấn bản administrator
+        $list = getRows("SELECT * FROM administrator ORDER BY update_at");
+        ?>
+        <thead>
+          <th>ID</th>
+          <th>Full name</th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Role</th>
+          <th width="5%">Edit</th>
+          <th width="5%">Delete</th>
+        </thead>
+        <tbody>
+          <?php
+          if (!empty($list)) :
+            $count = 0;
+            foreach ($list as $item) :
+              if ($item['Role'] != 'Admin') :
+                $count++;
+          ?>
+                <tr>
+                  <td><?php echo $count; ?></td>
+                  <td><?php echo $item['FullName']; ?></td>
+                  <td><?php echo $item['Address']; ?></td>
+                  <td><?php echo $item['Email']; ?></td>
+                  <td><?php echo $item['Phone']; ?></td>
+                  <td><?php echo $item['Role']; ?></td>
+                  <td>
+                    <div class="btn-group" role="group">
+                      <a href="" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="btn-group" role="group">
+                      <a href="" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"><i class="tf-ion-trash-b" aria-hidden="true"></i></a>
+                    </div>
+                  </td>
+                </tr>
+            <?php
+              endif;
+            endforeach;
+          else :
+            ?>
+            <tr>
+              <td colspan="8">
+                <div class="alert alert-danger text-center">Empty</div>
+              </td>
+            </tr>
+          <?php
+          endif;
+          ?>
+        </tbody>
+      </table>
 
-<!-- Nội dung của dashboard -->
-      <h2 class="mb-4">Sidebar #07</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
   </div>
 </body>
