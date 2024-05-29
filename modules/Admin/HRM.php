@@ -93,7 +93,7 @@ if (!isLoginA() || role() != 'Admin') {
                     <span class="tf-ion-ios-arrow-down"></span>
                     <ul class="dropdown-menu ml-0">
                       <li><a href="/BnL/admin/create">Create</a></li>
-                      <li><a href="/BnL/admin/reset">Reset</a></li>
+                      <li><a href="/BnL/admin/reset_login">Reset</a></li>
                       <li><a href="/BnL/admin/logout">Logout</a></li>
                     </ul>
                   </li>

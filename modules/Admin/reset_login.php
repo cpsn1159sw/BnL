@@ -21,10 +21,10 @@
         die('Access denied...');
     }
 
-    if (isLogin()) {
-        $token = getSession('logintokenc');
-        $queryToken = oneRow("SELECT CustomerID FROM logintokenc WHERE token = '$token'");
-        $customerId = $queryToken['CustomerID'];
+    if (isLoginA()) {
+        $token = getSession('logintokena');
+        $queryToken = oneRow("SELECT adminID FROM logintokena WHERE token = '$token'");
+        $adminId = $queryToken['adminID'];
         if (isPost()) {
             $filterAll = filter();
             $error = [];
@@ -55,17 +55,18 @@
                     'update_at' => date('y-m-d H:i:s')
                 ];
 
-                $updateStatus = update('customer', $dataUpdate, "customerid = '$customerId'");
+                $updateStatus = update('administrator', $dataUpdate, "adminID = '$adminId'");
                 if ($updateStatus) {
                     setFlashData('smg', 'Password changed successfully!');
                     setFlashData('smg_type', 'success');
-                    redirect('/BnL/user/login');
+                    getSmg($smg, $smg_type);
+                    redirect('/BnL/admin/logout');
                 }
             } else {
                 setFlashData('smg', 'Please check your information again!');
                 setFlashData('smg_type', 'danger');
                 setFlashData('errors', $errors);
-                redirect('/BnL/user/reset_login');
+                redirect('/BnL/admin/reset');
             }
         }
     }

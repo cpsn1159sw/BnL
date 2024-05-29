@@ -101,6 +101,9 @@
               <div class="form-group">
                 <input name="password" type="password" class="form-control" placeholder="Password">
               </div>
+              <div class="form-group">
+                <p><a href="forgot">forgot password</a></p>
+              </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-main text-center" >Login</button>
               </div>
