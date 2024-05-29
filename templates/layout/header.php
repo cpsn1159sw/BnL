@@ -11,6 +11,9 @@
   <meta name="author" content="Themefisher">
   <meta name="generator" content="Themefisher Constra HTML Template v1.0">
   
+  <!-- Favicon -->
+  <link rel="" type="" href="">
+
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
   <!-- bootstrap.min css -->
@@ -24,9 +27,6 @@
   
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
-
-  <!-- Dashboard -->
-  <script src="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css"></script>
 
   <body id="body">
 	<!-- Start Top Header Bar -->

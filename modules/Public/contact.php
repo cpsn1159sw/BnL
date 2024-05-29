@@ -35,58 +35,50 @@ if(!isLogin()) {
 		<div class="container">
 			<div class="row">
 				<!-- Contact Form -->
-				<div class="contact-form col-md-6 " >
+				<div class="contact-form col-md-6">
 					<form id="contact-form" method="post" action="" role="form">
-					
 						<div class="form-group">
 							<input type="text" placeholder="Your Name" class="form-control" name="name" id="name">
 						</div>
-						
 						<div class="form-group">
 							<input type="email" placeholder="Your Email" class="form-control" name="email" id="email">
 						</div>
-						
 						<div class="form-group">
 							<input type="text" placeholder="Subject" class="form-control" name="subject" id="subject">
 						</div>
-						
 						<div class="form-group">
 							<textarea rows="6" placeholder="Message" class="form-control" name="message" id="message"></textarea>	
 						</div>
-						
 						<div id="mail-success" class="success">
 							Thank you. The Mailman is on His Way :)
 						</div>
-						
 						<div id="mail-fail" class="error">
 							Sorry, don't know what happened. Try later :(
 						</div>
-						
 						<div id="cf-submit">
 							<input type="submit" id="contact-submit" class="btn btn-transparent" value="Submit">
 						</div>						
-						
 					</form>
 				</div>
 				<!-- ./End Contact Form -->
 				
 				<!-- Contact Details -->
-				<div class="contact-details col-md-6 " >
+				<div class="contact-details col-md-6">
 					<div class="google-map">
-						<div id="map"></div>
+						<div id="map" style="width: 100%; height: 400px;"></div>
 					</div>
-					<ul class="contact-short-info" >
+					<ul class="contact-short-info">
 						<li>
 							<i class="tf-ion-ios-home"></i>
-							<span>Khaja Road, Bayzid, Chittagong, Bangladesh</span>
+							<span>11 Nguyễn Đình Chiểu, Đa Kao, Quận 1, Thành phố Hồ Chí Minh, Việt Nam</span>
 						</li>
 						<li>
 							<i class="tf-ion-android-phone-portrait"></i>
-							<span>Phone: +880-31-000-000</span>
+							<span>Phone: +84-28-1234-5678</span>
 						</li>
 						<li>
 							<i class="tf-ion-android-globe"></i>
-							<span>Fax: +880-31-000-000</span>
+							<span>Fax: +84-28-1234-5678</span>
 						</li>
 						<li>
 							<i class="tf-ion-android-mail"></i>
@@ -106,11 +98,9 @@ if(!isLogin()) {
 					<!--/. End Footer Social Links -->
 				</div>
 				<!-- / End Contact Details -->
-					
-				
-			
 			</div> <!-- end row -->
 		</div> <!-- end container -->
 	</div>
 </section>
+
 <?php layouts('footer'); ?>

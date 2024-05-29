@@ -58,8 +58,10 @@
     <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.min.js"></script>
     <script src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-animation.min.js"></script>
 
-    <!-- Main Js File -->
-    <script src="<?php echo _WEB_HOST_TEMPLATES ?>/js/script.js"></script>
 
-	<!-- Dashboard -->
-	<script src="<?php echo _WEB_HOST_TEMPLATES ?>/js/dashboard.js"></script>
+	<!-- Google Mapl -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+    <script type="text/javascript" src="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/google-map/gmap.js"></script>
+
+	<!-- Main Js File -->
+	<script src="<?php echo _WEB_HOST_TEMPLATES ?>/js/script.js"></script>

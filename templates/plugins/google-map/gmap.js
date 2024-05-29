@@ -1,119 +1,86 @@
-/**
- * Created by Kausar on 06/10/2016.
- */
 window.marker = null;
 
 function initialize() {
     var map;
 
-    var nottingham = new google.maps.LatLng(51.507351, -0.127758);
+    var hcmc = new google.maps.LatLng(10.78947454611481, 106.70072973675899);
 
     var style = [
         {
-            "featureType": "road.highway",
+            "featureType": "road",
             "elementType": "geometry",
             "stylers": [
-                { "saturation": -100 },
-                { "lightness": -8 },
-                { "gamma": 1.18 }
-            ]
-        }, {
-            "featureType": "road.arterial",
-            "elementType": "geometry",
-            "stylers": [
-                { "saturation": -100 },
-                { "gamma": 1 },
-                { "lightness": -24 }
+                { "color": "#ffffff" } // Màu của đường
             ]
         }, {
             "featureType": "poi",
             "elementType": "geometry",
             "stylers": [
-                { "saturation": -100 }
-            ]
-        }, {
-            "featureType": "administrative",
-            "stylers": [
-                { "saturation": -100 }
-            ]
-        }, {
-            "featureType": "transit",
-            "stylers": [
-                { "saturation": -100 }
-            ]
-        }, {
-            "featureType": "water",
-            "elementType": "geometry.fill",
-            "stylers": [
-                { "saturation": -100 }
-            ]
-        }, {
-            "featureType": "road",
-            "stylers": [
-                { "saturation": -100 }
-            ]
-        }, {
-            "featureType": "administrative",
-            "stylers": [
-                { "saturation": -100 }
+                { "color": "#e5e5e5" } // Màu của các điểm quan trọng (POI)
             ]
         }, {
             "featureType": "landscape",
+            "elementType": "geometry",
             "stylers": [
-                { "saturation": -100 }
+                { "color": "#f2f2f2" } // Màu của các khu vực cảnh quan
             ]
         }, {
-            "featureType": "poi",
+            "featureType": "water",
+            "elementType": "geometry",
             "stylers": [
-                { "saturation": -100 }
+                { "color": "#a2daf2" } // Màu của mặt nước
             ]
         }, {
+            "featureType": "transit",
+            "elementType": "all",
+            "stylers": [
+                { "visibility": "off" } // Tắt hiển thị các phương tiện giao thông công cộng
+            ]
         }
     ];
-
+    
     var mapOptions = {
         // SET THE CENTER
-        center: nottingham,
+        center: hcmc,
 
         // SET THE MAP STYLE & ZOOM LEVEL
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        zoom:9,
+        zoom: 17,
 
         // SET THE BACKGROUND COLOUR
-        backgroundColor:"#000",
+        backgroundColor: "#000",
 
         // REMOVE ALL THE CONTROLS EXCEPT ZOOM
-        zoom:17,
-        panControl:false,
-        zoomControl:true,
-        mapTypeControl:false,
-        scaleControl:false,
-        streetViewControl:false,
-        overviewMapControl:false,
+        panControl: false,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        overviewMapControl: false,
         zoomControlOptions: {
-            style:google.maps.ZoomControlStyle.LARGE
+            style: google.maps.ZoomControlStyle.LARGE
         }
-
-    }
+    };
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     // SET THE MAP TYPE
-    var mapType = new google.maps.StyledMapType(style, {name:"Grayscale"});
+    var mapType = new google.maps.StyledMapType(style, { name: "Grayscale" });
     map.mapTypes.set('grey', mapType);
     map.setMapTypeId('grey');
 
     //CREATE A CUSTOM PIN ICON
-    var marker_image ='plugins/google-map/images/marker.png';
-    var pinIcon = new google.maps.MarkerImage(marker_image,null,null, null,new google.maps.Size(40, 60));
+    var marker_image = '/bnl/templates/plugins/google-map/images/marker.png';
+
+    var pinIcon = new google.maps.MarkerImage(marker_image, null, null, null, new google.maps.Size(40, 60));
 
     marker = new google.maps.Marker({
-        position: nottingham,
+        position: hcmc,
         map: map,
         icon: pinIcon,
-        title: 'eventre'
+        title: 'BnL'
     });
 }
-if(($('#map').length)!=0){
+
+if (($('#map').length) != 0) {
     google.maps.event.addDomListener(window, 'load', initialize);
-    
 }
