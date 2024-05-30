@@ -7,6 +7,8 @@ const _CODE = true;
 define('_WEB_HOST', 'http://' . $_SERVER['HTTP_HOST'] . '/BnL');
 define('_WEB_HOST_TEMPLATES', _WEB_HOST . '/templates');
 
+// http://localhost:88/BnL/templates/
+
 // Thiết lập path
 define('_WEB_PATH', __DIR__);
 define('_WEB_PATH_TEMPLATES', _WEB_PATH . '/templates');

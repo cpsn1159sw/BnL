@@ -65,9 +65,6 @@ $smg_type = getFlashData('smg_type');
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
         </li>
         <li class="">
-          <a href="feedback"><span class="tf-ion-android-chat"></span> Feedback</a>
-        </li>
-        <li class="">
           <a href="exchange"><span class="tf-ion-reply"></span> Exchange</a>
         </li>
         <li class="">
@@ -153,12 +150,12 @@ $smg_type = getFlashData('smg_type');
                 <td><?php echo $item['Status'] == 1 ? '<span class="btn btn-success btn-sm">Active<span>' : '<span class="btn btn-danger btn-sm">None Active<span>'; ?></td>
                 <td>
                   <div class="btn-group" role="group">
-                    <a href="" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
+                    <a href="/BnL/customers/edit&id=<?php echo $item['CustomerID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
                   </div>
                 </td>
                 <td>
                   <div class="btn-group" role="group">
-                    <a href="" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"><i class="tf-ion-trash-b" aria-hidden="true"></i></a>
+                    <a href="/BnL/customers/delete&id=<?php echo $item['CustomerID']; ?>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"><i class="tf-ion-trash-b" aria-hidden="true"></i></a>
                   </div>
                 </td>
               </tr>

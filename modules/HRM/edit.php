@@ -43,7 +43,7 @@ if (isLoginA() && role() == 'Admin') {
             }
         }
 
-        // Validate phonenumber
+        // Validate phone number
         if (empty($filterAll['phone'])) {
             $errors['phone']['required'] = '*Please enter your phone number.';
         } else {
@@ -76,10 +76,15 @@ if (isLoginA() && role() == 'Admin') {
                 'Phone' => $filterAll['phone'],
                 'Role' => $filterAll['role']
             ];
+
+            if(!empty($filterAll['password'])) {
+                $dataUpdate['password'] = password_hash($filterAll['password'], PASSWORD_DEFAULT);
+            }
+
             $condition = "AdminID = $adminID";
             $insertStatus = update('administrator', $dataUpdate, $condition); // NHỚ ĐỔI LẠI TÊN BẲNG customer SAU NÀY 
             if ($insertStatus) {
-                setFlashData('smg', 'Update unsuccessful!');
+                setFlashData('smg', 'Update successful!');
                 setFlashData('smg_type', 'success');
             } else {
                 setFlashData('smg', 'The system is experiencing issues. Please try again later!');
@@ -173,7 +178,6 @@ if(!empty($info)) {
                         <option value="" disabled selected>Role</option>
                         <option value="Staff" <?php echo (old_data('Role', $old) == "Staff") ? 'selected' : false; ?>>Staff</option>
                         <option value="Shipper" <?php echo (old_data('Role', $old) == "Shipper") ? 'selected' : false; ?>>Shipper</option>
-                        <option value="Admin" <?php echo (old_data('Role', $old) == "Admin") ? 'selected' : false; ?>>Admin</option>
                     </select>
                     <?php
                     echo form_error('role', '<span class="er">', '</span>', $errors);

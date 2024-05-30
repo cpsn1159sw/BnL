@@ -178,7 +178,6 @@ $old = getFlashData('old');
                   <option value="" disabled selected>Role</option>
                   <option value="Staff" <?php echo (old_data('role', $old) == "Staff") ? 'selected' : false; ?>>Staff</option>
                   <option value="Shipper" <?php echo (old_data('role', $old) == "Shipper") ? 'selected' : false; ?>>Shipper</option>
-                  <option value="Admin" <?php echo (old_data('role', $old) == "Admin") ? 'selected' : false; ?>>Admin</option>
                 </select>
                 <?php
                 echo form_error('role', '<span class="er">', '</span>', $errors);
