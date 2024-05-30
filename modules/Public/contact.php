@@ -74,25 +74,19 @@ if(!isLogin()) {
 						</li>
 						<li>
 							<i class="tf-ion-android-phone-portrait"></i>
-							<span>Phone: +84-28-1234-5678</span>
-						</li>
-						<li>
-							<i class="tf-ion-android-globe"></i>
-							<span>Fax: +84-28-1234-5678</span>
+							<span>Phone: +84-129-12323-123123</span>
 						</li>
 						<li>
 							<i class="tf-ion-android-mail"></i>
-							<span>Email: hello@example.com</span>
+							<span>Email: vana@gmail.com</span>
 						</li>
 					</ul>
 					<!-- Footer Social Links -->
 					<div class="social-icon">
 						<ul>
-							<li><a class="fb-icon" href="https://www.facebook.com/themefisher"><i class="tf-ion-social-facebook"></i></a></li>
-							<li><a href="https://www.twitter.com/themefisher"><i class="tf-ion-social-twitter"></i></a></li>
-							<li><a href="https://themefisher.com/"><i class="tf-ion-social-dribbble-outline"></i></a></li>
-							<li><a href="https://themefisher.com/"><i class="tf-ion-social-googleplus-outline"></i></a></li>
-							<li><a href="https://themefisher.com/"><i class="tf-ion-social-pinterest-outline"></i></a></li>
+							<li><a class="fb-icon" href="https://www.facebook.com"><i class="tf-ion-social-facebook"></i></a></li>
+							<li><a href="https://www.twitter.com"><i class="tf-ion-social-twitter"></i></a></li>
+							<li><a href="https://www.pinterest.com/"><i class="tf-ion-social-pinterest-outline"></i></a></li>
 						</ul>
 					</div>
 					<!--/. End Footer Social Links -->
