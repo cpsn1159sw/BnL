@@ -4,7 +4,9 @@ if (!defined('_CODE')) {
   die('Access denied...');
 }
 
-if (!isLoginA() || role() != 'Admin') {
+if (isLoginA() && role() == 'Admin') {
+
+} else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
   getSmg($smg, $smg_type);
@@ -111,16 +113,16 @@ $smg_type = getFlashData('smg_type');
       </div>
 
       <!-- Nội dung của dashboard -->
- 
+
       <h2 class="mb-4">Human Resources Management</h2>
-      <?php 
-              if(!empty($smg)) {
-                getSmg($smg, $smg_type);
-              }
-            ?>
+      <?php
+      if (!empty($smg)) {
+        getSmg($smg, $smg_type);
+      }
+      ?>
       <p><a href="/BnL/hrm/create" target="_blank" class="btn btn-success">Add account <span class="tf-ion-plus"></span></a></p>
       <form action="post" class="mt-3 mb-lg-2"><input type="search" class="form-control" placeholder="Search..."></form>
-      <table class="table table-bordered">
+      <table class="table table-bordered" id="">
         <?php
         // Truy vấn bản administrator
         $list = getRows("SELECT * FROM administrator ORDER BY update_at");
@@ -152,7 +154,7 @@ $smg_type = getFlashData('smg_type');
                   <td><?php echo $item['Role']; ?></td>
                   <td>
                     <div class="btn-group" role="group">
-                      <a href="" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
+                      <a href="/BnL/hrm/edit&id=<?php echo $item['AdminID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
                     </div>
                   </td>
                   <td>
@@ -176,7 +178,6 @@ $smg_type = getFlashData('smg_type');
           ?>
         </tbody>
       </table>
-
     </div>
   </div>
 </body>

@@ -4,7 +4,7 @@
         die('Access denied...');
     }
 
-    if(isLoginA()) {
+    if(isLoginA() && role() == 'Admin') {
       redirect('/BnL/admin/dashboard');
     } else {
 

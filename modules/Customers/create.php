@@ -5,9 +5,7 @@ if (!defined('_CODE')) {
 }
 
 // Kiểm tra vai trò đăng nhập
-if (isLoginA() && role() == 'Admin') {
-
-
+if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
 
   if (isPost()) {
     $filterAll = filter();
@@ -27,7 +25,7 @@ if (isLoginA() && role() == 'Admin') {
       $errors['email']['required'] = '*Please enter your email.';
     } else {
       $email = $filterAll['email'];
-      $sql = "SELECT adminID FROM administrator WHERE email = '$email'";
+      $sql = "SELECT customerid FROM customer WHERE email = '$email'";
       if (countRows($sql) > 0) {
         $errors['email']['unique'] = '*Email already exists.';
       }
@@ -41,7 +39,7 @@ if (isLoginA() && role() == 'Admin') {
         $errors['phone']['isPhone'] = '*The phone number is invalid.';
       } else {
         $phone = $filterAll['phone'];
-        $query = "SELECT adminID FROM administrator WHERE phone = '$phone'";
+        $query = "SELECT customerid FROM customer WHERE phone = '$phone'";
         if (countRows($query) > 0) {
           $errors['phone']['unique'] = '*This phone already exists.';
         }
@@ -58,8 +56,8 @@ if (isLoginA() && role() == 'Admin') {
     }
 
     // Validate role
-    if (empty($filterAll['role'])) {
-      $errors['role']['required'] = '*Please choose your role.';
+    if (empty($filterAll['Status'])) {
+      $errors['Status']['required'] = '*Please choose your status.';
     }
 
     // Validate address
@@ -68,31 +66,33 @@ if (isLoginA() && role() == 'Admin') {
     }
 
     if (empty($errors)) {
+      $activeToken = sha1(uniqid() . time());
       $dataInsert = [
         'fullname' => $filterAll['fullname'],
         'address' => $filterAll['address'],
         'email' => $filterAll['email'],
         'phone' => $filterAll['phone'],
         'password' => password_hash(($filterAll['password']), PASSWORD_DEFAULT),
-        'role' => $filterAll['role']
+        'Status' => $filterAll['Status'],
+        'create_at' => date('Y-m-d H:i:s')
       ];
 
-      $insertStatus = insert('administrator', $dataInsert); // NHỚ ĐỔI LẠI TÊN BẲNG customer SAU NÀY 
+      $insertStatus = insert('customer', $dataInsert); // NHỚ ĐỔI LẠI TÊN BẲNG customer SAU NÀY 
       if ($insertStatus) {
         setFlashData('smg', 'Create unsuccessful!');
         setFlashData('smg_type', 'success');
-        redirect('/BnL/admin/hrm');
+        redirect('/BnL/admin/customers');
       } else {
         setFlashData('smg', 'The system is experiencing issues. Please try again later!');
         setFlashData('smg_type', 'danger');
-        redirect('/BnL/hrm/create');
+        redirect('/BnL/customers/create');
       }
     } else {
       setFlashData('smg', 'Please check the information again!');
       setFlashData('smg_type', 'danger');
       setFlashData('errors', $errors);
       setFlashData('old', $filterAll);
-      redirect('/BnL/hrm/create');
+      redirect('/BnL/customers/create');
     }
   }
 } else {
@@ -132,9 +132,8 @@ $old = getFlashData('old');
           <div class="block text-center margin-0">
             <h2 class="text-center">
               <div class="text-left">
-                <a href="/BnL/admin/hrm" class="btn btn-success"><span class=" tf-ion-arrow-left-c">Back</span></a>
-              </div>
-              Create Account
+                <a href="/BnL/admin/customers" class="btn btn-success"><i class=" tf-ion-arrow-left-c">Back</i></a>
+              </div>Create User Account
             </h2>
             <?php
             if (!empty($smg)) {
@@ -174,14 +173,13 @@ $old = getFlashData('old');
                 ?>
               </div>
               <div class="form-group">
-                <select name="role" id="" class="form-control">
-                  <option value="" disabled selected>Role</option>
-                  <option value="Staff" <?php echo (old_data('role', $old) == "Staff") ? 'selected' : false; ?>>Staff</option>
-                  <option value="Shipper" <?php echo (old_data('role', $old) == "Shipper") ? 'selected' : false; ?>>Shipper</option>
-                  <option value="Admin" <?php echo (old_data('role', $old) == "Admin") ? 'selected' : false; ?>>Admin</option>
+                <select name="Status" id="" class="form-control">
+                  <option value="" disabled selected>Status</option>
+                  <option value="1" <?php echo (old_data('Status', $old) == "1") ? 'selected' : false; ?>>Active</option>
+                  <option value="NULL" <?php echo (old_data('Status', $old) == "NULL") ? 'selected' : false; ?>>None Active</option>
                 </select>
                 <?php
-                echo form_error('role', '<span class="er">', '</span>', $errors);
+                echo form_error('Status', '<span class="er">', '</span>', $errors);
                 ?>
               </div>
               <div class="text-center">
