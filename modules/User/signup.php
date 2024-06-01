@@ -34,6 +34,12 @@ if (isPost()) {
     } else {
         if (!isPhone($filterAll['phone'])) {
             $errors['phone']['isPhone'] = '*The phone number is invalid.';
+        } else {
+          $phone = $filterAll['phone'];
+          $query = "SELECT customerid FROM customer WHERE phone = '$phone'";
+          if (countRows($query) > 0) {
+            $errors['phone']['unique'] = '*Phone already exists.';
+        }
         }
     }
 

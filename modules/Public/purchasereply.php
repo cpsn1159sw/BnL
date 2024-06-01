@@ -1,22 +1,21 @@
 <?php
-// Chặn truy cập hợp lệ
-    if(!defined('_CODE')) {
-        die('Access denied...');
-    }
-    
-    if(!isLogin()) {
-        layouts('header', $data);
-    } else {
-        layouts('header_login', $data);
-    }
+// Restrict unauthorized access
+if(!defined('_CODE')) {
+    die('Access denied...');
+}
+
+if(!isLogin()) {
+    redirect('/BnL/user/login');
+} 
+
 ?>
 
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yêu cầu đổi trả hàng</title>
+    <title>BnL - Return Request</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +23,7 @@
         }
         .container {
             max-width: 600px;
-            margin: 50px auto;
+            margin: auto;
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -75,26 +74,27 @@
 </head>
 <body>
     <div class="container">
-        <h2>Yêu cầu đổi trả hàng</h2>
+        <h2>Return Request</h2>
         <form action="process_return.php" method="post" enctype="multipart/form-data">
-            <label for="order_id">Mã đơn hàng:</label>
+            <label for="order_id">Order ID:</label>
             <input type="text" id="order_id" name="order_id" required>
-            <div class="note">Vui lòng nhập mã đơn hàng mà bạn muốn đổi trả.</div>
+            <div class="note">Please enter the order ID you want to return.</div>
 
-            <label for="product_id">Mã sản phẩm:</label>
+            <label for="product_id">Product ID:</label>
             <input type="text" id="product_id" name="product_id" required>
-            <div class="note">Vui lòng nhập mã sản phẩm mà bạn muốn đổi trả.</div>
+            <div class="note">Please enter the product ID you want to return.</div>
 
-            <label for="reason">Lý do đổi trả:</label>
+            <label for="reason">Reason for Return:</label>
             <textarea id="reason" name="reason" rows="4" required></textarea>
-            <div class="note">Vui lòng mô tả chi tiết lý do bạn muốn đổi trả sản phẩm.</div>
+            <div class="note">Please describe in detail the reason for your return.</div>
 
-            <label for="invoice">Hóa đơn mua hàng:</label>
+            <label for="invoice">Purchase Invoice:</label>
             <input type="file" id="invoice" name="invoice" accept="image/*,application/pdf" required>
-            <div class="note">Vui lòng tải lên hóa đơn mua hàng dưới định dạng ảnh hoặc PDF.</div>
+            <div class="note">Please upload the purchase invoice in image or PDF format.</div>
 
-<button type="submit">Gửi yêu cầu</button>
-</form>
-</div>
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
 </body>
 </html>
+```

@@ -60,9 +60,6 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff')) {
         <li class="">
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
         </li>
-        <li class="">
-          <a href="feedback"><span class="tf-ion-android-chat"></span> Feedback</a>
-        </li>
         <li class="active">
           <a href="exchange"><span class="tf-ion-reply"></span> Exchange</a>
         </li>

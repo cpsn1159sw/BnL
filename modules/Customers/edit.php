@@ -37,7 +37,7 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
             $errors['email']['required'] = '*Please enter your email.';
         } else {
             $email = $filterAll['email'];
-            $sql = "SELECT CustomerID FROM customer WHERE Email = '$email' AND CustomerID <> $adminID";
+            $sql = "SELECT CustomerID FROM customer WHERE Email = '$email' AND CustomerID <> $customerID";
             if (countRows($sql) > 0) {
                 $errors['email']['unique'] = '*Email already exists.';
             }
@@ -51,16 +51,16 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
                 $errors['phone']['isPhone'] = '*The phone number is invalid.';
             } else {
                 $phone = $filterAll['phone'];
-                $query = "SELECT CustomerID FROM customer WHERE Phone = '$phone' AND CustomerID <> $adminID";
+                $query = "SELECT CustomerID FROM customer WHERE Phone = '$phone' AND CustomerID <> $customerID";
                 if (countRows($query) > 0) {
                     $errors['phone']['unique'] = '*This phone already exists.';
                 }
             }
         }
 
-        // Validate role
+        // Validate status
         if (empty($filterAll['status'])) {
-            $errors['status']['required'] = '*Please choose your role.';
+            $errors['status']['required'] = '*Please choose your status.';
         }
 
         // Validate address

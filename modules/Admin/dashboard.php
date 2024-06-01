@@ -23,20 +23,20 @@ if (!isLoginA() || role() != 'Admin') {
   <meta name="author" content="BnL">
 
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css">
-  
+
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
-  
+
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
 
   <!-- Animate css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
-  
+
   <!-- Slick Carousel -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
-  
+
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
 
@@ -61,9 +61,6 @@ if (!isLoginA() || role() != 'Admin') {
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
         </li>
         <li class="">
-          <a href="feedback"><span class="tf-ion-android-chat"></span> Feedback</a>
-        </li>
-        <li class="">
           <a href="exchange"><span class="tf-ion-reply"></span> Exchange</a>
         </li>
         <li class="">
@@ -74,50 +71,215 @@ if (!isLoginA() || role() != 'Admin') {
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-     <div class="container-fluid">
+      <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            
-                <button type="button" id="sidebarCollapse" class="btn btn-success">
-                  <i class="tf-ion-navicon-round"></i>
-                  <span class="sr-only">Toggle Menu</span>
-                </button>
 
-              <div class="ml-auto">
-              <ul class="nav navbar-nav">
-                  <li class="dropdown dropdown-slide">
-                    <?php 
-                      $adminQuery = oneRow("SELECT administrator.email, administrator.role
+          <button type="button" id="sidebarCollapse" class="btn btn-success">
+            <i class="tf-ion-navicon-round"></i>
+            <span class="sr-only">Toggle Menu</span>
+          </button>
+
+          <div class="ml-auto">
+            <ul class="nav navbar-nav">
+              <li class="dropdown dropdown-slide">
+                <?php
+                $adminQuery = oneRow("SELECT administrator.email, administrator.role
                       FROM administrator
                       INNER JOIN logintokena ON administrator.adminid = logintokena.adminid
                       WHERE logintokena.token = '" . getSession('logintokena') . "'");
-                      $email =  $adminQuery['email'];
-                      $role = $adminQuery['role'];
-                      $parts = explode("@", $email);
-                      $username = $parts[0];
-                      echo $username. ' ('. $role . ')';	
-                    ?>
-                  <span class="tf-ion-ios-arrow-down"></span>
-                    <ul class="dropdown-menu">
-                      <li><a href="/BnL/admin/create">Create Account</a></li>
-                      <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
-                      <li><a href="/BnL/admin/logout">Logout</a></li>
-                    </ul>
-                  </li>
+                $email =  $adminQuery['email'];
+                $role = $adminQuery['role'];
+                $parts = explode("@", $email);
+                $username = $parts[0];
+                echo $username . ' (' . $role . ')';
+                ?>
+                <span class="tf-ion-ios-arrow-down"></span>
+                <ul class="dropdown-menu">
+                  <li><a href="/BnL/admin/create">Create Account</a></li>
+                  <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
+                  <li><a href="/BnL/admin/logout">Logout</a></li>
                 </ul>
-              </div>
-          </nav>
-        </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
 
-<!-- Nội dung của dashboard -->
-      <h2 class="mb-4">Sidebar #07</h2>
-     
-    
-    
-    
-    
+      <!-- Nội dung của dashboard -->
+      <h2 class="mb-4">Home</h2>
+      <?php
+      $list1 = getRows("SELECT p.Name AS ProductName, SUM(od.Quantity) AS TotalQuantity
+      FROM OrderDetails od
+      INNER JOIN products p ON p.ProductID = od.ProductID
+      INNER JOIN Orders o ON o.OrderID = od.OrderID
+      WHERE o.Status = 'Delivered'
+      GROUP BY p.Name;");
+
+      $list2 = getRows("SELECT c.Name AS CategoryName, SUM(od.Quantity) AS TotalQuantity
+      FROM Products p
+      INNER JOIN Categories c ON p.CategoryID = c.CategoryID
+      INNER JOIN OrderDetails od ON p.ProductID = od.ProductID
+      INNER JOIN Orders o ON o.OrderID = od.OrderID
+      WHERE o.Status = 'Delivered'
+      GROUP BY c.Name;");
+
+      $selectedYear = isset($_GET['y']) ? $_GET['y'] : date('Y');
+
+      // Truy vấn cơ sở dữ liệu để lấy doanh thu theo tháng trong năm đã chọn
+      $query = getRows("SELECT DATE_FORMAT(OrderDate, '%Y') AS Year, DATE_FORMAT(OrderDate, '%m') AS Month, SUM(od.TotalAmount) AS Revenue
+      FROM Orders
+      INNER JOIN OrderDetails od ON Orders.OrderID = od.OrderID 
+      WHERE Orders.Status = 'Delivered' AND YEAR(OrderDate) = '$selectedYear'
+      GROUP BY DATE_FORMAT(OrderDate, '%Y-%m')");
+      ?>
+
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <div class="row">
+        <div class="col">
+          <div id="columnChart" style="width: 100%; height: 400px;"></div>
+        </div>
+        <div class="col">
+          <div id="circleChart" style="width:100%; max-width:600px; height:400px;"></div>
+        </div>
+      </div>
+
+      <div class="row">
+  <div class="col-lg-6">
+    <label for="yearSelect" class="form-label">Select Year:</label>
+    <select id="yearSelect" class="form-select">
+      <?php
+      // Loop through years from 2023 to the current year
+      for ($year = date('Y'); $year >= 2023; $year--) {
+        $selected = ($year == $selectedYear) ? 'selected' : '';
+        echo "<option value='$year' $selected>$year</option>";
+      }
+      ?>
+    </select>
+  </div>
+  <div id="chart_div" style="width: 100%; height: 400px;"></div>
+</div>
+
+
+
     </div>
   </div>
 </body>
 
 <?php layouts('footer_dashboard'); ?>
+<script>
+  google.charts.load('current', {
+    'packages': ['corechart']
+  });
+  google.charts.setOnLoadCallback(drawChart1);
+  google.charts.setOnLoadCallback(drawChart2);
+  google.charts.setOnLoadCallback(function() {drawChart3(<?php echo $selectedYear; ?>);});
+
+  function drawChart1() {
+    var data = google.visualization.arrayToDataTable([
+      ['Product', 'Total Quantity'],
+      <?php foreach ($list1 as $row) : ?>['<?php echo $row['ProductName']; ?>', <?php echo $row['TotalQuantity']; ?>],
+      <?php endforeach; ?>
+    ]);
+
+    var options = {
+      title: 'Top Products by Quantity Sold',
+      titleTextStyle: {
+        fontSize: 18,
+        bold: true
+      },
+      legend: {
+        position: 'none'
+      },
+      hAxis: {
+        title: 'Product'
+      },
+      vAxis: {
+        title: 'Total Quantity'
+      }
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById('columnChart'));
+    chart.draw(data, options);
+  }
+
+  function drawChart2() {
+    const data = google.visualization.arrayToDataTable([
+      ['Category', 'Total Quantity'],
+      <?php foreach ($list2 as $row) : ?>['<?php echo $row['CategoryName']; ?>', <?php echo $row['TotalQuantity']; ?>],
+      <?php endforeach; ?>
+    ]);
+
+    const options = {
+      title: 'Purchase Quantity by Category',
+      titleTextStyle: {
+        fontSize: 18,
+        bold: true
+      },
+      legend: {
+        position: 'right'
+      }
+    };
+
+    const chart = new google.visualization.PieChart(document.getElementById('circleChart'));
+    chart.draw(data, options);
+  }
+
+  
+
+  function drawChart3(year) {
+    var rawData = <?php echo json_encode($query); ?>;
+    var filteredData = rawData.filter(function(item) {
+      return item.Year == year;
+    });
+
+    if (filteredData.length === 0) {
+      document.getElementById('chart_div').innerHTML = '<p>No data available</p>';
+      return;
+    }
+
+    // Format data
+    var data = google.visualization.arrayToDataTable([
+  ['Month', 'Revenue'],
+  ...filteredData.map(item => [{v: parseInt(item.Month), f: 'Month: '+parseInt(item.Month)}, {v: parseFloat(item.Revenue), f: parseFloat(item.Revenue).toFixed(2) + '$'}])
+]);
+
+    var options = {
+      title: 'Revenue Over Time in ' + year,
+      titleTextStyle: {
+        fontSize: 18,
+        bold: true
+      },
+      curveType: 'function',
+      legend: {
+        position: 'right'
+      },
+      hAxis: {
+        titleTextStyle: {
+          fontSize: 18,
+        },
+        title: 'Month',
+        ticks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+      },
+      vAxis: {
+        titleTextStyle: {
+          fontSize: 16,
+        },
+        title: 'Revenue',
+        format: '#,##0.00$'
+      }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+
+  // Update chart when year select changes
+  document.getElementById('yearSelect').addEventListener('change', function() {
+    var selectedYear = this.value;
+    drawChart3(selectedYear); // Draw chart for selected year
+  });
+
+
+</script>
+
 </html>
