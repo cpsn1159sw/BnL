@@ -4,7 +4,7 @@ if (!defined('_CODE')) {
 	die('Access denied...');
 }
 $data = [
-	'pageTitle' => 'Sale'
+	'pageTitle' => 'BnL - Shop'
 ];
 
 if (!isLogin()) {
@@ -22,30 +22,29 @@ if (!isLogin()) {
 			<div class="row">
 				<div class="col-md-12">
 					<div class="content">
-						<h1 class="page-name">Sale</h1>
+						<h1 class="page-name">Satchel bags</h1>
 						<ol class="breadcrumb">
 							<li><a href="/BnL/Public/home">Home</a></li>
 							<li><a href="/BnL/Public/shop">Shop</a></li>
-							<li class="active">Sale</li>
+							<li class="active">Satchel bags</li>
 						</ol>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<section class="products section">
-	<div class="container">
+	<section class="products section bg-gray">
+		<div class="container">
 			<div class="row">
 				<?php
-				$salelist = getRows("SELECT * FROM products WHERE categoryid = 9");
-				if (!empty($salelist)) :
-					foreach ($salelist as $index => $item) :
+				$list = getRows("SELECT * FROM products WHERE categoryid = 5");
+				if (!empty($list)) :
+					foreach ($list as $index => $item) :
 				?>
 						<div class="col-md-4">
 							<div class="product-item">
 								<div class="product-thumb">
-								<span class="bage">Sale</span>
-									<img class="img-responsive" src="<?php echo _WEB_HOST_TEMPLATES.$item['image-url']; ?>" alt="product-img" />
+									<img class="img-responsive" src="<?php echo _WEB_HOST_TEMPLATES . $item['image-url']; ?>" alt="product-img" />
 									<div class="preview-meta">
 										<ul>
 											<li>
@@ -63,7 +62,7 @@ if (!isLogin()) {
 									</div>
 								</div>
 								<div class="product-content">
-									<h4><a href="product-single.html"><?php echo $item['Name']; ?></a></h4>
+									<h4><a href=""><?php echo $item['Name']; ?></a></h4>
 									<p class="price"><?php echo $item['Price']; ?></p>
 								</div>
 							</div>
@@ -106,6 +105,5 @@ if (!isLogin()) {
 			</div>
 		</div>
 	</section>
-
 </body>
 <?php layouts('footer'); ?>

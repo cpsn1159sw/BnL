@@ -151,9 +151,9 @@
 										<ul>
 											<li class=" ">Women</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/">Bra Tops</a></li>
-											<li><a href="/BnL/public/">Dresses & Jumpsuits</a></li>
-											<li><a href="/BnL/public/">Short Skirts</a></li>
+											<li><a href="/BnL/public/Bra_tops">Bra Tops</a></li>
+											<li><a href="/BnL/public/D_and_J">Dresses & Jumpsuits</a></li>
+											<li><a href="/BnL/public/Short_skirts">Short Skirts</a></li>
 										</ul>
 									</div>
 
@@ -162,9 +162,9 @@
 										<ul>
 											<li class=" ">Bags</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/">Tote Bags</a></li>
-											<li><a href="/BnL/public/">Satchel Bags</a></li>
-											<li><a href="/BnL/public/">Women's Backpacks</a></li>
+											<li><a href="/BnL/public/Tote_bag">Tote Bags</a></li>
+											<li><a href="/BnL/public/Satchel_bag">Satchel Bags</a></li>
+											<li><a href="/BnL/public/Women_Backpacks">Women's Backpacks</a></li>
 										</ul>
 									</div>
 
@@ -173,8 +173,8 @@
 										<ul>
 											<li class=" ">Accessories</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/">Sunglasses</a></li>
-											<li><a href="/BnL/public/">Hats</a></li>
+											<li><a href="/BnL/public/Sunglasses">Sunglasses</a></li>
+											<li><a href="/BnL/public/Hat">Hats</a></li>
 										</ul>
 									</div>
 
