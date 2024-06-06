@@ -52,8 +52,9 @@ if (!isLogin()) {
                                         </tr>
                                         <?php
                                         $total_price = 0;
-                                        if (isset($_SESSION['cart'])) {
-                                            foreach ($_SESSION['cart'] as $key => $item) {
+                                        $cart = getSession('cart');
+                                        if (!empty($cart)) :
+                                            foreach ($cart as $item) :
                                                 $total = $item['Price'] * $item['Quantity'];
                                                 $total_price += $total;
                                         ?>
@@ -65,8 +66,10 @@ if (!isLogin()) {
                                                     <td><a href="remove_from_cart.php?key=<?php echo $key; ?>">Remove</a></td>
                                                 </tr>
                                         <?php
-                                            }
-                                        }
+                                            
+                                        endforeach;
+                                    endif;
+                                        
                                         ?>
                                         <tr>
                                             <td colspan="3"><strong>Total</strong></td>

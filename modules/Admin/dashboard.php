@@ -4,7 +4,9 @@ if (!defined('_CODE')) {
   die('Access denied...');
 }
 
-if (!isLoginA() || role() != 'Admin') {
+if (isLoginA() && role() == 'Admin') {
+
+} else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
   getSmg($smg, $smg_type);
@@ -126,11 +128,10 @@ if (!isLoginA() || role() != 'Admin') {
       $selectedYear = isset($_GET['y']) ? $_GET['y'] : date('Y');
 
       // Truy vấn cơ sở dữ liệu để lấy doanh thu theo tháng trong năm đã chọn
-      $query = getRows("SELECT DATE_FORMAT(OrderDate, '%Y') AS Year, DATE_FORMAT(OrderDate, '%m') AS Month, SUM(od.TotalAmount) AS Revenue
-      FROM Orders
-      INNER JOIN OrderDetails od ON Orders.OrderID = od.OrderID 
-      WHERE Orders.Status = 'Delivered' AND YEAR(OrderDate) = '$selectedYear'
-      GROUP BY DATE_FORMAT(OrderDate, '%Y-%m')");
+      $query = getRows("SELECT  DATE_FORMAT(OrderDate, '%Y') AS Year, DATE_FORMAT(o.OrderDate, '%m') AS Month, SUM(o.TotalAmount) AS Revenue
+      FROM Orders o
+      WHERE o.Status = 'Delivered' AND YEAR(o.OrderDate) = '$selectedYear'
+      GROUP BY DATE_FORMAT(o.OrderDate, '%m')");
       ?>
 
       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -181,6 +182,11 @@ if (!isLoginA() || role() != 'Admin') {
       <?php endforeach; ?>
     ]);
 
+    if (data.length === 0) {
+      document.getElementById('columnChart').innerHTML = '<p>No data available</p>';
+      return;
+    }
+
     var options = {
       title: 'Top Products by Quantity Sold',
       titleTextStyle: {
@@ -208,6 +214,11 @@ if (!isLoginA() || role() != 'Admin') {
       <?php foreach ($list2 as $row) : ?>['<?php echo $row['CategoryName']; ?>', <?php echo $row['TotalQuantity']; ?>],
       <?php endforeach; ?>
     ]);
+
+    if (data.length === 0) {
+      document.getElementById('circleChart').innerHTML = '<p>No data available</p>';
+      return;
+    }
 
     const options = {
       title: 'Purchase Quantity by Category',
@@ -273,10 +284,9 @@ if (!isLoginA() || role() != 'Admin') {
     chart.draw(data, options);
   }
 
-  // Update chart when year select changes
   document.getElementById('yearSelect').addEventListener('change', function() {
     var selectedYear = this.value;
-    drawChart3(selectedYear); // Draw chart for selected year
+    window.location.href = window.location.pathname + '?y=' + selectedYear;
   });
 
 

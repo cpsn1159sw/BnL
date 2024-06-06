@@ -4,11 +4,21 @@ if (!defined('_CODE')) {
   die('Access denied...');
 }
 
-if (!isLoginA() || (role() != 'Admin' && role() != 'Staff' && role() != 'Shipper')) {
+if (isLoginA() && (role() == 'Admin' || role() == 'Staff' || role() != 'Shipper')) {
+
+} else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
   getSmg($smg, $smg_type);
   redirect('/BnL/admin/logout');
+}
+
+$smg = getFlashData('smg');
+$smg_type = getFlashData('smg_type');
+
+$search = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+    $search = $_POST['search'];
 }
 
 ?>
@@ -61,9 +71,6 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff' && role() != 'Shipper
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
         </li>
         <li class="">
-          <a href="feedback"><span class="tf-ion-android-chat"></span> Feedback</a>
-        </li>
-        <li class="">
           <a href="exchange"><span class="tf-ion-reply"></span> Exchange</a>
         </li>
         <li class="active">
@@ -110,9 +117,109 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff' && role() != 'Shipper
         </div>
 
 <!-- Nội dung của dashboard -->
-      <h2 class="mb-4">Sidebar #07</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h2 class="mb-4">Orders</h2>
+      <?php
+      if (!empty($smg)) {
+        getSmg($smg, $smg_type);
+      }
+      ?>
+     
+      <form action="" method="post" class="mt-3 mb-lg-2">
+        <input type="search" name="search" value="<?php echo htmlspecialchars($search); ?>" class="form-control" placeholder="Search...">
+      </form>
+      <table class="table table-bordered" id="">
+        <thead>
+          <th width="2%">ID</th>
+          <th>Full Name</th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Order ID</th>
+          <th>Order Date</th>
+          <th width="2%">Total</th>
+          <th>Status</th>
+        </thead>
+        <?php 
+        // Truy vấn dữ liệu
+        if (!empty($search)) {
+          $query = "SELECT o.CustomerID, 
+            c.FullName, 
+            c.Address, 
+            c.Email, 
+            c.Phone, 
+            o.OrderID, 
+            o.OrderDate AS OrderDate, 
+            o.TotalAmount AS Total, 
+            o.Status AS Status 
+            FROM orders o
+            LEFT JOIN customer c ON c.CustomerID = o.CustomerID
+            WHERE c.FullName LIKE '%$search%' OR c.Email LIKE '%$search%' OR c.Phone LIKE '%$search%'
+            GROUP BY o.CustomerID, c.FullName, c.Address, c.Email, c.Phone, o.OrderID, DATE(o.OrderDate), o.TotalAmount, o.Status";
+        } else {
+          $query = "SELECT o.CustomerID, 
+            c.FullName, 
+            c.Address, 
+            c.Email, 
+            c.Phone, 
+            o.OrderID, 
+            o.OrderDate AS OrderDate, 
+            o.TotalAmount AS Total, 
+            o.Status AS Status 
+            FROM orders o
+            LEFT JOIN customer c ON c.CustomerID = o.CustomerID
+            GROUP BY o.CustomerID, c.FullName, c.Address, c.Email, c.Phone, o.OrderID, DATE(o.OrderDate), o.TotalAmount, o.Status";
+        }
+
+        $list = getRows($query);
+        ?>
+        <tbody>
+          <?php
+          if (!empty($list)) :
+            $count = 0;
+            foreach ($list as $item) :
+              $count++;
+          ?>
+              <tr>
+                <td><?php echo $count; ?></td>
+                <td><?php echo $item['FullName']; ?></td>
+                <td><?php echo $item['Address']; ?></td>
+                <td><?php echo $item['Email']; ?></td>
+                <td><?php echo $item['Phone']; ?></td>
+                <td><?php echo $item['OrderID']; ?></td>
+                <td><?php echo $item['OrderDate']; ?></td>
+                <td><?php echo $item['Total']; ?></td>
+                <td>
+                  <form method="POST" action="/BnL/admin/orders_status">
+                    <input type="hidden" name="orderId" value="<?php echo $item['OrderID']; ?>">
+                    <input type="hidden" name="custo" value="<?php echo $item['OrderID']; ?>">
+                    <div class="form-group">
+                      <select name="status" class="form-control" onchange="this.form.submit()">
+                        <?php 
+                        $statusOptions = ['Delivered', 'Pending', 'Cancelled']; // Các tùy chọn trạng thái
+                        foreach ($statusOptions as $option) {
+                          $selected = $item['Status'] == $option ? 'selected' : '';
+                          echo "<option value='$option' $selected>$option</option>";
+                        }
+                        ?>
+                      </select>
+                    </div>
+                  </form>
+                </td>
+              </tr>
+            <?php
+            endforeach;
+          else :
+            ?>
+            <tr>
+              <td colspan="9">
+                <div class="alert alert-danger text-center">Empty</div>
+              </td>
+            </tr>
+          <?php
+          endif;
+          ?>
+        </tbody>
+      </table>
     </div>
   </div>
 </body>

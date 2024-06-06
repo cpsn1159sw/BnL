@@ -125,9 +125,7 @@ if (!isLogin()) {
                                                 <a href="#"><i class="tf-ion-ios-heart"></i></a>
                                             </li>
                                             <li>
-                                            
-                                                    <a href="add_to_cart&id=<?php echo $item["ProductID"];?>" target="_blank"><i class="tf-ion-android-cart"></i></a>
-
+                                                <a href="/BnL/public/add_to_cart&id=<?php echo $item["ProductID"];?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
                                             </li>
                                         </ul>
                                     </div>

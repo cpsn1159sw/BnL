@@ -69,19 +69,20 @@ CREATE TABLE Products (
 
 CREATE TABLE Orders (
     OrderID INT PRIMARY KEY AUTO_INCREMENT,
-    CustomerID INT,
-    OrderDate DATETIME,
+    CustomerID INT NOT NULL,
+    OrderDate DATE NOT NULL,
     Status VARCHAR(50),
-    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+    TotalAmount DECIMAL(10, 2),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
 
 CREATE TABLE OrderDetails (
-    OrderID INT,
-    ProductID INT,
-    Quantity INT,
-    UnitPrice DECIMAL(18, 2),
-    TotalAmount DECIMAL(18, 2),
-    PRIMARY KEY (OrderID, ProductID),
+    OrderDetailID INT PRIMARY KEY AUTO_INCREMENT,
+    OrderID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Quantity INT NOT NULL,
+    UnitPrice DECIMAL(10, 2) NOT NULL,
+    Discount DECIMAL(5, 2) DEFAULT 0,
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );

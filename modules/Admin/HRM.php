@@ -15,6 +15,12 @@ if (isLoginA() && role() == 'Admin') {
 
 $smg = getFlashData('smg');
 $smg_type = getFlashData('smg_type');
+
+$search = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+    $search = $_POST['search'];
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -118,12 +124,10 @@ $smg_type = getFlashData('smg_type');
       }
       ?>
       <p><a href="/BnL/hrm/create" target="_blank" class="btn btn-success">Add account <span class="tf-ion-plus"></span></a></p>
-      <form action="post" class="mt-3 mb-lg-2"><input type="search" class="form-control" placeholder="Search..."></form>
+      <form action="" method="post" class="mt-3 mb-lg-2">
+        <input type="search" name="search" value="<?php echo htmlspecialchars($search); ?>" class="form-control" placeholder="Search...">
+      </form>
       <table class="table table-bordered" id="">
-        <?php
-        // Truy vấn bản administrator
-        $list = getRows("SELECT * FROM administrator ORDER BY update_at");
-        ?>
         <thead>
           <th>ID</th>
           <th>Full name</th>
@@ -134,6 +138,17 @@ $smg_type = getFlashData('smg_type');
           <th width="5%">Edit</th>
           <th width="5%">Delete</th>
         </thead>
+        <?php
+         if (!empty($search)) {
+          $query = "SELECT * FROM administrator 
+          WHERE FullName LIKE '%$search%' OR Email LIKE '%$search%' OR Phone LIKE '%$search%'
+          ORDER BY update_at";
+        } else {
+          $query = "SELECT * FROM administrator ORDER BY update_at";
+        }
+        // Truy vấn bảng 
+        $list = getRows($query);
+        ?>
         <tbody>
           <?php
           if (!empty($list)) :

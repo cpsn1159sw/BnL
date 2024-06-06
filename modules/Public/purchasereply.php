@@ -80,17 +80,11 @@ if(!isLogin()) {
             <input type="text" id="order_id" name="order_id" required>
             <div class="note">Please enter the order ID you want to return.</div>
 
-            <label for="product_id">Product ID:</label>
-            <input type="text" id="product_id" name="product_id" required>
-            <div class="note">Please enter the product ID you want to return.</div>
-
             <label for="reason">Reason for Return:</label>
             <textarea id="reason" name="reason" rows="4" required></textarea>
             <div class="note">Please describe in detail the reason for your return.</div>
 
-            <label for="invoice">Purchase Invoice:</label>
-            <input type="file" id="invoice" name="invoice" accept="image/*,application/pdf" required>
-            <div class="note">Please upload the purchase invoice in image or PDF format.</div>
+            <div class="note" style="color: red;">Please enter the order ID you want to return.</div>
 
             <button type="submit">Submit Request</button>
         </form>
