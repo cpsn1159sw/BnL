@@ -151,9 +151,9 @@
 										<ul>
 											<li class=" ">Women</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/Bra_tops">Bra Tops</a></li>
-											<li><a href="/BnL/public/D_and_J">Dresses & Jumpsuits</a></li>
-											<li><a href="/BnL/public/Short_skirts">Short Skirts</a></li>
+											<li><a href="/BnL/public/Bra-tops">Bra Tops</a></li>
+											<li><a href="/BnL/public/D-and-J">Dresses & Jumpsuits</a></li>
+											<li><a href="/BnL/public/Short-skirts">Short Skirts</a></li>
 										</ul>
 									</div>
 
@@ -162,9 +162,9 @@
 										<ul>
 											<li class=" ">Bags</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/Tote_bag">Tote Bags</a></li>
-											<li><a href="/BnL/public/Satchel_bag">Satchel Bags</a></li>
-											<li><a href="/BnL/public/Women_Backpacks">Women's Backpacks</a></li>
+											<li><a href="/BnL/public/Tote-bag">Tote Bags</a></li>
+											<li><a href="/BnL/public/Satchel-bag">Satchel Bags</a></li>
+											<li><a href="/BnL/public/Women-Backpacks">Women's Backpacks</a></li>
 										</ul>
 									</div>
 
