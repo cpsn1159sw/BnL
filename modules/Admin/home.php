@@ -63,9 +63,6 @@ if (isLoginA() && role() == 'Admin') {
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
         </li>
         <li class="">
-          <a href="exchange"><span class="tf-ion-reply"></span> Exchange</a>
-        </li>
-        <li class="">
           <a href="orders"><span class="tf-ion-tshirt"></span> Orders</a>
         </li>
       </ul>
