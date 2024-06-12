@@ -42,10 +42,7 @@ if (isset($_GET['ProductID'])) {
 	if (mysqli_num_rows($result) > 0) {
 		$product = mysqli_fetch_assoc($result);
 		// Hiển thị thông tin chi tiết sản phẩm
-		echo "<h1>{$product['Name']}</h1>";
-		echo "<p>{$product['Description']}</p>";
-		echo "<p>Price: {$product['Price']}</p>";
-		echo "<p> {$product['image-url']}</p>";
+
 	} else {
 		echo "Product not found!";
 	}
@@ -62,8 +59,8 @@ mysqli_close($connection);
 		<div class="row">
 			<div class="col-md-6">
 				<ol class="breadcrumb">
-					<li><a href="home.php">Home</a></li>
-					<li><a href="shop.php">Shop</a></li>
+					<li><a href="/BnL/public/home">Home</a></li>
+					<li><a href="/BnL/public/shop">Shop</a></li>
 					<li class="active">Single Product</li>
 				</ol>
 			</div>
@@ -76,27 +73,9 @@ mysqli_close($connection);
 							<!-- me art lab slider -->
 							<div class='carousel-inner '>
 								<div class='item active'>
-									<img src='images/shop/single-products/product-1.jpg' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
+									<img src='<?php echo _WEB_HOST_TEMPLATES . $product['image-url']; ?>' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
 								</div>
-								<div class='item'>
-									<img src='images/shop/single-products/product-2.jpg' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
-								</div>
-
-								<div class='item'>
-									<img src='images/shop/single-products/product-3.jpg' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
-								</div>
-								<div class='item'>
-									<img src='images/shop/single-products/product-4.jpg' alt='' data-zoom-image="images/shop/single-products/product-4.jpg" />
-								</div>
-								<div class='item'>
-									<img src='images/shop/single-products/product-5.jpg' alt='' data-zoom-image="images/shop/single-products/product-5.jpg" />
-								</div>
-								<div class='item'>
-									<img src='images/shop/single-products/product-6.jpg' alt='' data-zoom-image="images/shop/single-products/product-6.jpg" />
-								</div>
-
 							</div>
-
 							<!-- sag sol -->
 							<a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
 								<i class="tf-ion-ios-arrow-left"></i>
@@ -109,25 +88,7 @@ mysqli_close($connection);
 						<!-- thumb -->
 						<ol class='carousel-indicators mCustomScrollbar meartlab'>
 							<li data-target='#carousel-custom' data-slide-to='0' class='active'>
-								<img src='images/shop/single-products/product-1.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='1'>
-								<img src='images/shop/single-products/product-2.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='2'>
-								<img src='images/shop/single-products/product-3.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='3'>
-								<img src='images/shop/single-products/product-4.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='4'>
-								<img src='images/shop/single-products/product-5.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='5'>
-								<img src='images/shop/single-products/product-6.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='6'>
-								<img src='images/shop/single-products/product-7.jpg' alt='' />
+								<img src='<?php echo _WEB_HOST_TEMPLATES . $product['image-url']; ?>' alt='' />
 							</li>
 						</ol>
 					</div>
@@ -135,11 +96,9 @@ mysqli_close($connection);
 			</div>
 			<div class="col-md-7">
 				<div class="single-product-details">
-					<h2>Eclipse Crossbody</h2>
-					<p class="product-price">$300</p>
-					<p class="product-description mt-20">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum ipsum dicta quod, quia doloremque aut deserunt commodi quis. Totam a consequatur beatae nostrum, earum consequuntur? Eveniet consequatur ipsum dicta recusandae.
-					</p>
+					<h2><?php echo $product['Name']; ?></h2>
+					<p class="product-price">$<?php echo $product['Price']; ?></p>
+					<p class="product-description mt-20"><?php echo $product['Description']; ?></p>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, velit, sunt temporibus, nulla accusamus similique sapiente tempora, at atque cumque assumenda minus asperiores est esse sequi dolore magnam. Debitis, explicabo.</p>
 					<div class="product-size">
 						<span>Size:</span>
@@ -156,7 +115,7 @@ mysqli_close($connection);
 							<input id="product-quantity" type="text" value="0" name="product-quantity">
 						</div>
 					</div>
-					<a href="" class="btn btn-main mt-20">Add To Cart</a>
+					<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" class="btn btn-main mt-20">Add To Cart</a>
 				</div>
 			</div>
 		</div>
@@ -169,9 +128,10 @@ mysqli_close($connection);
 					<div class="tab-content patternbg">
 						<div id="details" class="tab-pane fade active in">
 							<h4>Product Description</h4>
+							<p><?php echo $product['Description']; ?></p>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis delectus quidem repudiandae veniam distinctio repellendus magni pariatur molestiae asperiores animi, eos quod iusto hic doloremque iste a, nisi iure at unde molestias enim fugit, nulla voluptatibus. Deserunt voluptate tempora aut illum harum, deleniti laborum animi neque, praesentium explicabo, debitis ipsa?</p>
 						</div>
-						
+
 					</div>
 				</div>
 			</div>

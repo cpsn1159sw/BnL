@@ -1,13 +1,19 @@
 <?php
-
 // Chặn truy cập hợp lệ
 if (!defined('_CODE')) {
     die('Access denied...');
 }
 
 $data = [
-    'pageTitle' => 'BnL - Cart'
+    'pageTitle' => 'Cart'
 ];
+
+if (!isLogin()) {
+    setFlashData('smg', 'You need to log in to your account first ');
+    setFlashData('smg_type', 'danger');
+    getSmg($smg, $smg_type);
+    redirect('/BnL/user/login');
+}
 
 if (!isLogin()) {
     layouts('header', $data);
@@ -25,7 +31,8 @@ if (!isLogin()) {
                     <div class="content">
                         <h1 class="page-name">Cart</h1>
                         <ol class="breadcrumb">
-                            <li><a href="index.php">Home</a></li>
+                            <li><a href="home">Home</a></li>
+                            <li><a href="shop">Shop</a></li>
                             <li class="active">Cart</li>
                         </ol>
                     </div>
@@ -42,7 +49,7 @@ if (!isLogin()) {
                         <div class="block">
                             <div class="product-list">
                                 <form method="post">
-                                    <table>
+                                    <table class="table">
                                         <tr>
                                             <th>Product Name</th>
                                             <th>Price</th>
@@ -51,6 +58,7 @@ if (!isLogin()) {
                                             <th>Action</th>
                                         </tr>
                                         <?php
+
                                         $total_price = 0;
                                         $cart = getSession('cart');
                                         if (!empty($cart)) :
@@ -63,20 +71,18 @@ if (!isLogin()) {
                                                     <td>$<?php echo $item['Price']; ?></td>
                                                     <td><?php echo $item['Quantity']; ?></td>
                                                     <td>$<?php echo $total; ?></td>
-                                                    <td><a href="remove_from_cart.php?key=<?php echo $key; ?>">Remove</a></td>
+                                                    <td><a href="/BnL/public/remove-from-cart&id=<?php echo $item["ProductID"]; ?>">Remove</a></td>
                                                 </tr>
                                         <?php
-                                            
-                                        endforeach;
-                                    endif;
-                                        
+                                            endforeach;
+                                        endif;
                                         ?>
                                         <tr>
                                             <td colspan="3"><strong>Total</strong></td>
                                             <td colspan="2">$<?php echo $total_price; ?></td>
                                         </tr>
                                     </table>
-                                    <a href="checkout.php" class="btn btn-main pull-right">Checkout</a>
+                                    <a href="/BnL/public/checkout" class="btn btn-main pull-right">Checkout</a>
                                 </form>
                             </div>
                         </div>

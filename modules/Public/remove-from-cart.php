@@ -1,18 +1,38 @@
 <?php
+// Chặn truy cập hợp lệ
+if (!defined('_CODE')) {
+    die('Access denied...');
+}
+// Kiểm tra xem session đã bắt đầu chưa
+if (session_status() == PHP_SESSION_NONE) {
+    // Nếu session chưa được bắt đầu, bắt đầu một session mới
+    session_start();
+}
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
-    $productId = $_GET['id'];
+if (isGet()) {
+    $filterAll = filter();
+    if (!empty($filterAll['id'])) {
+        $productId = $filterAll['id'];
 
-    if (isset($_SESSION['cart'])) {
-        foreach ($_SESSION['cart'] as $key => $item) {
-            if ($item['id'] == $productId) {
-                unset($_SESSION['cart'][$key]);
-                break;
+        // Fetch the current cart session
+        $cart = getSession('cart');
+
+        // Check if the cart is not empty and contains the product
+        if (!empty($cart)) {
+            foreach ($cart as $item => $product) {
+                if ($product['ProductID'] == $productId) {
+                    // Remove the product from the cart
+                    unset($cart[$item]);
+                    break;
+                }
             }
+            // Update the cart session
+            setSession('cart', $cart);
         }
     }
-
-    header("Location: cart.php");
-    exit();
 }
+// print_r($productId);
+echo "Thông tin của session 'cart':<br>";
+var_dump(getSession('cart'));
+redirect("cart");
 ?>

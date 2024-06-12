@@ -55,13 +55,13 @@ if (!isLogin()) {
 												<a href="#"><i class="tf-ion-ios-heart"></i></a>
 											</li>
 											<li>
-												<a href="#"><i class="tf-ion-android-cart"></i></a>
+												<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart"></i></a>
 											</li>
 										</ul>
 									</div>
 								</div>
 								<div class="product-content">
-									<h4><a href="product-single.html"><?php echo $item['Name']; ?></a></h4>
+									<h4><a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>"><?php echo $item['Name']; ?></a></h4>
 									<p class="price"><?php echo $item['Price']; ?></p>
 								</div>
 							</div>
@@ -87,8 +87,8 @@ if (!isLogin()) {
 														<p class="product-short-description">
 															<?php echo $item['Description']; ?>
 														</p>
-														<a href="cart.html" class="btn btn-main">Add To Cart</a>
-														<a href="product-single.html" class="btn btn-transparent">View Product Details</a>
+														<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
+														<a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
 													</div>
 												</div>
 											</div>
