@@ -4,7 +4,7 @@ if (!defined('_CODE')) {
   die('Access denied...');
 }
 
-if (isLoginA() && (role() == 'Admin' || role() == 'Staff' || role() != 'Shipper')) {
+if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
 
 } else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');

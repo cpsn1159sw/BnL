@@ -4,7 +4,7 @@ if (!defined('_CODE')) {
   die('Access denied...');
 }
 
-if (isLoginA() && (role() == 'Admin' || role() == 'Staff' || role() != 'Shipper')) {
+if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
 
 } else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
       <h1><a href="/BnL/public/home" target="_blank" class="logo">BnL</a></h1>
       <ul class="list-unstyled components mb-5">
         <li class="">
-          <a href="dashboard"><span class="tf-ion-ios-home"></span> Home</a>
+          <a href="home"><span class="tf-ion-ios-home"></span> Home</a>
         </li>
         <li class="">
           <a href="hrm"><span class="tf-ion-android-people"></span> HRM</a>
