@@ -4,7 +4,7 @@ if (!defined('_CODE')) {
   die('Access denied...');
 }
 
-if (isLoginA() && (role() == 'Admin' || role() == 'Staff' || role() != 'Shipper')) {
+if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
 
 } else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
       <h1><a href="/BnL/public/home" target="_blank" class="logo">BnL</a></h1>
       <ul class="list-unstyled components mb-5">
         <li class="">
-          <a href="dashboard"><span class="tf-ion-ios-home"></span> Home</a>
+          <a href="home"><span class="tf-ion-ios-home"></span> Home</a>
         </li>
         <li class="">
           <a href="hrm"><span class="tf-ion-android-people"></span> HRM</a>
@@ -69,9 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
         </li>
         <li class="">
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
-        </li>
-        <li class="">
-          <a href="exchange"><span class="tf-ion-reply"></span> Exchange</a>
         </li>
         <li class="active">
           <a href="orders"><span class="tf-ion-tshirt"></span> Orders</a>
@@ -134,7 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
           <th>Address</th>
           <th>Email</th>
           <th>Phone</th>
-          <th>Order ID</th>
           <th>Order Date</th>
           <th width="2%">Total</th>
           <th>Status</th>
@@ -142,32 +138,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
         <?php 
         // Truy vấn dữ liệu
         if (!empty($search)) {
-          $query = "SELECT o.CustomerID, 
-            c.FullName, 
-            c.Address, 
-            c.Email, 
-            c.Phone, 
-            o.OrderID, 
-            o.OrderDate AS OrderDate, 
-            o.TotalAmount AS Total, 
-            o.Status AS Status 
-            FROM orders o
-            LEFT JOIN customer c ON c.CustomerID = o.CustomerID
-            WHERE c.FullName LIKE '%$search%' OR c.Email LIKE '%$search%' OR c.Phone LIKE '%$search%'
-            GROUP BY o.CustomerID, c.FullName, c.Address, c.Email, c.Phone, o.OrderID, DATE(o.OrderDate), o.TotalAmount, o.Status";
+          $query = "SELECT c.FullName AS CustomerName,
+                                c.Address,
+                                c.Email,
+                                c.Phone,
+                                o.OrderDate,
+                                GROUP_CONCAT(p.Name) AS ProductsOrdered,
+                                SUM(od.Quantity * p.Price) AS TotalAmount,
+                                o.Status,
+                                o.OrderID,
+                                o.CustomerID
+                        FROM 
+                            Orders o
+                        LEFT JOIN 
+                            Customer c ON c.CustomerID = o.CustomerID
+                        JOIN 
+                            OrderDetails od ON o.OrderID = od.OrderID
+                        JOIN 
+                            Products p ON od.ProductID = p.ProductID
+                        WHERE c.FullName LIKE '%$search%' OR c.Email LIKE '%$search%' OR c.Phone LIKE '%$search%' OR o.OrderDate LIKE '%$search%'
+                        GROUP BY 
+                            c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status, o.OrderID, o.CustomerID
+                        ORDER BY 
+                            o.OrderDate DESC";
         } else {
-          $query = "SELECT o.CustomerID, 
-            c.FullName, 
-            c.Address, 
-            c.Email, 
-            c.Phone, 
-            o.OrderID, 
-            o.OrderDate AS OrderDate, 
-            o.TotalAmount AS Total, 
-            o.Status AS Status 
-            FROM orders o
-            LEFT JOIN customer c ON c.CustomerID = o.CustomerID
-            GROUP BY o.CustomerID, c.FullName, c.Address, c.Email, c.Phone, o.OrderID, DATE(o.OrderDate), o.TotalAmount, o.Status";
+          $query = "SELECT c.FullName AS CustomerName,
+                                c.Address,
+                                c.Email,
+                                c.Phone,
+                                o.OrderDate,
+                                GROUP_CONCAT(p.Name) AS ProductsOrdered,
+                                SUM(od.Quantity * p.Price) AS TotalAmount,
+                                o.Status,
+                                o.OrderID,
+                                o.CustomerID
+                        FROM 
+                            Orders o
+                        LEFT JOIN 
+                            Customer c ON c.CustomerID = o.CustomerID
+                        JOIN 
+                            OrderDetails od ON o.OrderID = od.OrderID
+                        JOIN 
+                            Products p ON od.ProductID = p.ProductID
+                        GROUP BY 
+                            c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status, o.OrderID, o.CustomerID
+                        ORDER BY 
+                            o.OrderDate DESC";
         }
 
         $list = getRows($query);
@@ -180,18 +196,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
               $count++;
           ?>
               <tr>
-                <td><?php echo $count; ?></td>
-                <td><?php echo $item['FullName']; ?></td>
+                <td>
+                  <a href='/BnL/admin/orderdetails&id=<?php echo $item['OrderID'];?>'>
+                    <?php echo $count; ?>
+                  </a>
+                </td>
+                <td><?php echo $item['CustomerName']; ?></td>
                 <td><?php echo $item['Address']; ?></td>
                 <td><?php echo $item['Email']; ?></td>
                 <td><?php echo $item['Phone']; ?></td>
-                <td><?php echo $item['OrderID']; ?></td>
                 <td><?php echo $item['OrderDate']; ?></td>
-                <td><?php echo $item['Total']; ?></td>
+                <td><?php echo $item['TotalAmount']; ?></td>
                 <td>
                   <form method="POST" action="/BnL/admin/orders_status">
                     <input type="hidden" name="orderId" value="<?php echo $item['OrderID']; ?>">
-                    <input type="hidden" name="custo" value="<?php echo $item['OrderID']; ?>">
+                    <input type="hidden" name="customerId" value="<?php echo $item['CustomerID']; ?>">
                     <div class="form-group">
                       <select name="status" class="form-control" onchange="this.form.submit()">
                         <?php 

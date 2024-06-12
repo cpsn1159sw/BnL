@@ -51,7 +51,7 @@ if (isLoginA() && role() == 'Admin') {
       <h1><a href="/BnL/public/home" target="_blank" class="logo">BnL</a></h1>
       <ul class="list-unstyled components mb-5">
         <li class="active">
-          <a href="dashboard"><span class="tf-ion-ios-home"></span> Home</a>
+          <a href="home"><span class="tf-ion-ios-home"></span> Home</a>
         </li>
         <li class="">
           <a href="hrm"><span class="tf-ion-android-people"></span> HRM</a>
@@ -61,9 +61,6 @@ if (isLoginA() && role() == 'Admin') {
         </li>
         <li class="">
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
-        </li>
-        <li class="">
-          <a href="exchange"><span class="tf-ion-reply"></span> Exchange</a>
         </li>
         <li class="">
           <a href="orders"><span class="tf-ion-tshirt"></span> Orders</a>

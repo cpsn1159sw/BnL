@@ -5,7 +5,7 @@
     }
 
     if(isLoginA() && role() == 'Admin') {
-      redirect('/BnL/admin/dashboard');
+      redirect('/BnL/admin/home');
     } else {
 
     if (isPost()) {
@@ -37,7 +37,7 @@
                 if($insertStatus) {
                   setSession('logintokena', $tokenLogin);
                   if(role() == 'Admin') {
-                    redirect('/BnL/admin/dashboard');
+                    redirect('/BnL/admin/home');
                   } if(role() == 'Staff') {
                     redirect('/BnL/admin/products');
                   } if(role() == 'Shipper') {

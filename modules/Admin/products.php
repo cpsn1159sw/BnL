@@ -49,7 +49,7 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff')) {
       <h1><a href="/BnL/public/home" target="_blank" class="logo">BnL</a></h1>
       <ul class="list-unstyled components mb-5">
         <li class="">
-          <a href="dashboard"><span class="tf-ion-ios-home"></span> Home</a>
+          <a href="home"><span class="tf-ion-ios-home"></span> Home</a>
         </li>
         <li class="">
           <a href="hrm"><span class="tf-ion-android-people"></span> HRM</a>
@@ -59,9 +59,6 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff')) {
         </li>
         <li class="">
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
-        </li>
-        <li class="">
-          <a href="exchange"><span class="tf-ion-reply"></span> Exchange</a>
         </li>
         <li class="">
           <a href="orders"><span class="tf-ion-tshirt"></span> Orders</a>
@@ -107,9 +104,52 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff')) {
         </div>
 
 <!-- Nội dung của dashboard -->
-      <h2 class="mb-4">Sidebar #07</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h2 class="mb-4">BnL Products</h2>
+
+        <?php
+        $categories = getRows("SELECT * FROM categories");
+
+        // Check if a category is selected
+        $selectedCategory = isset($_POST['category']) ? $_POST['category'] : '';
+        ?>
+        <form method="POST" action="">
+          <label for="category" class="form-label">Categories:</label>
+          <select name="category" class="form-select" onchange="this.form.submit()">
+            <option value="">Select a category</option>
+            <?php 
+             foreach ($categories as $category) :
+              $selected = ($category['Name'] == $selectedCategory) ? 'selected' : '';
+              ?>
+            <option value='<?php echo $category['Name'] ?>' <?php echo $selected ?>><?php echo $category['Name'] ?></option>
+            <?php 
+          endforeach;
+          ?>
+          </select>
+        </form>
+        <?php
+        // Display products based on the selected category
+        if (!empty($selectedCategory)) {
+            $products = getRows("SELECT p.* FROM products p INNER JOIN categories c ON c.CategoryID = p.CategoryID WHERE c.Name = '$selectedCategory'" );
+        
+            if ($products) {
+                echo '<ul>';
+                foreach ($products as $product) {
+                    echo '<li>';
+                    echo '<h3>' . htmlspecialchars($product['Name'], ENT_QUOTES, 'UTF-8') . '</h3>';
+                    echo '<p>Price: ' . htmlspecialchars($product['Price'], ENT_QUOTES, 'UTF-8') . '</p>';
+                    echo '<p>Description: ' . htmlspecialchars($product['Description'], ENT_QUOTES, 'UTF-8') . '</p>';
+                    echo '<p>Size: ' . htmlspecialchars($product['Size'], ENT_QUOTES, 'UTF-8') . '</p>';
+                    echo '<p>StockQuantity: ' . htmlspecialchars($product['StockQuantity'], ENT_QUOTES, 'UTF-8') . '</p>';
+                    echo '</li>';
+                }
+                echo '</ul>';
+            } else {
+                echo '<p>No products found in this category.</p>';
+            }
+        }
+        ?>
+      </select>
+
     </div>
   </div>
 </body>

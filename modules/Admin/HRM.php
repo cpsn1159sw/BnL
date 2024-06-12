@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
       <h1><a href="/BnL/public/home" target="_blank" class="logo">BnL</a></h1>
       <ul class="list-unstyled components mb-5">
         <li class="">
-          <a href="dashboard"><span class="tf-ion-ios-home"></span> Home</a>
+          <a href="home"><span class="tf-ion-ios-home"></span> Home</a>
         </li>
         <li class="active">
           <a href="hrm"><span class="tf-ion-android-people"></span> HRM</a>
@@ -69,9 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
         </li>
         <li class="">
           <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
-        </li>
-        <li class="">
-          <a href="exchange"><span class="tf-ion-reply"></span> Exchange</a>
         </li>
         <li class="">
           <a href="orders"><span class="tf-ion-tshirt"></span> Orders</a>
@@ -144,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
           WHERE FullName LIKE '%$search%' OR Email LIKE '%$search%' OR Phone LIKE '%$search%'
           ORDER BY update_at";
         } else {
-          $query = "SELECT * FROM administrator ORDER BY update_at";
+          $query = "SELECT * FROM administrator ORDER BY create_at";
         }
         // Truy vấn bảng 
         $list = getRows($query);
@@ -154,7 +151,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
           if (!empty($list)) :
             $count = 0;
             foreach ($list as $item) :
-              if ($item['Role'] != 'Admin') :
                 $count++;
           ?>
                 <tr>
@@ -176,7 +172,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
                   </td>
                 </tr>
             <?php
-              endif;
             endforeach;
           else :
             ?>
