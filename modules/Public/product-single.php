@@ -115,7 +115,17 @@ mysqli_close($connection);
 							<input id="product-quantity" type="text" value="0" name="product-quantity">
 						</div>
 					</div>
-					<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" class="btn btn-main mt-20">Add To Cart</a>
+					<?php
+					if (!isLogin()) {
+					?>
+						<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>"><i class="btn btn-main mt-20" aria-hidden="true">Add To Cart</i></a>
+					<?php
+					} else {
+					?>
+						<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" target="_blank"><i class="tbtn btn-main mt-20" aria-hidden="true">Add To Cart</i></a>
+					<?php
+					}
+					?>
 				</div>
 			</div>
 		</div>

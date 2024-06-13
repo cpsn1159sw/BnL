@@ -53,7 +53,17 @@ if (!isLogin()) {
 												</span>
 											</li>
 											<li>
-												<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>"><i class="tf-ion-android-cart"></i></a>
+												<?php
+                                                if (!isLogin()) {
+                                                ?>
+                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                <?php
+                                                }
+                                                ?>											
 											</li>
 										</ul>
 									</div>
@@ -85,7 +95,17 @@ if (!isLogin()) {
 														<p class="product-short-description">
 															<?php echo $item['Description']; ?>
 														</p>
-														<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>" class="btn btn-main">Add To Cart</a>
+														<?php
+                                                        if (!isLogin()) {
+                                                        ?>
+                                                            <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
+                                                        <?php
+                                                        } else {
+                                                        ?>
+                                                            <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank" class="btn btn-main">Add To Cart</a>
+                                                        <?php
+                                                        }
+                                                        ?>
 														<a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
 													</div>
 												</div>
