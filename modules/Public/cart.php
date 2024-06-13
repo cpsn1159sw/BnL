@@ -87,10 +87,10 @@ if (!empty($smg)) {
                                                         <td><?php echo $item['Price']; ?></td>
                                                         <td><?php echo $item['Discount']; ?></td>
                                                         <td>
-															<input style="width: 80px;" type="number" value="<?php echo $item['Quantity']; ?>" min="1"> <a href="cart-update?id=<?php echo $item['ProductID']; ?>" class="btn btn-warning">Update</a>        
+															<input style="width: 80px;" name="quantity" type="number" value="<?php echo $item['Quantity']; ?>" min="1"> <a href="cart-update?id=<?php echo $item['ProductID']; ?>" class="btn btn-warning">Update</a>        
                                                         </td>
                                                         <td>
-                                                            <a class="product-remove" onclick="return confirm('Are you sure you want to remove?')" href="cart-remove?id=<?php echo $item['ProductID']; ?>">Remove</a>
+                                                            <a class="product-remove" onclick="return confirm('Are you sure you want to remove?')" href="cart-remove?id=<?php echo $item['ProductID'];?>&q=<?php echo $item['Quantity'];?>">Remove</a>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>												

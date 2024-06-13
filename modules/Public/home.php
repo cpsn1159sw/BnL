@@ -107,9 +107,9 @@ $smg_type = getFlashData('smg_type');
             </div>
             <div class="row">
                 <?php
-                 if (!empty($smg)) {
+                if (!empty($smg)) {
                     getSmg($smg, $smg_type);
-                 }
+                }
                 $trendylist = getRows("SELECT * FROM products");
                 if (!empty($trendylist)) :
                     foreach ($trendylist as $index => $item) :
@@ -125,14 +125,24 @@ $smg_type = getFlashData('smg_type');
                                                     <i class="tf-ion-ios-search-strong"></i>
                                                 </span>
                                             </li>
-                                            <li>
-                                                <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                            <li><?php
+                                                if (!isLogin()) {
+                                                ?>
+                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                <?php
+                                                }
+                                                ?>
+
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="product-content">
-                                    <h4><a href="product-single&id=<?php echo $item["ProductID"];?>"><?php echo $item['Name']; ?></a></h4>
+                                    <h4><a href="product-single&id=<?php echo $item["ProductID"]; ?>"><?php echo $item['Name']; ?></a></h4>
                                     <p class="price"><?php echo $item['Price']; ?></p>
                                 </div>
                             </div>
@@ -158,7 +168,7 @@ $smg_type = getFlashData('smg_type');
                                                         <p class="product-short-description">
                                                             <?php echo $item['Description']; ?>
                                                         </p>
-                                                        <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>" class="btn btn-main">Add To Cart</a>
+                                                        <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
                                                         <a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
                                                     </div>
                                                 </div>
@@ -203,7 +213,7 @@ $smg_type = getFlashData('smg_type');
                                                 </span>
                                             </li>
                                             <li>
-                                                <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>"><i class="tf-ion-android-cart"></i></a>
+                                                <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart"></i></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -235,7 +245,7 @@ $smg_type = getFlashData('smg_type');
                                                         <p class="product-short-description">
                                                             <?php echo $item['Description']; ?>
                                                         </p>
-                                                        <a href="/BnL/public/cart&id=<?php echo $item["ProductID"];?>" class="btn btn-main">Add To Cart</a>
+                                                        <a href="/BnL/public/cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
                                                         <a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
                                                     </div>
                                                 </div>

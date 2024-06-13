@@ -12,15 +12,16 @@ if (!isLogin()) {
     $filterAll = filter();
     if (!empty($filterAll['id'])) {
         $productID = $filterAll['id'];
+        $Quantity = $filterAll['q'];
         $tokenLogin = getSession('logintokenc');
 
         $info = getRows("SELECT * FROM cart WHERE ProductID = $productID AND Token = '$tokenLogin'");
 
             $dataUpdate = [
-                'Quantity' => $filterAll['quantity'],
+                'Quantity' => $Quantity,
             ];
 
-            $condition = "ProductID = $productID";
+            $condition = "ProductID = $productID AND Token = $tokenLogin";
             $insertStatus = update('cart', $dataUpdate, $condition);
             if ($insertStatus) {
                 setFlashData('smg', 'Update successful!');
@@ -29,7 +30,6 @@ if (!isLogin()) {
                 setFlashData('smg', 'The system is experiencing issues. Please try again later!');
                 setFlashData('smg_type', 'danger');
             }
-
         redirect('/BnL/public/cart');
     }
 }
