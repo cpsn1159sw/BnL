@@ -22,11 +22,11 @@ if (!isLogin()) {
 			<div class="row">
 				<div class="col-md-12">
 					<div class="content">
-						<h1 class="page-name">Hats</h1>
+						<h1 class="page-name">Tote bags</h1>
 						<ol class="breadcrumb">
 							<li><a href="/BnL/Public/home">Home</a></li>
 							<li><a href="/BnL/Public/shop">Shop</a></li>
-							<li class="active">Hats</li>
+							<li class="active">Tote Bags</li>
 						</ol>
 					</div>
 				</div>
@@ -37,11 +37,8 @@ if (!isLogin()) {
 		<div class="container">
 			<div class="row">
 				<?php
-				$list = getRows("SELECT * FROM products WHERE categoryid = 8");
+				$list = getRows("SELECT * FROM products WHERE categoryid = 4");
 				if (!empty($list)) :
-					$list = array('\images\Hat\3.jpg','\images\Hat\2.jpg');
-					$firstImageUrl = $list[0];
-
 					foreach ($list as $index => $item) :
 				?>
 						<div class="col-md-4">
@@ -56,10 +53,7 @@ if (!isLogin()) {
 												</span>
 											</li>
 											<li>
-												<a href="#"><i class="tf-ion-ios-heart"></i></a>
-											</li>
-											<li>
-												<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart"></i></a>
+												<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>"><i class="tf-ion-android-cart"></i></a>
 											</li>
 										</ul>
 									</div>
@@ -91,7 +85,7 @@ if (!isLogin()) {
 														<p class="product-short-description">
 															<?php echo $item['Description']; ?>
 														</p>
-														<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
+														<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>" class="btn btn-main">Add To Cart</a>
 														<a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
 													</div>
 												</div>

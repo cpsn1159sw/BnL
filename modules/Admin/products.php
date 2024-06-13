@@ -11,149 +11,215 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff')) {
   redirect('/BnL/admin/logout');
 }
 
+$search = '';
+$selectedCategory = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if (isset($_POST['search'])) {
+    $search = $_POST['search'];
+  }
+
+  if (isset($_POST['category'])) {
+    $selectedCategory = $_POST['category'];
+  }
+}
+
+$categories = getRows("SELECT * FROM categories");
+
 ?>
 <!doctype html>
 <html lang="en">
-
 <head>
   <title>BnL - Products</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="author" content="BnL">
-
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css">
-  
-  <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
-  
-  <!-- bootstrap.min css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
-
-  <!-- Animate css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
-  
-  <!-- Slick Carousel -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
-  
-  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
-
+  <style>
+    .table-responsive {
+      overflow-x: auto;
+    }
+    .form-select, .form-control {
+      width: 100%;
+    }
+  </style>
 </head>
-
 <body>
-
   <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar" class="active">
       <h1><a href="/BnL/public/home" target="_blank" class="logo">BnL</a></h1>
       <ul class="list-unstyled components mb-5">
-        <li class="">
-          <a href="home"><span class="tf-ion-ios-home"></span> Home</a>
-        </li>
-        <li class="">
-          <a href="hrm"><span class="tf-ion-android-people"></span> HRM</a>
-        </li>
-        <li class="active">
-          <a href="products"><span class="tf-basket"></span> Products</a>
-        </li>
-        <li class="">
-          <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
-        </li>
-        <li class="">
-          <a href="orders"><span class="tf-ion-tshirt"></span> Orders</a>
-        </li>
+        <li><a href="home"><span class="tf-ion-ios-home"></span> Home</a></li>
+        <li><a href="hrm"><span class="tf-ion-android-people"></span> HRM</a></li>
+        <li class="active"><a href="products"><span class="tf-basket"></span> Products</a></li>
+        <li><a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a></li>
+        <li><a href="orders"><span class="tf-ion-tshirt"></span> Orders</a></li>
       </ul>
     </nav>
-
-    <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-     <div class="container-fluid">
+      <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            
-                <button type="button" id="sidebarCollapse" class="btn btn-success">
-                  <i class="tf-ion-navicon-round"></i>
-                  <span class="sr-only">Toggle Menu</span>
-                </button>
-
-              <div class="ml-auto">
-                <ul class="nav navbar-nav">
-                  <li class="dropdown dropdown-slide">
-                  <?php 
-                      $adminQuery = oneRow("SELECT administrator.email, administrator.role
-                      FROM administrator
-                      INNER JOIN logintokena ON administrator.adminid = logintokena.adminid
-                      WHERE logintokena.token = '" . getSession('logintokena') . "'");
-                      $email =  $adminQuery['email'];
-                      $role = $adminQuery['role'];
-                      $parts = explode("@", $email);
-                      $username = $parts[0];
-                      echo $username. ' ('. $role . ')';	
-                    ?>
-                    <span class="tf-ion-ios-arrow-down"></span>
-                    <ul class="dropdown-menu ml-0">
-                      <li><a href="/BnL/admin/create">Create Account</a></li>
-                      <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
-                      <li><a href="/BnL/admin/logout">Logout</a></li>
-                    </ul>
-                  </li>
+          <button type="button" id="sidebarCollapse" class="btn btn-success">
+            <i class="tf-ion-navicon-round"></i>
+            <span class="sr-only">Toggle Menu</span>
+          </button>
+          <div class="ml-auto">
+            <ul class="nav navbar-nav">
+              <li class="dropdown dropdown-slide">
+                <?php 
+                  $adminQuery = oneRow("SELECT administrator.email, administrator.role FROM administrator INNER JOIN logintokena ON administrator.adminid = logintokena.adminid WHERE logintokena.token = '" . getSession('logintokena') . "'");
+                  $email = $adminQuery['email'];
+                  $role = $adminQuery['role'];
+                  $parts = explode("@", $email);
+                  $username = $parts[0];
+                  echo $username . ' (' . $role . ')';	
+                ?>
+                <span class="tf-ion-ios-arrow-down"></span>
+                <ul class="dropdown-menu ml-0">
+                  <li><a href="/BnL/admin/create">Create Account</a></li>
+                  <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
+                  <li><a href="/BnL/admin/logout">Logout</a></li>
                 </ul>
-              </div>
-
-          </nav>
-        </div>
-
-<!-- Nội dung của dashboard -->
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
       <h2 class="mb-4">BnL Products</h2>
-
-        <?php
-        $categories = getRows("SELECT * FROM categories");
-
-        // Check if a category is selected
-        $selectedCategory = isset($_POST['category']) ? $_POST['category'] : '';
-        ?>
-        <form method="POST" action="">
-          <label for="category" class="form-label">Categories:</label>
-          <select name="category" class="form-select" onchange="this.form.submit()">
-            <option value="">Select a category</option>
-            <?php 
-             foreach ($categories as $category) :
-              $selected = ($category['Name'] == $selectedCategory) ? 'selected' : '';
+      <p><a href="/BnL/products/create" class="btn btn-success">Add product <span class="tf-ion-plus"></span></a></p>
+      <div class="row">
+        <div class="col-lg-2">
+          <form method="POST" action="">
+            <label for="category" class="form-label">Categories:</label>
+            <select name="category" class="form-select" onchange="this.form.submit()">
+              <option value="">Select a category</option>
+              <?php 
+              foreach ($categories as $category) :
+                $selected = ($category['Name'] == $selectedCategory) ? 'selected' : '';
               ?>
-            <option value='<?php echo $category['Name'] ?>' <?php echo $selected ?>><?php echo $category['Name'] ?></option>
+                <option value='<?php echo htmlspecialchars($category['Name'], ENT_QUOTES, 'UTF-8'); ?>' <?php echo $selected ?>><?php echo htmlspecialchars($category['Name'], ENT_QUOTES, 'UTF-8'); ?></option>
+              <?php endforeach; ?>
+            </select>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <form action="" method="post" class="mt-3 mb-lg-3">
+            <input type="hidden" name="category" value="<?php echo htmlspecialchars($selectedCategory, ENT_QUOTES, 'UTF-8'); ?>">
+            <input type="search" name="search" value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th width="2%">ID</th>
+              <th>Product Name</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th width="2%">Size</th>
+              <th>Stock Quantity</th>
+              <th>Image</th>
+              <th width="5%">Edit</th>
+            </tr>
+          </thead>
+          <tbody>
             <?php 
-          endforeach;
-          ?>
-          </select>
-        </form>
-        <?php
-        // Display products based on the selected category
-        if (!empty($selectedCategory)) {
-            $products = getRows("SELECT p.* FROM products p INNER JOIN categories c ON c.CategoryID = p.CategoryID WHERE c.Name = '$selectedCategory'" );
-        
-            if ($products) {
-                echo '<ul>';
-                foreach ($products as $product) {
-                    echo '<li>';
-                    echo '<h3>' . htmlspecialchars($product['Name'], ENT_QUOTES, 'UTF-8') . '</h3>';
-                    echo '<p>Price: ' . htmlspecialchars($product['Price'], ENT_QUOTES, 'UTF-8') . '</p>';
-                    echo '<p>Description: ' . htmlspecialchars($product['Description'], ENT_QUOTES, 'UTF-8') . '</p>';
-                    echo '<p>Size: ' . htmlspecialchars($product['Size'], ENT_QUOTES, 'UTF-8') . '</p>';
-                    echo '<p>StockQuantity: ' . htmlspecialchars($product['StockQuantity'], ENT_QUOTES, 'UTF-8') . '</p>';
-                    echo '</li>';
-                }
-                echo '</ul>';
-            } else {
-                echo '<p>No products found in this category.</p>';
-            }
-        }
-        ?>
-      </select>
+            if (!empty($selectedCategory)) {
+              $query = "SELECT p.* FROM products p INNER JOIN categories c ON c.CategoryID = p.CategoryID WHERE c.Name = '$selectedCategory'";
+              
+              if (!empty($search)) {
+                $query .= " AND p.Name LIKE '%$search%'";
+              } 
+              
+              $list = getRows($query);
 
+              if (!empty($list)) :
+                $count = 0;
+                foreach ($list as $item) :
+                  $count++;
+            ?>
+                  <tr>
+                    <td><?php echo $count; ?></td>
+                    <td><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($item['Description'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($item['Size'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($item['StockQuantity'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['image-url'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?>" width="100"></td>
+                    <td>
+                      <div class="btn-group" role="group">
+                        <a href="/BnL/products/edit&id=<?php echo $item['ProductID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                <?php
+                endforeach;
+              else :
+                ?>
+                <tr>
+                  <td colspan="9">
+                    <div class="alert alert-danger text-center">No products found</div>
+                  </td>
+                </tr>
+              <?php
+              endif;
+            } else {
+              $query = "SELECT p.* FROM products p INNER JOIN categories c ON c.CategoryID = p.CategoryID";
+              
+              if (!empty($search)) {
+                $query .= " AND p.Name LIKE '%$search%'";
+              } 
+              
+              $list = getRows($query);
+
+              if (!empty($list)) :
+                $count = 0;
+                foreach ($list as $item) :
+                  $count++;
+            ?>
+                  <tr>
+                    <td><?php echo $count; ?></td>
+                    <td><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($item['Description'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($item['Size'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($item['StockQuantity'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['image-url'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?>" width="100"></td>
+                    <td>
+                      <div class="btn-group" role="group">
+                        <a href="/BnL/products/edit&id=<?php echo $item['ProductID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                <?php
+                endforeach;
+              else :
+                ?>
+                <tr>
+                  <td colspan="9">
+                    <div class="alert alert-danger text-center">No products found</div>
+                  </td>
+                </tr>
+              <?php
+              endif;
+            }
+            ?>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>
-
 </html>
 
 <?php layouts('footer_dashboard'); ?>

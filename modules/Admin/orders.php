@@ -5,7 +5,6 @@ if (!defined('_CODE')) {
 }
 
 if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
-
 } else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
@@ -18,7 +17,7 @@ $smg_type = getFlashData('smg_type');
 
 $search = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
-    $search = $_POST['search'];
+  $search = $_POST['search'];
 }
 
 ?>
@@ -33,23 +32,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
   <meta name="author" content="BnL">
 
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css">
-  
-  <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
-  
-  <!-- bootstrap.min css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
-
-  <!-- Animate css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
-  
-  <!-- Slick Carousel -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
-  
-  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
 
+  <style>
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    .form-control {
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      white-space: nowrap;
+    }
+  </style>
 </head>
 
 <body>
@@ -78,67 +81,65 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-     <div class="container-fluid">
+      <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            
-                <button type="button" id="sidebarCollapse" class="btn btn-success">
-                  <i class="tf-ion-navicon-round"></i>
-                  <span class="sr-only">Toggle Menu</span>
-                </button>
 
-              <div class="ml-auto">
-                <ul class="nav navbar-nav">
-                  <li class="dropdown dropdown-slide">
-                  <?php 
-                      $adminQuery = oneRow("SELECT administrator.email, administrator.role
+          <button type="button" id="sidebarCollapse" class="btn btn-success">
+            <i class="tf-ion-navicon-round"></i>
+            <span class="sr-only">Toggle Menu</span>
+          </button>
+
+          <div class="ml-auto">
+            <ul class="nav navbar-nav">
+              <li class="dropdown dropdown-slide">
+                <?php
+                $adminQuery = oneRow("SELECT administrator.email, administrator.role
                       FROM administrator
                       INNER JOIN logintokena ON administrator.adminid = logintokena.adminid
                       WHERE logintokena.token = '" . getSession('logintokena') . "'");
-                      $email =  $adminQuery['email'];
-                      $role = $adminQuery['role'];
-                      $parts = explode("@", $email);
-                      $username = $parts[0];
-                      echo $username. ' ('. $role . ')';	
-                    ?>
-                    <span class="tf-ion-ios-arrow-down"></span>
-                    <ul class="dropdown-menu ml-0">
-                      <li><a href="/BnL/admin/create">Create Account</a></li>
-                      <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
-                      <li><a href="/BnL/admin/logout">Logout</a></li>
-                    </ul>
-                  </li>
+                $email =  $adminQuery['email'];
+                $role = $adminQuery['role'];
+                $parts = explode("@", $email);
+                $username = $parts[0];
+                echo $username . ' (' . $role . ')';
+                ?>
+                <span class="tf-ion-ios-arrow-down"></span>
+                <ul class="dropdown-menu ml-0">
+                  <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
+                  <li><a href="/BnL/admin/forgot">Forgot Password</a></li>
+                  <li><a href="/BnL/admin/logout">Logout</a></li>
                 </ul>
-              </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
 
-          </nav>
-        </div>
-
-<!-- Nội dung của dashboard -->
+      <!-- Nội dung của dashboard -->
       <h2 class="mb-4">Orders</h2>
       <?php
       if (!empty($smg)) {
         getSmg($smg, $smg_type);
       }
       ?>
-     
-      <form action="" method="post" class="mt-3 mb-lg-2">
+      <form action="" method="post" class="mt-3 mb-lg-3">
         <input type="search" name="search" value="<?php echo htmlspecialchars($search); ?>" class="form-control" placeholder="Search...">
       </form>
-      <table class="table table-bordered" id="">
-        <thead>
-          <th width="2%">ID</th>
-          <th>Full Name</th>
-          <th>Address</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Order Date</th>
-          <th width="2%">Total</th>
-          <th>Status</th>
-        </thead>
-        <?php 
-        // Truy vấn dữ liệu
-        if (!empty($search)) {
-          $query = "SELECT c.FullName AS CustomerName,
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <th width="2%">ID</th>
+            <th>Full Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Order Date</th>
+            <th>Status</th>
+          </thead>
+          <?php
+          // Truy vấn dữ liệu
+          if (!empty($search)) {
+            $query = "SELECT c.FullName AS CustomerName,
                                 c.Address,
                                 c.Email,
                                 c.Phone,
@@ -161,8 +162,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
                             c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status, o.OrderID, o.CustomerID
                         ORDER BY 
                             o.OrderDate DESC";
-        } else {
-          $query = "SELECT c.FullName AS CustomerName,
+          } else {
+            $query = "SELECT c.FullName AS CustomerName,
                                 c.Address,
                                 c.Email,
                                 c.Phone,
@@ -184,61 +185,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
                             c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status, o.OrderID, o.CustomerID
                         ORDER BY 
                             o.OrderDate DESC";
-        }
+          }
 
-        $list = getRows($query);
-        ?>
-        <tbody>
-          <?php
-          if (!empty($list)) :
-            $count = 0;
-            foreach ($list as $item) :
-              $count++;
+          $list = getRows($query);
           ?>
+          <tbody>
+            <?php
+            if (!empty($list)) :
+              $count = 0;
+              foreach ($list as $item) :
+                $count++;
+            ?>
+                <tr>
+                  <td>
+                    <a href='/BnL/admin/orderdetails&id=<?php echo $item['OrderID']; ?>'>
+                      <?php echo $count; ?>
+                    </a>
+                  </td>
+                  <td><?php echo $item['CustomerName']; ?></td>
+                  <td><?php echo $item['Address']; ?></td>
+                  <td><?php echo $item['Email']; ?></td>
+                  <td><?php echo $item['Phone']; ?></td>
+                  <td><?php echo $item['OrderDate']; ?></td>
+                  <td>
+                    <form method="POST" action="/BnL/admin/orders_status">
+                      <input type="hidden" name="orderId" value="<?php echo $item['OrderID']; ?>">
+                      <input type="hidden" name="customerId" value="<?php echo $item['CustomerID']; ?>">
+                      <div class="form-group">
+                        <select name="status" class="form-control" onchange="this.form.submit()">
+                          <?php
+                          $statusOptions = ['Delivered', 'Pending', 'Cancelled']; // Các tùy chọn trạng thái
+                          foreach ($statusOptions as $option) {
+                            $selected = $item['Status'] == $option ? 'selected' : '';
+                            echo "<option value='$option' $selected>$option</option>";
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+              <?php
+              endforeach;
+            else :
+              ?>
               <tr>
-                <td>
-                  <a href='/BnL/admin/orderdetails&id=<?php echo $item['OrderID'];?>'>
-                    <?php echo $count; ?>
-                  </a>
-                </td>
-                <td><?php echo $item['CustomerName']; ?></td>
-                <td><?php echo $item['Address']; ?></td>
-                <td><?php echo $item['Email']; ?></td>
-                <td><?php echo $item['Phone']; ?></td>
-                <td><?php echo $item['OrderDate']; ?></td>
-                <td><?php echo $item['TotalAmount']; ?></td>
-                <td>
-                  <form method="POST" action="/BnL/admin/orders_status">
-                    <input type="hidden" name="orderId" value="<?php echo $item['OrderID']; ?>">
-                    <input type="hidden" name="customerId" value="<?php echo $item['CustomerID']; ?>">
-                    <div class="form-group">
-                      <select name="status" class="form-control" onchange="this.form.submit()">
-                        <?php 
-                        $statusOptions = ['Delivered', 'Pending', 'Cancelled']; // Các tùy chọn trạng thái
-                        foreach ($statusOptions as $option) {
-                          $selected = $item['Status'] == $option ? 'selected' : '';
-                          echo "<option value='$option' $selected>$option</option>";
-                        }
-                        ?>
-                      </select>
-                    </div>
-                  </form>
+                <td colspan="9">
+                  <div class="alert alert-danger text-center">Empty</div>
                 </td>
               </tr>
             <?php
-            endforeach;
-          else :
+            endif;
             ?>
-            <tr>
-              <td colspan="9">
-                <div class="alert alert-danger text-center">Empty</div>
-              </td>
-            </tr>
-          <?php
-          endif;
-          ?>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>

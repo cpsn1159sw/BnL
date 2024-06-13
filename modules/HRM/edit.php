@@ -151,10 +151,10 @@ if(!empty($info)) {
                 </div>
                 <div class="form-group">
                     <input name="address" type="text" class="form-control" placeholder="Address" value="<?php echo old_data('Address', $old) ?>">
+                    <?php
+                    echo form_error('address', '<span class="er">', '</span>', $errors);
+                    ?>
                 </div>
-                <?php
-                echo form_error('address', '<span class="er">', '</span>', $errors);
-                ?>
                 <div class="form-group">
                     <input name="email" type="email" class="form-control" placeholder="Email" value="<?php echo old_data('Email', $old) ?>">
                     <?php

@@ -54,9 +54,6 @@ if (!isLogin()) {
 												</span>
 											</li>
 											<li>
-												<a href="#"><i class="tf-ion-ios-heart"></i></a>
-											</li>
-											<li>
 												<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>"><i class="tf-ion-android-cart"></i></a>
 											</li>
 										</ul>

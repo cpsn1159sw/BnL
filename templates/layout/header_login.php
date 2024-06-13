@@ -67,7 +67,7 @@
 											<span>1 x</span>
 											<span>1250.00</span>
 										</div>
-										<h5><strong>$1200</strong></h5>
+										<h5><strong>$1250.00</strong></h5> 
 									</div>
 									<a href="#!" class="remove"><i class="tf-ion-close"></i></a>
 								</div><!-- / Cart Item -->

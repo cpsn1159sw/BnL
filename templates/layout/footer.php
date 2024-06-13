@@ -29,7 +29,13 @@
 						<a href="/BnL/public/contact">CONTACT</a>
 					</li>
 					<li>
+						<a href="/BnL/public/about">ABOUT</a>
+					</li>
+					<li>
 						<a href="/BnL/public/shop">SHOP</a>
+					</li>
+					<li>
+						<a href="/BnL/public/faq">FAQ</a>
 					</li>
 					<li>
 						<a href="/Bnl/public/">PRIVACY POLICY</a>

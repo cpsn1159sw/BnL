@@ -61,7 +61,7 @@
 									<span class="total-price"></span>
 								</div>
 								<ul class="text-center cart-buttons">
-									<li><a href="/BnL/user/login" class="btn btn-small">View Cart</a></li>
+									<li><a href="/BnL/public/cart" class="btn btn-small">View Cart</a></li>
 									<li><a href="/BnL/user/login" class="btn btn-small btn-solid-border">Checkout</a></li>
 								</ul>
 							</div>

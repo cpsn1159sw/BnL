@@ -22,11 +22,11 @@ if (!isLogin()) {
 			<div class="row">
 				<div class="col-md-12">
 					<div class="content">
-						<h1 class="page-name">Tote bags</h1>
+						<h1 class="page-name">Satchel bags</h1>
 						<ol class="breadcrumb">
 							<li><a href="/BnL/Public/home">Home</a></li>
 							<li><a href="/BnL/Public/shop">Shop</a></li>
-							<li class="active">Tote Bags</li>
+							<li class="active">Satchel bags</li>
 						</ol>
 					</div>
 				</div>
@@ -37,7 +37,7 @@ if (!isLogin()) {
 		<div class="container">
 			<div class="row">
 				<?php
-				$list = getRows("SELECT * FROM products WHERE categoryid = 4");
+				$list = getRows("SELECT * FROM products WHERE categoryid = 5");
 				if (!empty($list)) :
 					foreach ($list as $index => $item) :
 				?>
@@ -51,9 +51,6 @@ if (!isLogin()) {
 												<span data-toggle="modal" data-target="#product-modal-<?php echo $index; ?>">
 													<i class="tf-ion-ios-search-strong"></i>
 												</span>
-											</li>
-											<li>
-												<a href="#"><i class="tf-ion-ios-heart"></i></a>
 											</li>
 											<li>
 												<a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>"><i class="tf-ion-android-cart"></i></a>

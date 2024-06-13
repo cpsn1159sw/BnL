@@ -143,7 +143,7 @@ $old = getFlashData('old');
             ?>
             <form class="text-left clearfix" action="" method="post">
               <div class="form-group">
-                <input name="fullname" type="text" class="form-control" placeholder="Họ và tên" value="<?php echo old_data('fullname', $old) ?>">
+                <input name="fullname" type="text" class="form-control" placeholder="Full Name" value="<?php echo old_data('fullname', $old) ?>">
                 <?php
                 // echo (!empty($errors['fullname'])) ? '<span class="er">'.reset($errors['fullname']).'</span>' : null;
                 echo form_error('fullname', '<span class="er">', '</span>', $errors);

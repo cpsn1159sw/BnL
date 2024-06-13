@@ -5,7 +5,7 @@ if (!defined('_CODE')) {
 }
 
 if (isLoginA() && role() == 'Admin') {
-
+  // ...
 } else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
@@ -33,23 +33,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
   <meta name="author" content="BnL">
 
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/dashboard.css">
-
-  <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/themefisher-font/style.css">
-
-  <!-- bootstrap.min css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/bootstrap/css/bootstrap.min.css">
-
-  <!-- Animate css -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/animate/animate.css">
-
-  <!-- Slick Carousel -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick.css">
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/plugins/slick/slick-theme.css">
-
-  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
 
+  <style>
+    .table-responsive {
+      overflow-x: auto;
+    }
+    .form-select, .form-control {
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
@@ -76,11 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
       </ul>
     </nav>
 
-    <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
           <button type="button" id="sidebarCollapse" class="btn btn-success">
             <i class="tf-ion-navicon-round"></i>
             <span class="sr-only">Toggle Menu</span>
@@ -112,8 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
         </nav>
       </div>
 
-      <!-- Nội dung của dashboard -->
-
       <h2 class="mb-4">Human Resources Management</h2>
       <?php
       if (!empty($smg)) {
@@ -121,33 +115,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
       }
       ?>
       <p><a href="/BnL/hrm/create" target="_blank" class="btn btn-success">Add account <span class="tf-ion-plus"></span></a></p>
-      <form action="" method="post" class="mt-3 mb-lg-2">
+      <form action="" method="post" class="mt-3 mb-lg-3">
         <input type="search" name="search" value="<?php echo htmlspecialchars($search); ?>" class="form-control" placeholder="Search...">
       </form>
-      <table class="table table-bordered" id="">
-        <thead>
-          <th>ID</th>
-          <th>Full name</th>
-          <th>Address</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Role</th>
-          <th width="5%">Edit</th>
-          <th width="5%">Delete</th>
-        </thead>
-        <?php
-         if (!empty($search)) {
-          $query = "SELECT * FROM administrator 
-          WHERE FullName LIKE '%$search%' OR Email LIKE '%$search%' OR Phone LIKE '%$search%'
-          ORDER BY update_at";
-        } else {
-          $query = "SELECT * FROM administrator ORDER BY create_at";
-        }
-        // Truy vấn bảng 
-        $list = getRows($query);
-        ?>
-        <tbody>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Full name</th>
+              <th>Address</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th width="5%">Edit</th>
+              <th width="5%">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
           <?php
+          if (!empty($search)) {
+            $query = "SELECT * FROM administrator 
+                      WHERE FullName LIKE '%$search%' OR Email LIKE '%$search%' OR Phone LIKE '%$search%'
+                      ORDER BY update_at";
+          } else {
+            $query = "SELECT * FROM administrator ORDER BY create_at";
+          }
+          $list = getRows($query);
           if (!empty($list)) :
             $count = 0;
             foreach ($list as $item) :
@@ -155,11 +149,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
           ?>
                 <tr>
                   <td><?php echo $count; ?></td>
-                  <td><?php echo $item['FullName']; ?></td>
-                  <td><?php echo $item['Address']; ?></td>
-                  <td><?php echo $item['Email']; ?></td>
-                  <td><?php echo $item['Phone']; ?></td>
-                  <td><?php echo $item['Role']; ?></td>
+                  <td><?php echo htmlspecialchars($item['FullName'], ENT_QUOTES, 'UTF-8'); ?></td>
+                  <td><?php echo htmlspecialchars($item['Address'], ENT_QUOTES, 'UTF-8'); ?></td>
+                  <td><?php echo htmlspecialchars($item['Email'], ENT_QUOTES, 'UTF-8'); ?></td>
+                  <td><?php echo htmlspecialchars($item['Phone'], ENT_QUOTES, 'UTF-8'); ?></td>
+                  <td><?php echo htmlspecialchars($item['Role'], ENT_QUOTES, 'UTF-8'); ?></td>
                   <td>
                     <div class="btn-group" role="group">
                       <a href="/BnL/hrm/edit&id=<?php echo $item['AdminID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
@@ -183,8 +177,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
           <?php
           endif;
           ?>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>

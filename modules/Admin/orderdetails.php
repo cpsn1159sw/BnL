@@ -17,12 +17,11 @@ if(isGet()) {
     $filterAll = filter();
     if (!empty($filterAll['id'])) {
         $orderId = $filterAll['id'];
-        $info = getRows("SELECT c.FullName AS CustomerName,
+        $infoCus = getRows("SELECT c.FullName AS CustomerName,
                                 c.Address,
                                 c.Email,
                                 c.Phone,
                                 o.OrderDate,
-                                GROUP_CONCAT(p.Name) AS ProductsOrdered,
                                 SUM(od.Quantity * p.Price) AS TotalAmount,
                                 o.Status
                         FROM 
@@ -35,10 +34,20 @@ if(isGet()) {
                             Products p ON od.ProductID = p.ProductID
                         WHERE o.OrderID = $orderId
                         GROUP BY 
-                            c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status
-                        ORDER BY 
-                            o.OrderDate DESC");
-        setSession('orderdetails', $info);
+                            c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status");
+        $infoOD = getRows("SELECT p.Name AS ProductsOrdered,
+                                  od.Quantity,
+                                  p.Price AS UnitPrice,
+                                  (od.Quantity * p.Price) AS TotalAmount    
+                            FROM 
+                                Orders o
+                            JOIN 
+                                OrderDetails od ON o.OrderID = od.OrderID
+                            JOIN 
+                                Products p ON od.ProductID = p.ProductID
+                            WHERE o.OrderID = $orderId");
+        setSession('customer', $infoCus);                  
+        setSession('orderdetails', $infoOD);
     }                    
 }
 $smg = getFlashData('smg');
@@ -87,46 +96,80 @@ $smg_type = getFlashData('smg_type');
                 getSmg($smg, $smg_type);
             }
             $od = getSession('orderdetails');
-                foreach ($od as $item) :
+            $cus = getSession('customer');
+
+            // Group products by name
+            $groupedProducts = [];
+            foreach ($od as $odItem) {
+                if (isset($groupedProducts[$odItem['ProductsOrdered']])) {
+                    $groupedProducts[$odItem['ProductsOrdered']]['Quantity'] += $odItem['Quantity'];
+                    $groupedProducts[$odItem['ProductsOrdered']]['TotalAmount'] += $odItem['TotalAmount'];
+                } else {
+                    $groupedProducts[$odItem['ProductsOrdered']] = $odItem;
+                }
+            }
+
+            foreach ($cus as $cusItem) :
             ?>
             <form class="text-left clearfix" action="" method="post">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-lg-4">
                         <label for="">Customer Information</label>
                         <div class="form-group">
-                            <span>Name: </span><?php echo $item['CustomerName']; ?>
+                            <span>Name: </span><?php echo $cusItem['CustomerName']; ?>
                         </div>
                         <div class="form-group">
-                            <span>Address: </span><?php echo $item['Address']; ?>
+                            <span>Address: </span><?php echo $cusItem['Address']; ?>
                         </div>
                         <div class="form-group">
-                            <span>Email: </span><?php echo $item['Email']; ?>
+                            <span>Email: </span><?php echo $cusItem['Email']; ?>
                         </div>
                         <div class="form-group">
-                            <span>Phone: </span><?php echo $item['Phone']; ?>
+                            <span>Phone: </span><?php echo $cusItem['Phone']; ?>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-lg-6">
                         <label for="">Order Date</label>
                         <div class="form-group">
-                            <?php echo $item['OrderDate']; ?>
+                            <?php echo $cusItem['OrderDate']; ?>
                         </div>
                         <label for="">Products Ordered</label>
                         <div class="form-group">
-                            <?php echo $item['ProductsOrdered']; ?>
+                        <table class="table table-bordered" id="">
+                            <thead>
+                                <td width="10%">Product Name</td>
+                                <td width="3%">Quantity</td>
+                                <td width="3%">Unit Price</td>
+                                <td width="3%">Total</td>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($groupedProducts as $product) :
+                                ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($product['ProductsOrdered'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td><?php echo htmlspecialchars($product['Quantity'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td><?php echo htmlspecialchars($product['UnitPrice'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td><?php echo htmlspecialchars($product['TotalAmount'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <tr>
+                                <?php
+                                endforeach;
+                                ?>
+                            </tbody>
+                        </table>
                         </div>
-                        <label for="">Total</label>
+                        <label for="">Total Amount</label>
                         <div class="form-group">
-                            <?php echo $item['TotalAmount']; ?>
+                            <?php echo $cusItem['TotalAmount']; ?>
                         </div>
                         <label for="">Status</label>
                         <div class="form-group">
-                            <?php echo $item['Status']; ?>
+                            <?php echo $cusItem['Status']; ?>
                         </div>
                     </div>
                 </div>           
                 <?php  
-                endforeach;                                  
+                endforeach;                            
                 ?>
                 <a href="/BnL/admin/orders" class="btn btn-primary">Back</a>
             </form>
@@ -134,3 +177,7 @@ $smg_type = getFlashData('smg_type');
         </div>
     </div>
 </body>
+
+</html>
+
+<?php layouts('footer_dashboard'); ?>

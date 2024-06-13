@@ -13,7 +13,8 @@ if (!isLogin()) {
 } else {
     layouts('header_login', $data);
 }
-
+$smg = getFlashData('smg');
+$smg_type = getFlashData('smg_type');
 ?>
 
 <body id="body">
@@ -106,6 +107,9 @@ if (!isLogin()) {
             </div>
             <div class="row">
                 <?php
+                 if (!empty($smg)) {
+                    getSmg($smg, $smg_type);
+                 }
                 $trendylist = getRows("SELECT * FROM products");
                 if (!empty($trendylist)) :
                     foreach ($trendylist as $index => $item) :
@@ -122,10 +126,7 @@ if (!isLogin()) {
                                                 </span>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="tf-ion-ios-heart"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -202,9 +203,6 @@ if (!isLogin()) {
                                                 </span>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="tf-ion-ios-heart"></i></a>
-                                            </li>
-                                            <li>
                                                 <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>"><i class="tf-ion-android-cart"></i></a>
                                             </li>
                                         </ul>
@@ -237,7 +235,7 @@ if (!isLogin()) {
                                                         <p class="product-short-description">
                                                             <?php echo $item['Description']; ?>
                                                         </p>
-                                                        <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"];?>" class="btn btn-main">Add To Cart</a>
+                                                        <a href="/BnL/public/cart&id=<?php echo $item["ProductID"];?>" class="btn btn-main">Add To Cart</a>
                                                         <a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
                                                     </div>
                                                 </div>

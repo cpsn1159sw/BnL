@@ -78,7 +78,7 @@ if(!isLogin()) {
 						</li>
 						<li>
 							<i class="tf-ion-android-mail"></i>
-							<span>Email: vana@gmail.com</span>
+							<span>Email: cskhbandl@gmail.com</span>
 						</li>
 					</ul>
 					<!-- Footer Social Links -->

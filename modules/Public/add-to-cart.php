@@ -1,42 +1,65 @@
 <?php
-// Chặn truy cập hợp lệ
-// if (!defined('_CODE')) {
-//     die('Access denied...');
-// }
-// Kiểm tra xem session đã bắt đầu chưa
-if (session_status() == PHP_SESSION_NONE) {
-    // Nếu session chưa được bắt đầu, bắt đầu một session mới
-    session_start();
+if (!defined('_CODE')) {
+    die('Access denied...');
 }
+
+// Kiểm tra người dùng đã đăng nhập chưa
 if (!isLogin()) {
-    setFlashData('smg', 'You need to log in to your account first ');
+    setFlashData('smg', 'You need to log in to your account first');
     setFlashData('smg_type', 'danger');
-    getSmg($smg, $smg_type);
     redirect('/BnL/user/login');
 } else {
     if (isGet()) {
         $filterAll = filter();
         if (!empty($filterAll['id'])) {
             $productId = $filterAll['id'];
+
+            // Lấy thông tin sản phẩm từ cơ sở dữ liệu
             $info = getRows("SELECT * FROM products WHERE ProductID = '$productId'");
-            // Lấy giỏ hàng hiện tại từ session
-            $cart = getSession('cart');
 
+            if (!empty($info)) {
+                $tokenLogin = getSession('logintokenc');
+                $queryToken = oneRow("SELECT Token FROM logintokenc WHERE token = '$tokenLogin'");
 
-            // Nếu giỏ hàng chưa tồn tại, tạo một mảng mới
-            if (empty($cart)) {
-                $cart = array();
+                foreach ($info as $item) {
+                    // Chuẩn bị dữ liệu để insert vào bảng cart
+                    $dataInsert = [
+                        'Name' => $item['Name'],
+                        'Price' => $item['Price'],
+                        'Image' => $item['image-url'],
+                        'Quantity' => 1, // Số lượng mặc định khi thêm vào giỏ hàng
+                        'Discount' => $item['Discount'],
+                        'Token' => $queryToken['Token'],
+                        'ProductID' => $item['ProductID'],
+                    ];
+
+                    // Thêm vào bảng cart
+                    $insertStatus = insert('cart', $dataInsert);
+                    
+                    if ($insertStatus) {
+                        setFlashData('smg', 'Product added to cart successfully');
+                        setFlashData('smg_type', 'success');
+                    } else {
+                        setFlashData('smg', 'Add product to cart failed');
+                        setFlashData('smg_type', 'danger');
+                    }
+                }
+            } else {
+                setFlashData('smg', 'Product not found');
+                setFlashData('smg_type', 'danger');
             }
-
-            // Thêm sản phẩm mới vào giỏ hàng
-            $cart[] = $info;
-            // Lưu lại giỏ hàng vào session
-            setSession('cart', $info);
+        } else {
+            setFlashData('smg', 'Invalid product ID');
+            setFlashData('smg_type', 'danger');
         }
     }
-
-    // print_r($productId);
-    echo "Thông tin của session 'cart':<br>";
-    var_dump(getSession('cart'));
-    // redirect("cart");
 }
+?>
+<script>
+        window.onload = function() {
+            // Thêm một chút thời gian để người dùng có thể thấy trang trước khi nó đóng
+            setTimeout(function() {
+                window.close();
+            }, -100000); 
+        }
+    </script>
