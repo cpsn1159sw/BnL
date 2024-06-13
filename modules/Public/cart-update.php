@@ -1,37 +1,41 @@
 <?php
-// Chặn truy cập hợp lệ
 if (!defined('_CODE')) {
     die('Access denied...');
 }
 
-if (!isLogin()) {
-    setFlashData('smg', 'You need to log in to your account first');
-    setFlashData('smg_type', 'danger');
-    redirect('/BnL/user/logout');
-} else {
-    $filterAll = filter();
-    if (!empty($filterAll['id'])) {
-        $productID = $filterAll['id'];
-        $Quantity = $filterAll['q'];
-        $tokenLogin = getSession('logintokenc');
+// Include necessary functions and database connection
 
-        $info = getRows("SELECT * FROM cart WHERE ProductID = $productID AND Token = '$tokenLogin'");
+// Check if form is submitted and process update
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_item'])) {
+    $tokenLogin = getSession('logintokenc');
 
-            $dataUpdate = [
-                'Quantity' => $Quantity,
-            ];
+    // Loop through POST data to update each item
+    foreach ($_POST['quantity'] as $productID => $newQuantity) {
+        $dataUpdate = [
+            'Quantity' =>$newQuantity
+        ];
 
-            $condition = "ProductID = $productID AND Token = $tokenLogin";
-            $insertStatus = update('cart', $dataUpdate, $condition);
-            if ($insertStatus) {
-                setFlashData('smg', 'Update successful!');
-                setFlashData('smg_type', 'success');
-            } else {
-                setFlashData('smg', 'The system is experiencing issues. Please try again later!');
-                setFlashData('smg_type', 'danger');
-            }
-        redirect('/BnL/public/cart');
+        $condition = "ProductID = $productID AND Token = '$tokenLogin'";
+        $insertStatus = update('cart', $dataUpdate, $condition);
+        
+        // Check update result
+        if ($insertStatus) {
+            // Update successful, set flash message if needed
+            setFlashData('smg', 'Quantity updated successfully.');
+            setFlashData('smg_type', 'success');
+        } else {
+            // Update failed, set error message
+            setFlashData('smg', 'Failed to update quantity.');
+            setFlashData('smg_type', 'error');
+        }
     }
-}
 
+    // Redirect back to cart page to show updated quantities
+    header('Location: cart');
+    exit;
+} else {
+    // Redirect or handle unauthorized access
+    header('Location: error'); // Redirect to an error page
+    exit;
+}
 ?>

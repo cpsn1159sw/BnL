@@ -51,19 +51,19 @@ if (!empty($smg)) {
                             $tokenLogin = getSession('logintokenc');
                             $cartlist = getRows("SELECT * FROM cart WHERE Token = '$tokenLogin'");
 
-							$query = oneRow("SELECT CustomerID FROM logintokenc WHERE Token = '$tokenLogin'");
-                             // Group products by name
-                             $groupedProducts = [];
-                             foreach ($cartlist as $item) {
-                                 if (isset($groupedProducts[$item['ProductID']])) {
-                                     $groupedProducts[$item['ProductID']]['Quantity'] += $item['Quantity'];
-                                 } else {
-                                     $groupedProducts[$item['ProductID']] = $item;
-                                 }
-                             }
+                            $query = oneRow("SELECT CustomerID FROM logintokenc WHERE Token = '$tokenLogin'");
+                            // Group products by ID
+                            $groupedProducts = [];
+                            foreach ($cartlist as $item) {
+                                if (isset($groupedProducts[$item['ProductID']])) {
+                                    $groupedProducts[$item['ProductID']]['Quantity'] += $item['Quantity'];
+                                } else {
+                                    $groupedProducts[$item['ProductID']] = $item;
+                                }
+                            }
                             if (!empty($groupedProducts)) :
                             ?>
-                                <form method="post" action="">
+                                <form method="post" action="cart-update">
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
@@ -87,18 +87,22 @@ if (!empty($smg)) {
                                                         <td><?php echo $item['Price']; ?></td>
                                                         <td><?php echo $item['Discount']; ?></td>
                                                         <td>
-															<input style="width: 80px;" name="quantity" type="number" value="<?php echo $item['Quantity']; ?>" min="1"> <a href="cart-update?id=<?php echo $item['ProductID']; ?>" class="btn btn-warning">Update</a>        
+                                                            <!-- Input for quantity with product ID and current quantity -->
+                                                            <input style="width: 80px;" name="quantity[<?php echo $item['ProductID']; ?>]" type="number" value="<?php echo $item['Quantity']; ?>" min="1">
                                                         </td>
                                                         <td>
-                                                            <a class="product-remove" onclick="return confirm('Are you sure you want to remove?')" href="cart-remove?id=<?php echo $item['ProductID'];?>&q=<?php echo $item['Quantity'];?>">Remove</a>
+                                                            <!-- Update button with product ID -->
+                                                            <button type="submit" name="update_item" value="<?php echo $item['ProductID']; ?>" class="btn btn-warning">Update</button>
+                                                            <!-- Remove link with confirmation -->
+                                                            <a class="product-remove" onclick="return confirm('Are you sure you want to remove?')" href="cart-remove?id=<?php echo $item['ProductID']; ?>">Remove</a>
                                                         </td>
                                                     </tr>
-                                                <?php endforeach; ?>												
+                                                <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
-									<h3>Total: </h3>
-                                    <a href="checkout?id=<?php echo $query['CustomerID'];?>" class="btn btn-main pull-right">Checkout</a>
+                                    <h3>Total: </h3>
+                                    <a href="checkout?id=<?php echo $query['CustomerID']; ?>" class="btn btn-main pull-right">Checkout</a>
                                 </form>
                             <?php else : ?>
                                 <section class="empty-cart page-wrapper">
