@@ -38,7 +38,7 @@
 						<a href="/BnL/public/faq">FAQ</a>
 					</li>
 					<li>
-						<a href="/Bnl/public/">PRIVACY POLICY</a>
+						<a href="/Bnl/public/privacy-policy">PRIVACY POLICY</a>
 					</li>
 				</ul>
 				<p class="copyright-text">Copyright &copy;<?php echo date("Y"); ?> BnL Bảo Lưu Mọi Quyền.</p>
