@@ -196,6 +196,12 @@ $smg_type = getFlashData('smg_type');
         </div>
     </section>
 
+    <div class="post">
+        <div class="post-media post-media-video">
+            <iframe width="100%" height="500" src="https://www.youtube.com/embed/KwRxeZ9Ro24" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+    
     <!-- Sale Products-->
     <section class="products section bg-gray">
         <div class="container">

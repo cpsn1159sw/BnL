@@ -50,7 +50,8 @@ if (!empty($smg)) {
                             // Lấy giỏ hàng hiện tại từ db
                             $tokenLogin = getSession('logintokenc');
                             $cartlist = getRows("SELECT * FROM cart WHERE Token = '$tokenLogin'");
-
+                            $total = oneRow("SELECT ROUND(SUM(Quantity * Price - (Price * Quantity * Discount / 100)), 2) AS Total
+                                FROM cart WHERE Token = '$tokenLogin'");
                             $query = oneRow("SELECT CustomerID FROM logintokenc WHERE Token = '$tokenLogin'");
                             // Group products by ID
                             $groupedProducts = [];
@@ -88,11 +89,9 @@ if (!empty($smg)) {
                                                         <td><?php echo $item['Discount']; ?></td>
                                                         <td>
                                                             <!-- Input for quantity with product ID and current quantity -->
-                                                            <input style="width: 80px;" name="quantity[<?php echo $item['ProductID']; ?>]" type="number" value="<?php echo $item['Quantity']; ?>" min="1">
+                                                            <input style="width: 80px;" name="quantity[<?php echo $item['ProductID']; ?>]" type="number" value="<?php echo $item['Quantity']; ?>" min="1"> <button type="submit" name="update_item" value="<?php echo $item['ProductID']; ?>" class="btn btn-warning">Update</button>
                                                         </td>
-                                                        <td>
-                                                            <!-- Update button with product ID -->
-                                                            <button type="submit" name="update_item" value="<?php echo $item['ProductID']; ?>" class="btn btn-warning">Update</button>
+                                                        <td>                                                      
                                                             <!-- Remove link with confirmation -->
                                                             <a class="product-remove" onclick="return confirm('Are you sure you want to remove?')" href="cart-remove?id=<?php echo $item['ProductID']; ?>">Remove</a>
                                                         </td>
@@ -101,7 +100,7 @@ if (!empty($smg)) {
                                             </tbody>
                                         </table>
                                     </div>
-                                    <h3>Total: </h3>
+                                    <h3>Total: <?php echo $total['Total'];?>$</h3>
                                     <a href="checkout?id=<?php echo $query['CustomerID']; ?>" class="btn btn-main pull-right">Checkout</a>
                                 </form>
                             <?php else : ?>

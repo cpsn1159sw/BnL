@@ -35,33 +35,24 @@ if(!isLogin()) {
 		<div class="container">
 			<div class="row">
 				<!-- Contact Form -->
-				<div class="contact-form col-md-6">
-					<form id="contact-form" method="post" action="" role="form">
-						<div class="form-group">
-							<input type="text" placeholder="Your Name" class="form-control" name="name" id="name">
+				<div class="col-lg-6">
+					<div class="post">
+						<div class="post-media post-media-video">
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/Jh65uUdLCZM" frameborder="0" allowfullscreen></iframe>
 						</div>
-						<div class="form-group">
-							<input type="email" placeholder="Your Email" class="form-control" name="email" id="email">
-						</div>
-						<div class="form-group">
-							<input type="text" placeholder="Subject" class="form-control" name="subject" id="subject">
-						</div>
-						<div class="form-group">
-							<textarea rows="6" placeholder="Message" class="form-control" name="message" id="message"></textarea>	
-						</div>
-						<div id="mail-success" class="success">
-							Thank you. The Mailman is on His Way :)
-						</div>
-						<div id="mail-fail" class="error">
-							Sorry, don't know what happened. Try later :(
-						</div>
-						<div id="cf-submit">
-							<input type="submit" id="contact-submit" class="btn btn-transparent" value="Submit">
-						</div>						
-					</form>
+						<ul>
+							<li>
+								<i class="tf-ion-ios-calendar"></i> 16, Jun 2024
+							</li>
+							<li>
+								<i class="tf-ion-android-person"></i> POSTED BY ADMIN
+							</li>
+							<li>
+								<a><i class="tf-ion-ios-pricetags"></i> LIFESTYLE</a>,<a> TRAVEL</a>, <a>FASHION</a>
+							</li>
+						</ul>
+					</div>
 				</div>
-				<!-- ./End Contact Form -->
-				
 				<!-- Contact Details -->
 				<div class="contact-details col-md-6">
 					<div class="google-map">
