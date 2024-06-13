@@ -3,29 +3,44 @@ if (!defined('_CODE')) {
     die('Access denied...');
 }
 
-// Include necessary functions and database connection
+// Start session if not already started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
+if (!isLogin()) {
+    setFlashData('smg', 'You need to log in to your account first');
+    setFlashData('smg_type', 'danger');
+    redirect('/BnL/user/logout');
+} else {
 // Check if form is submitted and process update
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_item'])) {
     $tokenLogin = getSession('logintokenc');
 
     // Loop through POST data to update each item
     foreach ($_POST['quantity'] as $productID => $newQuantity) {
-        $dataUpdate = [
-            'Quantity' =>$newQuantity
-        ];
+        // Validate and sanitize $newQuantity if needed
+        $newQuantity = (int)$newQuantity;
+        if ($newQuantity > 0) {
+            $dataUpdate = [
+                'Quantity' => $newQuantity
+            ];
 
-        $condition = "ProductID = $productID AND Token = '$tokenLogin'";
-        $insertStatus = update('cart', $dataUpdate, $condition);
-        
-        // Check update result
-        if ($insertStatus) {
-            // Update successful, set flash message if needed
-            setFlashData('smg', 'Quantity updated successfully.');
-            setFlashData('smg_type', 'success');
+            $condition = "ProductID = $productID AND Token = '$tokenLogin'";
+            $updateStatus = update('cart', $dataUpdate, $condition);
+
+            // Check update result
+            if ($updateStatus) {
+                // Update successful, set flash message if needed
+                setFlashData('smg', 'Quantity updated successfully.');
+                setFlashData('smg_type', 'success');
+            } else {
+                // Update failed, set error message
+                setFlashData('smg', 'Failed to update quantity.');
+                setFlashData('smg_type', 'error');
+            }
         } else {
-            // Update failed, set error message
-            setFlashData('smg', 'Failed to update quantity.');
+            setFlashData('smg', 'Invalid quantity value.');
             setFlashData('smg_type', 'error');
         }
     }
@@ -37,5 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_item'])) {
     // Redirect or handle unauthorized access
     header('Location: error'); // Redirect to an error page
     exit;
+}
 }
 ?>
