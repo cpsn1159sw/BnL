@@ -239,3 +239,12 @@ function role(){
     }
     return $checkRole;
 }
+
+// Function to sanitize strings (like category name)
+function sanitizeString($str)
+{
+    $str = trim($str); // Trim whitespace
+    $str = str_replace('&', '', $str); // Remove '&'
+    // Add more sanitization if needed
+    return $str;
+}

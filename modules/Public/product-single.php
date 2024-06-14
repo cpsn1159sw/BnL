@@ -50,8 +50,7 @@ if (isset($_GET['ProductID'])) {
 	echo "Product ID is missing!";
 }
 
-// Đóng kết nối
-mysqli_close($connection);
+
 ?>
 
 <section class="single-product">
@@ -73,7 +72,7 @@ mysqli_close($connection);
 							<!-- me art lab slider -->
 							<div class='carousel-inner '>
 								<div class='item active'>
-									<img src='<?php echo _WEB_HOST_TEMPLATES . $product['image-url']; ?>' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
+									<img src='<?php echo _WEB_HOST_TEMPLATES . $product['imageURL']; ?>' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
 								</div>
 							</div>
 							<!-- sag sol -->
@@ -88,7 +87,7 @@ mysqli_close($connection);
 						<!-- thumb -->
 						<ol class='carousel-indicators mCustomScrollbar meartlab'>
 							<li data-target='#carousel-custom' data-slide-to='0' class='active'>
-								<img src='<?php echo _WEB_HOST_TEMPLATES . $product['image-url']; ?>' alt='' />
+								<img src='<?php echo _WEB_HOST_TEMPLATES . $product['imageURL']; ?>' alt='' />
 							</li>
 						</ol>
 					</div>
@@ -101,21 +100,12 @@ mysqli_close($connection);
 					<p class="product-description mt-20"><?php echo $product['Description']; ?></p>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, velit, sunt temporibus, nulla accusamus similique sapiente tempora, at atque cumque assumenda minus asperiores est esse sequi dolore magnam. Debitis, explicabo.</p>
 					<div class="product-size">
-						<span>Size:</span>
-						<select class="form-control">
-							<option>S</option>
-							<option>M</option>
-							<option>L</option>
-							<option>XL</option>
-						</select>
+						<span>Size:</span> <?php echo $product['Size'] ?>
 					</div>
 					<div class="product-quantity">
-						<span>Quantity:</span>
-						<div class="product-quantity-slider">
-							<input id="product-quantity" type="text" value="0" name="product-quantity">
-						</div>
+						<span>Quantity:</span> <input id="product-quantity" type="number" value="1" name="" max="1" min="1">
 					</div>
-					<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" class="btn btn-main mt-20">Add To Cart</a>
+					<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" target="_blank" class="btn btn-main mt-20">Add To Cart</a>
 				</div>
 			</div>
 		</div>

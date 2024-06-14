@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $categories = getRows("SELECT * FROM categories");
 
+$smg = getFlashData('smg');
+$smg_type = getFlashData('smg_type');
 ?>
 <!doctype html>
 <html lang="en">
@@ -48,6 +50,9 @@ $categories = getRows("SELECT * FROM categories");
     }
     .form-select, .form-control {
       width: 100%;
+    }
+    .out-of-stock {
+      background-color: #f8d7da;
     }
   </style>
 </head>
@@ -118,6 +123,11 @@ $categories = getRows("SELECT * FROM categories");
           </form>
         </div>
       </div>
+      <?php
+      if (!empty($smg)) {
+        getSmg($smg, $smg_type);
+      }
+      ?>
       <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
@@ -130,6 +140,7 @@ $categories = getRows("SELECT * FROM categories");
               <th>Stock Quantity</th>
               <th>Image</th>
               <th width="5%">Edit</th>
+              <th width="5%">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -147,18 +158,24 @@ $categories = getRows("SELECT * FROM categories");
                 $count = 0;
                 foreach ($list as $item) :
                   $count++;
+                  $rowClass = $item['StockQuantity'] == 0 ? 'out-of-stock' : '';
             ?>
-                  <tr>
+                  <tr class="<?php echo $rowClass; ?>">
                     <td><?php echo $count; ?></td>
                     <td><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($item['Description'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($item['Size'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($item['StockQuantity'], ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td><img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['image-url'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?>" width="100"></td>
+                    <td><img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?>" width="100"></td>
                     <td>
                       <div class="btn-group" role="group">
                         <a href="/BnL/products/edit&id=<?php echo $item['ProductID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="btn-group" role="group">
+                        <a href="/BnL/products/delete&id=<?php echo $item['ProductID']; ?>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"><i class="tf-ion-trash-b" aria-hidden="true"></i></a>
                       </div>
                     </td>
                   </tr>
@@ -177,27 +194,33 @@ $categories = getRows("SELECT * FROM categories");
               $query = "SELECT p.* FROM products p INNER JOIN categories c ON c.CategoryID = p.CategoryID";
               
               if (!empty($search)) {
-                $query .= " AND p.Name LIKE '%$search%'";
+                $query .= " WHERE p.Name LIKE '%$search%'";
               } 
-              
+              $query .= " ORDER BY p.StockQuantity ASC;";
               $list = getRows($query);
 
               if (!empty($list)) :
                 $count = 0;
                 foreach ($list as $item) :
                   $count++;
+                  $rowClass = $item['StockQuantity'] == 0 ? 'out-of-stock' : '';
             ?>
-                  <tr>
+                  <tr class="<?php echo $rowClass; ?>">
                     <td><?php echo $count; ?></td>
                     <td><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($item['Description'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($item['Size'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($item['StockQuantity'], ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td><img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['image-url'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?>" width="100"></td>
+                    <td><img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?>" width="100"></td>
                     <td>
                       <div class="btn-group" role="group">
                         <a href="/BnL/products/edit&id=<?php echo $item['ProductID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="btn-group" role="group">
+                        <a href="/BnL/products/delete&id=<?php echo $item['ProductID']; ?>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"><i class="tf-ion-trash-b" aria-hidden="true"></i></a>
                       </div>
                     </td>
                   </tr>

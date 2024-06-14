@@ -20,30 +20,36 @@ if (!isLogin()) {
             if (!empty($info)) {
                 $tokenLogin = getSession('logintokenc');
                 $queryToken = oneRow("SELECT Token FROM logintokenc WHERE token = '$tokenLogin'");
-
-                foreach ($info as $item) {
-                    // Chuẩn bị dữ liệu để insert vào bảng cart
-                    $dataInsert = [
-                        'Name' => $item['Name'],
-                        'Price' => $item['Price'],
-                        'Image' => $item['image-url'],
-                        'Quantity' => 1, // Số lượng mặc định khi thêm vào giỏ hàng
-                        'Discount' => $item['Discount'],
-                        'Token' => $queryToken['Token'],
-                        'ProductID' => $item['ProductID'],
-                    ];
-
-                    // Thêm vào bảng cart
-                    $insertStatus = insert('cart', $dataInsert);
-                    
-                    if ($insertStatus) {
-                        setFlashData('smg', 'Product added to cart successfully');
-                        setFlashData('smg_type', 'success');
-                    } else {
-                        setFlashData('smg', 'Add product to cart failed');
-                        setFlashData('smg_type', 'danger');
+                $cart = getRows("SELECT * FROM cart WHERE token = '$tokenLogin' AND ProductID = '$productId'");
+                if($cart>1) {
+                    setFlashData('smg', 'This product has already been added');
+                    setFlashData('smg_type', 'info');
+                } else {
+                    foreach ($info as $item) {
+                        // Chuẩn bị dữ liệu để insert vào bảng cart
+                        $dataInsert = [
+                            'Name' => $item['Name'],
+                            'Price' => $item['Price'],
+                            'Image' => $item['imageURL'],
+                            'Quantity' => 1, // Số lượng mặc định khi thêm vào giỏ hàng
+                            'Discount' => $item['Discount'],
+                            'Token' => $queryToken['Token'],
+                            'ProductID' => $item['ProductID'],
+                        ];
+    
+                        // Thêm vào bảng cart
+                        $insertStatus = insert('cart', $dataInsert);
+                        
+                        if ($insertStatus) {
+                            setFlashData('smg', 'Product added to cart successfully');
+                            setFlashData('smg_type', 'success');
+                        } else {
+                            setFlashData('smg', 'Add product to cart failed');
+                            setFlashData('smg_type', 'danger');
+                        }
                     }
                 }
+
             } else {
                 setFlashData('smg', 'Product not found');
                 setFlashData('smg_type', 'danger');

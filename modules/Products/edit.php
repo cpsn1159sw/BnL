@@ -48,7 +48,7 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
         }
 
         // Validate 
-        if (empty($filterAll['Stock_Quantity'])) {
+        if (!isset($filterAll['Stock_Quantity']) || !is_numeric($filterAll['Stock_Quantity'])) {
             $errors['Stock_Quantity']['required'] = '*Please enter product stock quantity.';
         }
 
