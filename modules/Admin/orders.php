@@ -139,52 +139,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
           <?php
           // Truy vấn dữ liệu
           if (!empty($search)) {
-            $query = "SELECT c.FullName AS CustomerName,
-                                c.Address,
-                                c.Email,
-                                c.Phone,
-                                o.OrderDate,
-                                GROUP_CONCAT(p.Name) AS ProductsOrdered,
-                                SUM(od.Quantity * p.Price) AS TotalAmount,
-                                o.Status,
-                                o.OrderID,
-                                o.CustomerID
-                        FROM 
-                            Orders o
-                        LEFT JOIN 
-                            Customer c ON c.CustomerID = o.CustomerID
-                        JOIN 
-                            OrderDetails od ON o.OrderID = od.OrderID
-                        JOIN 
-                            Products p ON od.ProductID = p.ProductID
-                        WHERE c.FullName LIKE '%$search%' OR c.Email LIKE '%$search%' OR c.Phone LIKE '%$search%' OR o.OrderDate LIKE '%$search%'
-                        GROUP BY 
-                            c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status, o.OrderID, o.CustomerID
-                        ORDER BY 
-                            o.OrderDate DESC";
+            $query = "SELECT
+    c.FullName AS CustomerName,
+    c.Address,
+    c.Email,
+    c.Phone,
+    o.OrderDate,
+    GROUP_CONCAT(p.Name) AS ProductsOrdered,
+    SUM(od.Quantity * p.Price) AS TotalAmount,
+    o.Status,
+    o.OrderID,
+    o.CustomerID
+FROM 
+    Orders o
+LEFT JOIN 
+    Customer c ON c.CustomerID = o.CustomerID
+JOIN 
+    OrderDetails od ON o.OrderID = od.OrderID
+JOIN 
+    Products p ON od.ProductID = p.ProductID
+WHERE 
+    c.FullName LIKE '%$search%' OR 
+    c.Email LIKE '%$search%' OR 
+    c.Phone LIKE '%$search%' OR 
+    DATE(o.OrderDate) LIKE '%$search%' -- Thêm hàm DATE() để so sánh ngày
+GROUP BY 
+    c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status, o.OrderID, o.CustomerID
+ORDER BY 
+    o.OrderDate DESC, 
+    CASE WHEN o.Status = 'Pending' THEN 0 ELSE 1 END ASC;";
           } else {
-            $query = "SELECT c.FullName AS CustomerName,
-                                c.Address,
-                                c.Email,
-                                c.Phone,
-                                o.OrderDate,
-                                GROUP_CONCAT(p.Name) AS ProductsOrdered,
-                                SUM(od.Quantity * p.Price) AS TotalAmount,
-                                o.Status,
-                                o.OrderID,
-                                o.CustomerID
-                        FROM 
-                            Orders o
-                        LEFT JOIN 
-                            Customer c ON c.CustomerID = o.CustomerID
-                        JOIN 
-                            OrderDetails od ON o.OrderID = od.OrderID
-                        JOIN 
-                            Products p ON od.ProductID = p.ProductID
-                        GROUP BY 
-                            c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status, o.OrderID, o.CustomerID
-                        ORDER BY 
-                            o.OrderDate DESC";
+            $query = "SELECT
+    c.FullName AS CustomerName,
+    c.Address,
+    c.Email,
+    c.Phone,
+    o.OrderDate,
+    GROUP_CONCAT(p.Name SEPARATOR ', ') AS ProductsOrdered,
+    SUM(od.Quantity * p.Price) AS TotalAmount,
+    o.Status,
+    o.OrderID,
+    o.CustomerID
+FROM 
+    Orders o
+LEFT JOIN 
+    Customer c ON c.CustomerID = o.CustomerID
+JOIN 
+    OrderDetails od ON o.OrderID = od.OrderID
+JOIN 
+    Products p ON od.ProductID = p.ProductID
+GROUP BY 
+    o.OrderID, c.FullName, c.Address, c.Email, c.Phone, o.OrderDate, o.Status, o.CustomerID  -- Thêm các trường vào GROUP BY để đảm bảo tính hợp lệ của truy vấn
+ORDER BY 
+    CASE WHEN o.Status = 'Pending' THEN 0 ELSE 1 END ASC,
+    o.OrderDate DESC";
           }
 
           $list = getRows($query);

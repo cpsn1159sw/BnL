@@ -20,6 +20,7 @@ if (!isLogin()) {
             if (!empty($info)) {
                 $tokenLogin = getSession('logintokenc');
                 $queryToken = oneRow("SELECT Token FROM logintokenc WHERE token = '$tokenLogin'");
+<<<<<<< HEAD
 
                 foreach ($info as $item) {
                     // Chuẩn bị dữ liệu để insert vào bảng cart
@@ -42,8 +43,38 @@ if (!isLogin()) {
                     } else {
                         setFlashData('smg', 'Add product to cart failed');
                         setFlashData('smg_type', 'danger');
+=======
+                $cart = getRows("SELECT * FROM cart WHERE token = '$tokenLogin' AND ProductID = '$productId'");
+                if($cart>1) {
+                    setFlashData('smg', 'This product has already been added');
+                    setFlashData('smg_type', 'info');
+                } else {
+                    foreach ($info as $item) {
+                        // Chuẩn bị dữ liệu để insert vào bảng cart
+                        $dataInsert = [
+                            'Name' => $item['Name'],
+                            'Price' => $item['Price'],
+                            'Image' => $item['imageURL'],
+                            'Quantity' => 1, // Số lượng mặc định khi thêm vào giỏ hàng
+                            'Discount' => $item['Discount'],
+                            'Token' => $queryToken['Token'],
+                            'ProductID' => $item['ProductID'],
+                        ];
+    
+                        // Thêm vào bảng cart
+                        $insertStatus = insert('cart', $dataInsert);
+                        
+                        if ($insertStatus) {
+                            setFlashData('smg', 'Product added to cart successfully');
+                            setFlashData('smg_type', 'success');
+                        } else {
+                            setFlashData('smg', 'Add product to cart failed');
+                            setFlashData('smg_type', 'danger');
+                        }
+>>>>>>> 40153a758f8a344915ea76ac20347adf97450aa1
                     }
                 }
+
             } else {
                 setFlashData('smg', 'Product not found');
                 setFlashData('smg_type', 'danger');

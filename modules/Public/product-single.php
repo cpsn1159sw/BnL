@@ -50,8 +50,7 @@ if (isset($_GET['ProductID'])) {
 	echo "Product ID is missing!";
 }
 
-// Đóng kết nối
-mysqli_close($connection);
+
 ?>
 
 <section class="single-product">
@@ -101,20 +100,14 @@ mysqli_close($connection);
 					<p class="product-description mt-20"><?php echo $product['Description']; ?></p>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, velit, sunt temporibus, nulla accusamus similique sapiente tempora, at atque cumque assumenda minus asperiores est esse sequi dolore magnam. Debitis, explicabo.</p>
 					<div class="product-size">
-						<span>Size:</span>
-						<select class="form-control">
-							<option>S</option>
-							<option>M</option>
-							<option>L</option>
-							<option>XL</option>
-						</select>
+						<span>Size:</span> <?php echo $product['Size'] ?>
 					</div>
 					<div class="product-quantity">
-						<span>Quantity:</span>
-						<div class="product-quantity-slider">
-							<input id="product-quantity" type="text" value="0" name="product-quantity">
-						</div>
+						<span>Quantity:</span> <input id="product-quantity" type="number" value="1" name="" max="1" min="1">
 					</div>
+<<<<<<< HEAD
+					<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" target="_blank" class="btn btn-main mt-20">Add To Cart</a>
+=======
 					<?php
 					if (!isLogin()) {
 					?>
@@ -126,6 +119,7 @@ mysqli_close($connection);
 					<?php
 					}
 					?>
+>>>>>>> 484c3e3313192b8690ba72c01e9708e841061a67
 				</div>
 			</div>
 		</div>

@@ -5,7 +5,6 @@ if (!defined('_CODE')) {
 }
 
 if (isLoginA() && role() == 'Admin') {
-
 } else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
@@ -140,24 +139,29 @@ if (isLoginA() && role() == 'Admin') {
           <div id="circleChart" style="width:100%; max-width:600px; height:400px;"></div>
         </div>
       </div>
+      <style>
+  @media screen and (max-width: 500px) {
+    .this {
+      overflow-x: auto;
+    }
+  }
+</style>
 
-      <div class="row">
-  <div class="col-lg-6">
-    <label for="yearSelect" class="form-label">Select Year:</label>
-    <select id="yearSelect" class="form-select">
-      <?php
-      // Loop through years from 2023 to the current year
-      for ($year = date('Y'); $year >= 2023; $year--) {
-        $selected = ($year == $selectedYear) ? 'selected' : '';
-        echo "<option value='$year' $selected>$year</option>";
-      }
-      ?>
-    </select>
-  </div>
-  <div id="chart_div" style="width: 100%; height: 400px;"></div>
-</div>
-
-
+      <div class="row this">
+        <div class="col-lg-6">
+          <label for="yearSelect" class="form-label">Select Year:</label>
+          <select id="yearSelect" class="form-select">
+            <?php
+            // Loop through years from 2023 to the current year
+            for ($year = date('Y'); $year >= 2023; $year--) {
+              $selected = ($year == $selectedYear) ? 'selected' : '';
+              echo "<option value='$year' $selected>$year</option>";
+            }
+            ?>
+          </select>
+        </div>
+        <div id="chart_div" style="width: 100%; height: 400px;"></div>
+      </div>
 
     </div>
   </div>
@@ -170,7 +174,9 @@ if (isLoginA() && role() == 'Admin') {
   });
   google.charts.setOnLoadCallback(drawChart1);
   google.charts.setOnLoadCallback(drawChart2);
-  google.charts.setOnLoadCallback(function() {drawChart3(<?php echo $selectedYear; ?>);});
+  google.charts.setOnLoadCallback(function() {
+    drawChart3(<?php echo $selectedYear; ?>);
+  });
 
   function drawChart1() {
     var data = google.visualization.arrayToDataTable([
@@ -232,7 +238,7 @@ if (isLoginA() && role() == 'Admin') {
     chart.draw(data, options);
   }
 
-  
+
 
   function drawChart3(year) {
     var rawData = <?php echo json_encode($query); ?>;
@@ -247,9 +253,15 @@ if (isLoginA() && role() == 'Admin') {
 
     // Format data
     var data = google.visualization.arrayToDataTable([
-  ['Month', 'Revenue'],
-  ...filteredData.map(item => [{v: parseInt(item.Month), f: 'Month: '+parseInt(item.Month)}, {v: parseFloat(item.Revenue), f: parseFloat(item.Revenue).toFixed(2) + '$'}])
-]);
+      ['Month', 'Revenue'],
+      ...filteredData.map(item => [{
+        v: parseInt(item.Month),
+        f: 'Month: ' + parseInt(item.Month)
+      }, {
+        v: parseFloat(item.Revenue),
+        f: parseFloat(item.Revenue).toFixed(2) + '$'
+      }])
+    ]);
 
     var options = {
       title: 'Revenue Over Time in ' + year,
@@ -285,8 +297,6 @@ if (isLoginA() && role() == 'Admin') {
     var selectedYear = this.value;
     window.location.href = window.location.pathname + '?y=' + selectedYear;
   });
-
-
 </script>
 
 </html>
