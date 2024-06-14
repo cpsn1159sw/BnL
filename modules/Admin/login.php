@@ -5,7 +5,7 @@
     }
 
     if(isLoginA() && role() == 'Admin') {
-      redirect('/BnL/admin/home');
+      redirect(_WEB_HOST.'/admin/home');
     } else {
 
     if (isPost()) {
@@ -37,13 +37,13 @@
                 if($insertStatus) {
                   setSession('logintokena', $tokenLogin);
                   if(role() == 'Admin') {
-                    redirect('/BnL/admin/home');
+                    redirect(_WEB_HOST.'/admin/home');
                   } if(role() == 'Staff') {
-                    redirect('/BnL/admin/products');
+                    redirect(_WEB_HOST.'/admin/products');
                   } if(role() == 'Shipper') {
-                    redirect('/BnL/admin/orders');
+                    redirect(_WEB_HOST.'/admin/orders');
                   } else {
-                    redirect('/BnL/admin/logout');
+                    redirect(_WEB_HOST.'/admin/logout');
                   }
                 } else {
                   setFlashData('smg', 'Unable to login, please try again later!');
@@ -61,7 +61,7 @@
           setFlashData('smg', 'Please enter your email and password!');
           setFlashData('smg_type', 'danger');
       }
-      redirect('/BnL/admin/login');
+      redirect(_WEB_HOST.'/admin/login');
     }
   }
   $smg = getFlashData('smg');
@@ -106,7 +106,7 @@
                 <input name="password" type="password" class="form-control" placeholder="Password">
               </div>
               <div class="form-group">
-                <p><a href="forgot">forgot password</a></p>
+                <p><a href="<?php echo _WEB_HOST?>/admin/forgot">forgot password</a></p>
               </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-main text-center" >Login</button>

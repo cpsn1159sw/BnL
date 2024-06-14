@@ -9,7 +9,7 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
   getSmg($smg, $smg_type);
-  redirect('/BnL/admin/logout');
+  redirect(_WEB_HOST.'admin/logout');
 }
 
 $smg = getFlashData('smg');
@@ -59,22 +59,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
 
   <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar" class="active">
-      <h1><a href="/BnL/public/home" target="_blank" class="logo">BnL</a></h1>
+      <h1><a href="<?php echo _WEB_HOST?>/public/home" target="_blank" class="logo">BnL</a></h1>
       <ul class="list-unstyled components mb-5">
         <li class="">
-          <a href="home"><span class="tf-ion-ios-home"></span> Home</a>
+          <a href="<?php echo _WEB_HOST?>/admin/home"><span class="tf-ion-ios-home"></span> Home</a>
         </li>
         <li class="">
-          <a href="hrm"><span class="tf-ion-android-people"></span> HRM</a>
+          <a href="<?php echo _WEB_HOST?>/admin/hrm"><span class="tf-ion-android-people"></span> HRM</a>
         </li>
         <li class="">
-          <a href="products"><span class="tf-basket"></span> Products</a>
+          <a href="<?php echo _WEB_HOST?>/admin/products"><span class="tf-basket"></span> Products</a>
         </li>
         <li class="">
-          <a href="customers"><span class="tf-ion-android-contacts"></span> Customers</a>
+          <a href="<?php echo _WEB_HOST?>/admin/customers"><span class="tf-ion-android-contacts"></span> Customers</a>
         </li>
         <li class="active">
-          <a href="orders"><span class="tf-ion-tshirt"></span> Orders</a>
+          <a href="<?php echo _WEB_HOST?>/admin/orders"><span class="tf-ion-tshirt"></span> Orders</a>
         </li>
       </ul>
     </nav>
@@ -105,9 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
                 ?>
                 <span class="tf-ion-ios-arrow-down"></span>
                 <ul class="dropdown-menu ml-0">
-                  <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
-                  <li><a href="/BnL/admin/forgot">Forgot Password</a></li>
-                  <li><a href="/BnL/admin/logout">Logout</a></li>
+                  <li><a href="<?php echo _WEB_HOST?>/admin/reset_login">Reset Password</a></li>
+                  <li><a href="<?php echo _WEB_HOST?>/admin/forgot">Forgot Password</a></li>
+                  <li><a href="<?php echo _WEB_HOST?>/admin/logout">Logout</a></li>
                 </ul>
               </li>
             </ul>
@@ -206,7 +206,7 @@ ORDER BY
             ?>
                 <tr>
                   <td>
-                    <a href='/BnL/admin/orderdetails&id=<?php echo $item['OrderID']; ?>'>
+                    <a href='<?php echo _WEB_HOST?>/admin/orderdetails&id=<?php echo $item['OrderID']; ?>'>
                       <?php echo $count; ?>
                     </a>
                   </td>
@@ -216,7 +216,7 @@ ORDER BY
                   <td><?php echo $item['Phone']; ?></td>
                   <td><?php echo $item['OrderDate']; ?></td>
                   <td>
-                    <form method="POST" action="/BnL/admin/orders_status">
+                    <form method="POST" action="admin/orders_status">
                       <input type="hidden" name="orderId" value="<?php echo $item['OrderID']; ?>">
                       <input type="hidden" name="customerId" value="<?php echo $item['CustomerID']; ?>">
                       <div class="form-group">

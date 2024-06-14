@@ -10,7 +10,7 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
   getSmg($smg, $smg_type);
-  redirect('/BnL/admin/logout');
+  redirect(_WEB_HOST.'/admin/logout');
 }
 
 if(isGet()) {
@@ -171,7 +171,7 @@ $smg_type = getFlashData('smg_type');
                 <?php  
                 endforeach;                            
                 ?>
-                <a href="/BnL/admin/orders" class="btn btn-primary">Back</a>
+                <a href="<?php echo _WEB_HOST?>/admin/orders" class="btn btn-primary">Back</a>
             </form>
 
         </div>

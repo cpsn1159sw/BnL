@@ -11,7 +11,7 @@ if (session_status() == PHP_SESSION_NONE) {
 if (!isLogin()) {
     setFlashData('smg', 'You need to log in to your account first');
     setFlashData('smg_type', 'danger');
-    redirect('/BnL/user/logout');
+    redirect(_WEB_HOST.'/user/logout');
 } else {
 // Check if form is submitted and process update
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_item'])) {
@@ -45,12 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_item'])) {
         }
     }
 
-    // Redirect back to cart page to show updated quantities
-    header('Location: cart');
-    exit;
+    redirect(_WEB_HOST.'/public/cart');
 } else {
     // Redirect or handle unauthorized access
-    header('Location: error'); // Redirect to an error page
+    redirect(_WEB_HOST.'/error/404');
     exit;
 }
 }

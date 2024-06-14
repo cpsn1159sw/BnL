@@ -26,19 +26,19 @@
 				</ul>
 				<ul class="footer-menu text-uppercase">
 					<li>
-						<a href="/BnL/public/contact">CONTACT</a>
+						<a href="<?php echo _WEB_HOST?>/public/contact">CONTACT</a>
 					</li>
 					<li>
-						<a href="/BnL/public/about">ABOUT</a>
+						<a href="<?php echo _WEB_HOST?>/public/about">ABOUT</a>
 					</li>
 					<li>
-						<a href="/BnL/public/shop">SHOP</a>
+						<a href="<?php echo _WEB_HOST?>/public/shop">SHOP</a>
 					</li>
 					<li>
-						<a href="/BnL/public/faq">FAQ</a>
+						<a href="<?php echo _WEB_HOST?>/public/faq">FAQ</a>
 					</li>
 					<li>
-						<a href="/Bnl/public/privacy-policy">PRIVACY POLICY</a>
+						<a href="<?php echo _WEB_HOST?>/public/privacy-policy">PRIVACY POLICY</a>
 					</li>
 				</ul>
 				<p class="copyright-text">Copyright &copy;<?php echo date("Y"); ?> BnL Bảo Lưu Mọi Quyền.</p>

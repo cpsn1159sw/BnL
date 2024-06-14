@@ -60,13 +60,13 @@
                     setFlashData('smg', 'Password changed successfully!');
                     setFlashData('smg_type', 'success');
                     getSmg($smg, $smg_type);
-                    redirect('/BnL/admin/logout');
+                    redirect(_WEB_HOST.'/admin/logout');
                 }
             } else {
                 setFlashData('smg', 'Please check your information again!');
                 setFlashData('smg_type', 'danger');
                 setFlashData('errors', $errors);
-                redirect('/BnL/admin/reset');
+                redirect(_WEB_HOST.'/admin/reset');
             }
         }
     }

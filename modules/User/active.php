@@ -25,7 +25,7 @@
                 setFlashData('smg_type', 'danger');
             }
             
-            redirect('/BnL/user/login');
+            redirect(_WEB_HOST.'/user/login');
         } else {
             getSmg('The link does not exist or has expired!', 'danger');
         }

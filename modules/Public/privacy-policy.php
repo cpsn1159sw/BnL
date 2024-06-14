@@ -94,7 +94,7 @@ if (!isLogin()) {
     <h3>7. Contact Us</h3>
     <p>If you have questions or comments about this Privacy Policy, please contact us at:</p>
     <ul>
-        <li>Email: vana@gmail.com</li>
+        <li>Email: cskhbandl@gmail.com</li>
         <li>Phone: +84-129-12323-123123</li>
         <li>Address: 11 Nguyễn Đình Chiểu, Đa Kao, Quận 1, Thành phố Hồ Chí Minh, Việt Nam</li>
     </ul>

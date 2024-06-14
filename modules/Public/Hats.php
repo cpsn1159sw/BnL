@@ -24,8 +24,8 @@ if (!isLogin()) {
 					<div class="content">
 						<h1 class="page-name">Hats</h1>
 						<ol class="breadcrumb">
-							<li><a href="/BnL/Public/home">Home</a></li>
-							<li><a href="/BnL/Public/shop">Shop</a></li>
+							<li><a href="<?php echo _WEB_HOST?>/public/home">Home</a></li>
+							<li><a href="<?php echo _WEB_HOST?>/public/shop">Shop</a></li>
 							<li class="active">Hats</li>
 						</ol>
 					</div>
@@ -59,11 +59,11 @@ if (!isLogin()) {
 												<?php
                                                 if (!isLogin()) {
                                                 ?>
-                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                    <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
                                                 <?php
                                                 } else {
                                                 ?>
-                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                    <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
                                                 <?php
                                                 }
                                                 ?>
@@ -72,7 +72,7 @@ if (!isLogin()) {
 									</div>
 								</div>
 								<div class="product-content">
-									<h4><a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>"><?php echo $item['Name']; ?></a></h4>
+									<h4><a href="<?php echo _WEB_HOST?>/public/product-single&ProductID=<?php echo $item['ProductID']; ?>"><?php echo $item['Name']; ?></a></h4>
 									<p class="price"><?php echo $item['Price']; ?></p>
 								</div>
 							</div>
@@ -101,15 +101,15 @@ if (!isLogin()) {
 														<?php
                                                         if (!isLogin()) {
                                                         ?>
-                                                            <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
+                                                            <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
                                                         <?php
                                                         } else {
                                                         ?>
-                                                            <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank" class="btn btn-main">Add To Cart</a>
+                                                            <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank" class="btn btn-main">Add To Cart</a>
                                                         <?php
                                                         }
                                                         ?>
-														<a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
+														<a href="<?php echo _WEB_HOST?>/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
 													</div>
 												</div>
 											</div>

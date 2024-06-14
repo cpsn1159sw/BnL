@@ -24,7 +24,7 @@ $smg_type = getFlashData('smg_type');
                 <div class="content">
                     <h1 class="page-name">Cart</h1>
                     <ol class="breadcrumb">
-                        <li><a href="home">Home</a></li>
+                        <li><a href="<?php echo _WEB_HOST?>/public/home">Home</a></li>
                         <li class="active">Cart</li>
                     </ol>
                 </div>
@@ -93,7 +93,7 @@ if (!empty($smg)) {
                                                         </td>
                                                         <td>                                                      
                                                             <!-- Remove link with confirmation -->
-                                                            <a class="product-remove" onclick="return confirm('Are you sure you want to remove?')" href="cart-remove?id=<?php echo $item['ProductID']; ?>">Remove</a>
+                                                            <a class="product-remove" onclick="return confirm('Are you sure you want to remove?')" href="<?php echo _WEB_HOST?>/public/cart-remove?id=<?php echo $item['ProductID']; ?>">Remove</a>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -101,7 +101,7 @@ if (!empty($smg)) {
                                         </table>
                                     </div>
                                     <h3>Total: <?php echo $total['Total'];?>$</h3>
-                                    <a href="checkout?id=<?php echo $query['CustomerID']; ?>" class="btn btn-main pull-right">Checkout</a>
+                                    <a href="<?php echo _WEB_HOST?>/public/checkout?id=<?php echo $query['CustomerID']; ?>" class="btn btn-main pull-right">Checkout</a>
                                 </form>
                             <?php else : ?>
                                 <section class="empty-cart page-wrapper">
@@ -111,7 +111,7 @@ if (!empty($smg)) {
                                                 <i class="tf-ion-ios-cart-outline"></i>
                                                 <h2 class="text-center">Your cart is currently empty.</h2>
                                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, sed.</p>
-                                                <a href="shop" class="btn btn-main mt-20">Return to shop</a>
+                                                <a href="<?php echo _WEB_HOST?>/public/shop" class="btn btn-main mt-20">Return to shop</a>
                                             </div>
                                         </div>
                                     </div>

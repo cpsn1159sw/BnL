@@ -5,7 +5,7 @@
     }
 
     if(isLogin()) {
-      redirect('/BnL/public/home');
+      redirect('<?php echo _WEB_HOST?>/public/home');
     } else {
 
   
@@ -41,7 +41,7 @@
 
                   // Lưu tokenLogin vào session
                   setSession('logintokenc', $tokenLogin);
-                  redirect('/BnL/public/home');
+                  redirect('<?php echo _WEB_HOST?>/public/home');
                 } else {
                   setFlashData('smg', 'Unable to login, please try again later!');
                   setFlashData('smg_type', 'danger');
@@ -58,7 +58,7 @@
           setFlashData('smg', 'Please enter your email and password!');
           setFlashData('smg_type', 'danger');
       }
-      redirect('login');
+      redirect(_WEB_HOST.'/user/login');
     }
   }
   $smg = getFlashData('smg');
@@ -89,7 +89,7 @@
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
           <div class="block text-center margin-0">
-            <a class="logo" href="/BnL/public/home">
+            <a class="logo" href="<?php echo _WEB_HOST?>/public/home">
               <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/BnL_logo.png" alt="" style="height: 20vh;">
             </a>
             <h2 class="text-center">Welcome Back</h2>
@@ -106,13 +106,13 @@
                 <input name="password" type="password" class="form-control" placeholder="Password">
               </div>
               <div class="form-group">
-                <p><a href="forgot">forgot password</a></p>
+                <p><a href="<?php echo _WEB_HOST ?>/user/forgot">forgot password</a></p>
               </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-main text-center" >Login</button>
               </div>
             </form>
-            <p class="mt-20">New in this site ?<a href="signup"> Create New Account</a></p>
+            <p class="mt-20">New in this site ?<a href="<?php echo _WEB_HOST ?>/user/signup"> Create New Account</a></p>
           </div>
         </div>
       </div>

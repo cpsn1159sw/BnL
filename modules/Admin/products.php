@@ -8,7 +8,7 @@ if (!isLoginA() || (role() != 'Admin' && role() != 'Staff')) {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
   getSmg($smg, $smg_type);
-  redirect('/BnL/admin/logout');
+  redirect('admin/logout');
 }
 
 $search = '';
@@ -59,7 +59,7 @@ $smg_type = getFlashData('smg_type');
 <body>
   <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar" class="active">
-      <h1><a href="/BnL/public/home" target="_blank" class="logo">BnL</a></h1>
+      <h1><a href="<?php echo _WEB_HOST?>/public/home" target="_blank" class="logo">BnL</a></h1>
       <ul class="list-unstyled components mb-5">
         <li><a href="home"><span class="tf-ion-ios-home"></span> Home</a></li>
         <li><a href="hrm"><span class="tf-ion-android-people"></span> HRM</a></li>
@@ -88,9 +88,9 @@ $smg_type = getFlashData('smg_type');
                 ?>
                 <span class="tf-ion-ios-arrow-down"></span>
                 <ul class="dropdown-menu ml-0">
-                  <li><a href="/BnL/admin/create">Create Account</a></li>
-                  <li><a href="/BnL/admin/reset_login">Reset Password</a></li>
-                  <li><a href="/BnL/admin/logout">Logout</a></li>
+                  <li><a href="admin/create">Create Account</a></li>
+                  <li><a href="admin/reset_login">Reset Password</a></li>
+                  <li><a href="admin/logout">Logout</a></li>
                 </ul>
               </li>
             </ul>
@@ -98,7 +98,7 @@ $smg_type = getFlashData('smg_type');
         </nav>
       </div>
       <h2 class="mb-4">BnL Products</h2>
-      <p><a href="/BnL/products/create" class="btn btn-success">Add product <span class="tf-ion-plus"></span></a></p>
+      <p><a href="products/create" class="btn btn-success">Add product <span class="tf-ion-plus"></span></a></p>
       <div class="row">
         <div class="col-lg-2">
           <form method="POST" action="">
@@ -170,12 +170,12 @@ $smg_type = getFlashData('smg_type');
                     <td><img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?>" width="100"></td>
                     <td>
                       <div class="btn-group" role="group">
-                        <a href="/BnL/products/edit&id=<?php echo $item['ProductID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
+                        <a href="products/edit&id=<?php echo $item['ProductID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
                       </div>
                     </td>
                     <td>
                       <div class="btn-group" role="group">
-                        <a href="/BnL/products/delete&id=<?php echo $item['ProductID']; ?>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"><i class="tf-ion-trash-b" aria-hidden="true"></i></a>
+                        <a href="products/delete&id=<?php echo $item['ProductID']; ?>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"><i class="tf-ion-trash-b" aria-hidden="true"></i></a>
                       </div>
                     </td>
                   </tr>
@@ -215,12 +215,12 @@ $smg_type = getFlashData('smg_type');
                     <td><img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?>" width="100"></td>
                     <td>
                       <div class="btn-group" role="group">
-                        <a href="/BnL/products/edit&id=<?php echo $item['ProductID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
+                        <a href="products/edit&id=<?php echo $item['ProductID']; ?>" class="btn btn-warning"><i class="tf-ion-edit" aria-hidden="true"></i></a>
                       </div>
                     </td>
                     <td>
                       <div class="btn-group" role="group">
-                        <a href="/BnL/products/delete&id=<?php echo $item['ProductID']; ?>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"><i class="tf-ion-trash-b" aria-hidden="true"></i></a>
+                        <a href="products/delete&id=<?php echo $item['ProductID']; ?>" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger"><i class="tf-ion-trash-b" aria-hidden="true"></i></a>
                       </div>
                     </td>
                   </tr>

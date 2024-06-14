@@ -9,7 +9,7 @@
         $token = getSession('logintokena');
         delete('logintokena', "token='$token'");
         removeSession('logintokena');
-        redirect('/BnL/admin/login');
+        redirect(_WEB_HOST.'/admin/login');
     } else {
-        redirect('/BnL/admin/login');
+        redirect(_WEB_HOST.'/admin/login');
     }

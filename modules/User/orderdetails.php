@@ -10,7 +10,7 @@ if (isLogin()) {
   setFlashData('smg', 'You need to login your account first!');
   setFlashData('smg_type', 'danger');
   getSmg($smg, $smg_type);
-  redirect('/BnL/user/login');
+  redirect(_WEB_HOST.'/user/login');
 }
 
 if(isGet()) {
@@ -167,7 +167,7 @@ $smg_type = getFlashData('smg_type');
                 <?php  
                 endforeach;                            
                 ?>
-                <a href="/BnL/user/order" class="btn btn-primary">Back</a>
+                <a href="<?php echo _WEB_HOST?>/user/order" class="btn btn-primary">Back</a>
             </form>
 
         </div>

@@ -114,12 +114,12 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
                     // Success message and redirect
                     setFlashData('smg', 'Successfully added a new product!');
                     setFlashData('smg_type', 'success');
-                    redirect('/BnL/admin/products');
+                    redirect(_WEB_HOST.'/admin/products');
                 } else {
                     // Error message if insertion fails
                     setFlashData('smg', 'System encountered an issue. Please try again later!');
                     setFlashData('smg_type', 'danger');
-                    redirect('/BnL/products/create');
+                    redirect(_WEB_HOST.'/admin/products');
                 }
         } else {
             // Display error message and redirect back to form
@@ -127,14 +127,14 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
             setFlashData('smg_type', 'danger');
             setFlashData('errors', $errors);
             setFlashData('old', $filterAll);
-            redirect('/BnL/products/create');
+            redirect(_WEB_HOST.'/products/create');
         }
     }
 } else {
     // Redirect if unauthorized access
     setFlashData('smg', 'You are not authorized to access this page and have been logged out!');
     setFlashData('smg_type', 'danger');
-    redirect('/BnL/admin/logout');
+    redirect(_WEB_HOST.'/admin/logout');
 }
 
 $smg = getFlashData('smg');
@@ -279,7 +279,7 @@ $old = getFlashData('old');
                     }
                     ?>
                 </div>
-                <a href="/BnL/admin/products" class="btn btn-primary">Back</a>
+                <a href="<?php echo _WEB_HOST ?>/admin/products" class="btn btn-primary">Back</a>
                 <button type="submit" class="btn btn-success">Add Product</button>
             </form>
         </div>

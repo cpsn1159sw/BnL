@@ -21,7 +21,7 @@ if (!isLogin()) {
 				<div class="content">
 					<h1 class="page-name">Frequently Asked Questions</h1>
 					<ol class="breadcrumb">
-						<li><a href="index.html">Home</a></li>
+						<li><a href="<?php echo _WEB_HOST?>/public/home">Home</a></li>
 						<li class="active">f.a.q</li>
 					</ol>
 				</div>
@@ -36,7 +36,7 @@ if (!isLogin()) {
 			<div class="col-md-4">
 				<h2>Frequently Asked Questions</h2>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, repudiandae.</p>
-				<p>admin@mail.com</p>
+				<p>cskhbandl@gmail.com</p>
 			</div>
 			<div class="col-md-8">
 				<h4>Order Status</h4>

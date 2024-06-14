@@ -81,25 +81,25 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
       if ($insertStatus) {
         setFlashData('smg', 'Create unsuccessful!');
         setFlashData('smg_type', 'success');
-        redirect('/BnL/admin/customers');
+        redirect(_WEB_HOST.'/admin/customers');
       } else {
         setFlashData('smg', 'The system is experiencing issues. Please try again later!');
         setFlashData('smg_type', 'danger');
-        redirect('/BnL/customers/create');
+        redirect(_WEB_HOST.'/customers/create');
       }
     } else {
       setFlashData('smg', 'Please check the information again!');
       setFlashData('smg_type', 'danger');
       setFlashData('errors', $errors);
       setFlashData('old', $filterAll);
-      redirect('/BnL/customers/create');
+      redirect(_WEB_HOST.'/customers/create');
     }
   }
 } else {
   setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
   setFlashData('smg_type', 'danger');
   getSmg($smg, $smg_type);
-  redirect('/BnL/admin/logout');
+  redirect(_WEB_HOST.'/admin/logout');
 }
 $smg = getFlashData('smg');
 $smg_type = getFlashData('smg_type');
@@ -132,7 +132,7 @@ $old = getFlashData('old');
           <div class="block text-center margin-0">
             <h2 class="text-center">
               <div class="text-left">
-                <a href="/BnL/admin/customers" class="btn btn-success"><i class=" tf-ion-arrow-left-c">Back</i></a>
+                <a href="<?php echo _WEB_HOST?>/admin/customers" class="btn btn-success"><i class=" tf-ion-arrow-left-c">Back</i></a>
               </div>Create User Account
             </h2>
             <?php

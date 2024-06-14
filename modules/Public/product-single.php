@@ -58,8 +58,8 @@ if (isset($_GET['ProductID'])) {
 		<div class="row">
 			<div class="col-md-6">
 				<ol class="breadcrumb">
-					<li><a href="/BnL/public/home">Home</a></li>
-					<li><a href="/BnL/public/shop">Shop</a></li>
+					<li><a href="<?php echo _WEB_HOST?>/public/home">Home</a></li>
+					<li><a href="<?php echo _WEB_HOST?>/public/shop">Shop</a></li>
 					<li class="active">Single Product</li>
 				</ol>
 			</div>
@@ -108,11 +108,11 @@ if (isset($_GET['ProductID'])) {
 					<?php
 					if (!isLogin()) {
 					?>
-						<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>"><i class="btn btn-main mt-20" aria-hidden="true">Add To Cart</i></a>
+						<a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>"><i class="btn btn-main mt-20" aria-hidden="true">Add To Cart</i></a>
 					<?php
 					} else {
 					?>
-						<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" target="_blank"><i class="tbtn btn-main mt-20" aria-hidden="true">Add To Cart</i></a>
+						<a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" target="_blank"><i class="tbtn btn-main mt-20" aria-hidden="true">Add To Cart</i></a>
 					<?php
 					}
 					?>

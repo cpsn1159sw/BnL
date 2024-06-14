@@ -95,7 +95,7 @@ $smg_type = getFlashData('smg_type');
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="block text-center">
-                        <a class="logo" href="/BnL/public/home">
+                        <a class="logo" href="<?php echo _WEB_HOST?>/public/home">
                             <img src="images/logo.png" alt="">
                         </a>
                         <h2 class="text-center">Reset Your Password Here</h2>
@@ -113,7 +113,7 @@ $smg_type = getFlashData('smg_type');
                                 <button type="submit" class="btn btn-main text-center">Request password reset</button>
                             </div>
                         </form>
-                        <p class="mt-20"><a href="login">Back to log in</a></p>
+                        <p class="mt-20"><a href="<?php echo _WEB_HOST ?>/user/login">Back to log in</a></p>
                     </div>
                 </div>
             </div>

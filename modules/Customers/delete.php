@@ -29,10 +29,10 @@
         setFlashData('smg', 'The link does not exist or has expired!');
         setFlashData('smg_type', 'danger');
     }
-     redirect('/BnL/admin/customers');
+     redirect(_WEB_HOST.'/admin/customers');
 } else {
     setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
     setFlashData('smg_type', 'danger');
     getSmg($smg, $smg_type);
-    redirect('/BnL/admin/logout');
+    redirect(_WEB_HOST.'/admin/logout');
 }

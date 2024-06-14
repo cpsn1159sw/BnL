@@ -7,7 +7,7 @@ if (!defined('_CODE')) {
 if (!isLogin()) {
     setFlashData('smg', 'You need to log in to your account first');
     setFlashData('smg_type', 'danger');
-    redirect('/BnL/user/logout');
+    redirect(_WEB_HOST.'/user/logout');
 } else {
     $filterAll = filter();
     if (!empty($filterAll['id'])) {
@@ -23,6 +23,6 @@ if (!isLogin()) {
                 setFlashData('smg_type', 'danger');
             }
         }
-        redirect('/BnL/public/cart');
+        redirect(_WEB_HOST.'/public/cart');
     }
 }

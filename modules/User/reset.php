@@ -62,7 +62,7 @@
             if ($updateStatus) {
               setFlashData('smg', 'Password changed successfully!');
               setFlashData('smg_type', 'success');
-              redirect('/BnL/user/login');
+              redirect(_WEB_HOST.'/user/login');
             } else {
               setFlashData('smg', 'System error, please try again later!');
               setFlashData('smg_type', 'danger');
@@ -71,7 +71,7 @@
             setFlashData('smg', 'Please check your information again!');
             setFlashData('smg_type', 'danger');
             setFlashData('errors', $errors);
-            redirect('?module=user&action=reset&token=' . $token);
+            redirect(_WEB_HOST.'?module=user&action=reset&token=' . $token);
           }
         }
 

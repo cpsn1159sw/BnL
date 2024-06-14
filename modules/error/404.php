@@ -24,12 +24,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<a href="?">
+					<a href="<?php echo _WEB_HOST?>/public/home"">
 						<img src="<?php echo _WEB_HOST_TEMPLATES; ?>/images/logo/titleBnL.png" alt="site logo" style="width: 20%;">
 					</a>
 					<h1>404</h1>
 					<h2>Page Not Found</h2>
-					<a href="/BnL/public/home" class="btn btn-main"><i class="tf-ion-android-arrow-back"></i> Go Home</a>
+					<a href="<?php echo _WEB_HOST?>/public/home" class="btn btn-main"><i class="tf-ion-android-arrow-back"></i> Go Home</a>
 				</div>
 			</div>
 		</div>

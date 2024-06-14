@@ -8,7 +8,7 @@ if (!defined('_CODE')) {
 if (!isLogin()) {
     setFlashData('smg', 'You need to log in to your account first');
     setFlashData('smg_type', 'danger');
-    redirect('/BnL/user/login');
+    redirect(_WEB_HOST.'/user/login');
     exit;
 } 
 
@@ -20,7 +20,7 @@ $countCart = countRows("SELECT * FROM cart WHERE Token = '$tokenLogin'");
 if ($countCart == 0) {
     setFlashData('smg', 'Your cart is empty. Please add products to proceed.');
     setFlashData('smg_type', 'danger');
-    redirect('/BnL/public/cart'); // Chuyển hướng đến trang giỏ hàng
+    redirect(_WEB_HOST.'/public/cart'); // Chuyển hướng đến trang giỏ hàng
     exit;
 }
 
@@ -99,7 +99,7 @@ if ($customerQuery) {
                             <i class="tf-ion-android-checkmark-circle"></i>
                             <h2 class="text-center">Thank you! For your purchase</h2>
                             <p>Your order has been placed successfully.</p>
-                            <a href="shop" class="btn btn-main mt-20">Continue Shopping</a>
+                            <a href="<?php echo _WEB_HOST?>/public/shop" class="btn btn-main mt-20">Continue Shopping</a>
                         </div>
                     </div>
                 </div>
@@ -110,13 +110,13 @@ if ($customerQuery) {
         // Nếu không thể thêm đơn hàng vào cơ sở dữ liệu
         setFlashData('smg', 'Failed to place order. Please try again later.');
         setFlashData('smg_type', 'danger');
-        redirect('/BnL/public/cart');
+        redirect(_WEB_HOST.'/public/cart');
     }
 } else {
     // Nếu không tìm thấy CustomerID trong logintokenc
     setFlashData('smg', 'Customer information not found.');
     setFlashData('smg_type', 'danger');
-    redirect('/BnL/user/logout');
+    redirect(_WEB_HOST.'/user/logout');
 }
 
 layouts('footer');

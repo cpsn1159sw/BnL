@@ -111,13 +111,13 @@ if (isPost()) {
         setFlashData('smg', 'Sign up unsuccessful!');
         setFlashData('smg_type', 'danger');
       }
-       redirect('/BnL/user/signup');
+       redirect(_WEB_HOST.'/user/signup');
     } else {
         setFlashData('smg', 'Please check the information again!');
         setFlashData('smg_type', 'danger');
         setFlashData('errors', $errors);
         setFlashData('old', $filterAll);
-        redirect('signup');
+        redirect(_WEB_HOST.'/user/signup');
     }
 }
 $smg = getFlashData('smg');
@@ -149,7 +149,7 @@ $old = getFlashData('old');
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
           <div class="block text-center margin-0">
-            <a class="logo" href="/BnL/public/home">
+            <a class="logo" href="<?php echo _WEB_HOST ?>/public/home">
               <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/BnL_logo.png" alt="" style="height: 20vh;">
             </a>
             <h2 class="text-center">Create Your Account</h2>
@@ -201,7 +201,7 @@ $old = getFlashData('old');
                 <button type="submit" class="btn btn-main text-center">Sign Up</button>
               </div>
             </form>
-            <p class="mt-20">Already have an account ?<a href="login"> Login</a></p>
+            <p class="mt-20">Already have an account ?<a href="<?php echo _WEB_HOST ?>/user/login"> Login</a></p>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ if (!defined('_CODE')) {
 if (!isLogin()) {
     setFlashData('smg', 'You need to log in to your account first');
     setFlashData('smg_type', 'danger');
-    redirect('/BnL/user/login');
+    redirect(_WEB_HOST.'/user/login');
 } else {
     if (isGet()) {
         $filterAll = filter();

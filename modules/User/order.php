@@ -13,7 +13,7 @@ if (isLogin()) {
     setFlashData('smg', 'Please login to your account first!');
     setFlashData('smg_type', 'danger');
     getSmg($smg, $smg_type);
-    redirect('/BnL/user/login');
+    redirect('user/login');
 }
 
 ?>
@@ -24,7 +24,7 @@ if (isLogin()) {
                 <div class="content">
                     <h1 class="page-name">My order history</h1>
                     <ol class="breadcrumb">
-                        <li><a href="/BnL/public/home">Home</a></li>
+                        <li><a href="<?php echo _WEB_HOST?>/public/home">Home</a></li>
                         <li class="active">My order history</li>
                     </ol>
                 </div>

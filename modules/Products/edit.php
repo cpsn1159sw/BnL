@@ -15,7 +15,7 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
         if(!empty($info)) {
             setFlashData('info', $info);
         } else {
-            redirect('/BnL/admin/products');
+            redirect('admin/products');
         }
     }
 
@@ -76,13 +76,13 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
             setFlashData('errors', $errors);
             setFlashData('old', $filterAll);
         }
-        redirect('/BnL/products/edit&id='.$productID);
+        redirect('products/edit&id='.$productID);
     }
 } else {
     setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
     setFlashData('smg_type', 'danger');
     getSmg($smg, $smg_type);
-    redirect('/BnL/admin/logout');
+    redirect('admin/logout');
 }
 $smg = getFlashData('smg');
 $smg_type = getFlashData('smg_type');
@@ -153,7 +153,7 @@ if(!empty($info)) {
                     ?>
                 </div>
                 <input type="hidden" name="id" value="<?php echo $productID; ?>">
-                <a href="/BnL/admin/products" class="btn btn-primary">Back</a> <button type="submit" class="btn btn-success">Save</button>
+                <a href="admin/products" class="btn btn-primary">Back</a> <button type="submit" class="btn btn-success">Save</button>
             </form>
         </div>
     </div>

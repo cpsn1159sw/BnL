@@ -25,7 +25,7 @@ $smg_type = getFlashData('smg_type');
                     <div class="col-lg-8 text-center">
                         <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">PRODUCTS</p>
                         <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">Elegance and sophistication <br>of women.</h1>
-                        <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="/BnL/Public/shop">Shop Now</a>
+                        <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="<?php echo _WEB_HOST?>/public/shop">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@ $smg_type = getFlashData('smg_type');
                     <div class="col-lg-8 text-left">
                         <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">PRODUCTS</p>
                         <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The beauty of nature <br> is hidden in details.</h1>
-                        <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="/BnL/Public/shop">Shop Now</a>
+                        <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="<?php echo _WEB_HOST?>/public/shop">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@ $smg_type = getFlashData('smg_type');
                     <div class="col-lg-8 text-right">
                         <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">PRODUCTS</p>
                         <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The allure of a woman <br> is expressed through <br>every delicate feature.</h1>
-                        <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="/BnL/Public/shop">Shop Now</a>
+                        <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="<?php echo _WEB_HOST?>/public/shop">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@ $smg_type = getFlashData('smg_type');
                 </div>
                 <div class="col-md-6">
                     <div class="category-box">
-                        <a href="D-and-J">
+                        <a href="<?php echo _WEB_HOST?>/public/D-and-J">
                             <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/Product-category/Pro-category-1.jpg" alt="" />
                             <div class="content">
                                 <h3>Dresses</h3>
@@ -73,7 +73,7 @@ $smg_type = getFlashData('smg_type');
                         </a>
                     </div>
                     <div class="category-box">
-                        <a href="Satchel-bag">
+                        <a href="<?php echo _WEB_HOST?>/public/Satchel-bag">
                             <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/Product-category/Pro-category-2.jpg" alt="" />
                             <div class="content">
                                 <h3>Smart Casuals</h3>
@@ -84,7 +84,7 @@ $smg_type = getFlashData('smg_type');
                 </div>
                 <div class="col-md-6">
                     <div class="category-box category-box-2">
-                        <a href="Sunglasses">
+                        <a href="<?php echo _WEB_HOST?>/public/Sunglasses">
                             <img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/Product-category/Pro-category-3.jpg" alt="" />
                             <div class="content">
                                 <h3>Sunglasses</h3>
@@ -129,11 +129,11 @@ $smg_type = getFlashData('smg_type');
                                                 <?php
                                                 if (!isLogin()) {
                                                 ?>
-                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                    <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
                                                 <?php
                                                 } else {
                                                 ?>
-                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                    <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
                                                 <?php
                                                 }
                                                 ?>
@@ -171,15 +171,15 @@ $smg_type = getFlashData('smg_type');
                                                         <?php
                                                         if (!isLogin()) {
                                                         ?>
-                                                            <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
+                                                            <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
                                                         <?php
                                                         } else {
                                                         ?>
-                                                            <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank" class="btn btn-main">Add To Cart</a>
+                                                            <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank" class="btn btn-main">Add To Cart</a>
                                                         <?php
                                                         }
                                                         ?>
-                                                        <a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
+                                                        <a href="<?php echo _WEB_HOST?>/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -232,11 +232,11 @@ $smg_type = getFlashData('smg_type');
                                             <?php
                                                 if (!isLogin()) {
                                                 ?>
-                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                    <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
                                                 <?php
                                                 } else {
                                                 ?>
-                                                    <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
+                                                    <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank"><i class="tf-ion-android-cart" aria-hidden="true"></i></a>
                                                 <?php
                                                 }
                                                 ?>
@@ -245,7 +245,7 @@ $smg_type = getFlashData('smg_type');
                                     </div>
                                 </div>
                                 <div class="product-content">
-                                    <h4><a href="product-single.html"><?php echo $item['Name']; ?></a></h4>
+                                    <h4><a href="<?php echo _WEB_HOST?>/public/product-single.html"><?php echo $item['Name']; ?></a></h4>
                                     <p class="price"><?php echo $item['Price']; ?></p>
                                 </div>
                             </div>
@@ -274,15 +274,15 @@ $smg_type = getFlashData('smg_type');
                                                         <?php
                                                         if (!isLogin()) {
                                                         ?>
-                                                            <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
+                                                            <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" class="btn btn-main">Add To Cart</a>
                                                         <?php
                                                         } else {
                                                         ?>
-                                                            <a href="/BnL/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank" class="btn btn-main">Add To Cart</a>
+                                                            <a href="<?php echo _WEB_HOST?>/public/add-to-cart&id=<?php echo $item["ProductID"]; ?>" target="_blank" class="btn btn-main">Add To Cart</a>
                                                         <?php
                                                         }
                                                         ?>
-                                                        <a href="/BnL/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
+                                                        <a href="<?php echo _WEB_HOST?>/public/product-single&ProductID=<?php echo $item['ProductID']; ?>" class="btn btn-transparent">View Product Details</a>
                                                     </div>
                                                 </div>
                                             </div>

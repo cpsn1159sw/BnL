@@ -21,7 +21,7 @@ if(!isLogin()) {
 				<div class="content">
 					<h1 class="page-name">Contact Us</h1>
 					<ol class="breadcrumb">
-						<li><a href="/BnL/Public/home">Home</a></li>
+						<li><a href="<?php echo _WEB_HOST?>/public/home">Home</a></li>
 						<li class="active">Contact</li>
 					</ol>
 				</div>

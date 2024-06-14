@@ -62,13 +62,13 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff' || role() == 'Shipper'
             setFlashData('smg', 'Invalid data received. Please try again later!');
             setFlashData('smg_type', 'danger');
         }
-        redirect('/BnL/admin/orders');
+        redirect(_WEB_HOST.'/admin/orders');
     }
 
 } else {
     // Nếu người dùng không có quyền truy cập, chuyển hướng và hiển thị thông báo
     setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
     setFlashData('smg_type', 'danger');
-    redirect('/BnL/admin/logout');
+    redirect(_WEB_HOST.'/admin/logout');
 }
 ?>

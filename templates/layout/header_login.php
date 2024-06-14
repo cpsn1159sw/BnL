@@ -88,7 +88,7 @@
 				<div class="col-md-4 col-xs-12 col-sm-4">
 					<!-- Site Logo -->
 					<div class="logo text-center">
-						<a href="/BnL/Public/home">
+						<a href="<?php echo _WEB_HOST?>/public/home">
 							<img src="<?php echo _WEB_HOST_TEMPLATES ?>/images/logo/titleBnL.png" style="height: 20vh;" alt="">
 						</a>
 					</div>
@@ -132,7 +132,7 @@
 												</div>
 
 											</div>
-											<a class="remove" onclick="return confirm('Are you sure you want to remove?')" href="cart-remove?id=<?php echo $item['ProductID']; ?>"><i class="tf-ion-close"></i></a>
+											<a class="remove" onclick="return confirm('Are you sure you want to remove?')" href="<?php echo _WEB_HOST?>/public/cart-remove?id=<?php echo $item['ProductID']; ?>"><i class="tf-ion-close"></i></a>
 										</div><!-- / Cart Item -->
 										<!-- Cart Item -->
 								<?php
@@ -145,8 +145,8 @@
 									<span class="total-price"></span>
 								</div>
 								<ul class="text-center cart-buttons">
-									<li><a href="/BnL/public/cart" class="btn btn-small">View Cart</a></li>
-									<li><a href="/BnL/public/checkout" class="btn btn-small btn-solid-border">Checkout</a></li>
+									<li><a href="<?php echo _WEB_HOST?>/public/cart" class="btn btn-small">View Cart</a></li>
+									<li><a href="<?php echo _WEB_HOST?>/public/checkout" class="btn btn-small btn-solid-border">Checkout</a></li>
 								</ul>
 							</div>
 
@@ -201,12 +201,12 @@
 
 						<!-- Home -->
 						<li class="dropdown ">
-							<a href="/BnL/public/home">Home</a>
+							<a href="<?php echo _WEB_HOST?>/public/home">Home</a>
 						</li><!-- / Home -->
 
 						<!-- Pages -->
 						<li class="dropdown full-width dropdown-slide">
-							<a href="/BnL/public/shop" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Shop <span class="tf-ion-ios-arrow-down"></span></a>
+							<a href="<?php echo _WEB_HOST?>/public/shop" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Shop <span class="tf-ion-ios-arrow-down"></span></a>
 							<div class="dropdown-menu">
 								<div class="row">
 									<!-- Women -->
@@ -214,9 +214,9 @@
 										<ul>
 											<li class=" ">Women</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/Bra-tops">Bra Tops</a></li>
-											<li><a href="/BnL/public/D-and-J">Dresses & Jumpsuits</a></li>
-											<li><a href="/BnL/public/Short-skirts">Short Skirts</a></li>
+											<li><a href="<?php echo _WEB_HOST?>/public/Bra-tops">Bra Tops</a></li>
+											<li><a href="<?php echo _WEB_HOST?>/public/D-and-J">Dresses & Jumpsuits</a></li>
+											<li><a href="<?php echo _WEB_HOST?>/public/Short-skirts">Short Skirts</a></li>
 										</ul>
 									</div>
 
@@ -225,9 +225,9 @@
 										<ul>
 											<li class=" ">Bags</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/Tote-bags">Tote Bags</a></li>
-											<li><a href="/BnL/public/Satchel-bags">Satchel Bags</a></li>
-											<li><a href="/BnL/public/Women-Backpacks">Women's Backpacks</a></li>
+											<li><a href="<?php echo _WEB_HOST?>/public/Tote-bags">Tote Bags</a></li>
+											<li><a href="<?php echo _WEB_HOST?>/public/Satchel-bags">Satchel Bags</a></li>
+											<li><a href="<?php echo _WEB_HOST?>/public/Women-Backpacks">Women's Backpacks</a></li>
 										</ul>
 									</div>
 
@@ -236,8 +236,8 @@
 										<ul>
 											<li class=" ">Accessories</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/Sunglasses">Sunglasses</a></li>
-											<li><a href="/BnL/public/Hats">Hats</a></li>
+											<li><a href="<?php echo _WEB_HOST?>/public/Sunglasses">Sunglasses</a></li>
+											<li><a href="<?php echo _WEB_HOST?>/public/Hats">Hats</a></li>
 										</ul>
 									</div>
 
@@ -253,26 +253,26 @@
 
 						<!-- Sale -->
 						<li class="dropdown ">
-							<a href="/BnL/public/sale">Sale</a>
+							<a href="<?php echo _WEB_HOST?>/public/sale">Sale</a>
 						</li><!-- / Sale -->
 						<!-- Login -->
 						<li class="dropdown dropdown-slide">
 							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Utility <span class="tf-ion-ios-arrow-down"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="/BnL/user/order">Order History</a></li>
-								<li><a href="/BnL/user/reset_login">Reset Password</a></li>
-								<li><a href="/BnL/user/forgot">Forget Password</a></li>
-								<li><a href="/BnL/user/logout">Logout</a></li>
+								<li><a href="<?php echo _WEB_HOST?>/user/order">Order History</a></li>
+								<li><a href="<?php echo _WEB_HOST?>/user/reset_login">Reset Password</a></li>
+								<li><a href="<?php echo _WEB_HOST?>/user/forgot">Forget Password</a></li>
+								<li><a href="<?php echo _WEB_HOST?>/user/logout">Logout</a></li>
 							</ul>
 						</li><!-- / Login -->
 						<!-- About -->
 						<li class="dropdown ">
-							<a href="/BnL/public/about">About</a>
+							<a href="<?php echo _WEB_HOST?>/public/about">About</a>
 						</li><!-- / About -->
 
 						<!-- Contact -->
 						<li class="dropdown ">
-							<a href="/BnL/public/contact">Contact</a>
+							<a href="<?php echo _WEB_HOST?>/public/contact">Contact</a>
 						</li><!-- / Contact -->
 
 						<!-- Shop -->

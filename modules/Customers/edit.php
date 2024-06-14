@@ -15,7 +15,7 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
         if(!empty($info)) {
             setFlashData('info', $info);
         } else {
-            redirect('/BnL/admin/customers');
+            redirect(_WEB_HOST.'/admin/customers');
         }
     }
 
@@ -96,13 +96,13 @@ if (isLoginA() && (role() == 'Admin' || role() == 'Staff')) {
             setFlashData('errors', $errors);
             setFlashData('old', $filterAll);
         }
-        redirect('/BnL/customers/edit&id='.$customerID);
+        redirect(_WEB_HOST.'/customers/edit&id='.$customerID);
     }
 } else {
     setFlashData('smg', 'You do not have permission to access this page and have been logged out!');
     setFlashData('smg_type', 'danger');
     getSmg($smg, $smg_type);
-    redirect('/BnL/admin/logout');
+    redirect(_WEB_HOST.'/admin/logout');
 }
 $smg = getFlashData('smg');
 $smg_type = getFlashData('smg_type');
@@ -184,7 +184,7 @@ if(!empty($info)) {
                     ?>
                 </div>
                 <input type="hidden" name="id" value="<?php echo $customerID; ?>">
-                <a href="/BnL/admin/customers" class="btn btn-primary">Back</a> <button type="submit" class="btn btn-success">Save</button>
+                <a href="<?php echo _WEB_HOST ?>/admin/customers" class="btn btn-primary">Back</a> <button type="submit" class="btn btn-success">Save</button>
             </form>
         </div>
     </div>
