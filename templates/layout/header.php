@@ -120,28 +120,61 @@
 								<li>
 									<form method="post">
 										<p>
-											<input type="text" name="search" class="form-control" placeholder="Search..." require><button type="submit" name="btn"></button>
-											<button type="submit" name="btn"></button>
+											<input type="text" name="search" class="form-control" placeholder="Search..." required>
+											<button type="submit" name="btn"><i class="tf-ion-ios-search-strong"></i></button>
 										</p>
 									</form>
 									<?php
-									if (isset($_POST['btn'])) {
+									// Khởi tạo biến query là một mảng rỗng ban đầu để tránh lỗi undefined variable
+									$query = [];
+
+									// Kiểm tra nếu form đã được gửi đi và nút tìm kiếm được nhấn
+									if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn'])) {
 										$noidung = $_POST['search'];
+
+										// Nếu có từ khóa tìm kiếm, thực hiện truy vấn để tìm sản phẩm
+										if (!empty($noidung)) {
+											$searchQuery = "SELECT * FROM products WHERE Name LIKE '%$noidung%'";
+											$query = getRows($searchQuery);
+
+											// Kiểm tra kết quả của truy vấn tìm kiếm
+											if (!empty($query)) {
+												foreach ($query as $item) :
+									?>
+													<div class="search-result-item">
+														<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"]; ?>">
+															<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img" />
+														</a>
+														<div class="media-body">
+															<h4><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></h4>
+															<p class="price">Price: $<?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></p>
+														</div>
+													</div>
+											<?php
+												endforeach;
+											} else {
+												// Nếu không có kết quả tìm kiếm
+												echo '<p>No products found.</p>';
+											}
+										}
 									} else {
-										echo $noidung = false;
-									}
-									if($noidung){
-										$query = getRows("SELECT * FROM products WHERE Name LIKE '%$noidung%' ");
-									}
-									?>
-									<?php
-									$query = getRows("SELECT * FROM products WHERE Name LIKE '%$noidung%' ");
-									if (!empty($query)) {
+										// Trường hợp mặc định khi chưa thực hiện tìm kiếm
+										$defaultQuery = "SELECT p.ProductID AS ProductID, p.Name AS Name, p.Price AS Price, p.imageURL AS imageURL, SUM(od.Quantity) AS TotalQuantity
+                                FROM OrderDetails od
+                                INNER JOIN products p ON p.ProductID = od.ProductID
+                                INNER JOIN Orders o ON o.OrderID = od.OrderID
+                                WHERE o.Status = 'Delivered'
+                                GROUP BY p.ProductID, p.Name, p.Price, p.imageURL
+                                ORDER BY TotalQuantity DESC
+                                LIMIT 5";
+										$query = getRows($defaultQuery);
+
+										// Hiển thị kết quả mặc định
 										foreach ($query as $item) :
-									?>
+											?>
 											<div class="search-result-item">
-												<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"];?>">
-													<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['image-url'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img"/>
+												<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"]; ?>">
+													<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img" />
 												</a>
 												<div class="media-body">
 													<h4><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></h4>
@@ -150,13 +183,14 @@
 											</div>
 									<?php
 										endforeach;
-									} else {
-										echo '<p>No products found.</p>';
 									}
-									?>	
+									?>
 								</li>
 							</ul>
-						</li><!-- / Search -->
+						</li>
+
+					</ul>
+					</li><!-- / Search -->
 					</ul><!-- / .nav .navbar-nav .navbar-right -->
 				</div>
 			</div>

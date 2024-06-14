@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
     c.Phone,
     o.OrderDate,
     GROUP_CONCAT(p.Name) AS ProductsOrdered,
-    SUM(od.Quantity * p.Price) AS TotalAmount,
+    o.TotalAmount,
     o.Status,
     o.OrderID,
     o.CustomerID
@@ -176,7 +176,7 @@ ORDER BY
     c.Phone,
     o.OrderDate,
     GROUP_CONCAT(p.Name SEPARATOR ', ') AS ProductsOrdered,
-    SUM(od.Quantity * p.Price) AS TotalAmount,
+    o.TotalAmount,
     o.Status,
     o.OrderID,
     o.CustomerID

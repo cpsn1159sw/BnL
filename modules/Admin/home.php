@@ -179,37 +179,47 @@ if (isLoginA() && role() == 'Admin') {
   });
 
   function drawChart1() {
-    var data = google.visualization.arrayToDataTable([
-      ['Product', 'Total Quantity'],
-      <?php foreach ($list1 as $row) : ?>['<?php echo $row['ProductName']; ?>', <?php echo $row['TotalQuantity']; ?>],
-      <?php endforeach; ?>
-    ]);
+    // Chuyển đổi dữ liệu PHP sang dữ liệu JavaScript
+    var list1 = <?php echo json_encode($list1); ?>;
 
-    if (data.length === 0) {
-      document.getElementById('columnChart').innerHTML = '<p>No data available</p>';
-      return;
+    // Kiểm tra dữ liệu trước khi chuyển đổi thành DataTable
+    if (list1.length === 0) {
+        document.getElementById('columnChart').innerHTML = '<p>No data</p>';
+        return;
     }
 
+    // Chuẩn bị dữ liệu để vẽ biểu đồ
+    var dataArray = [['Product', 'Total Quantity']];
+    list1.forEach(function(row) {
+        dataArray.push([row.ProductName, parseInt(row.TotalQuantity)]);
+    });
+
+    var data = google.visualization.arrayToDataTable(dataArray);
+
     var options = {
-      title: 'Top Products by Quantity Sold',
-      titleTextStyle: {
-        fontSize: 18,
-        bold: true
-      },
-      legend: {
-        position: 'none'
-      },
-      hAxis: {
-        title: 'Product'
-      },
-      vAxis: {
-        title: 'Total Quantity'
-      }
+        title: 'Top Products by Quantity Sold',
+        titleTextStyle: {
+            fontSize: 18,
+            bold: true
+        },
+        legend: {
+            position: 'none'
+        },
+        hAxis: {
+            title: 'Product'
+        },
+        vAxis: {
+            title: 'Total Quantity'
+        }
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById('columnChart'));
     chart.draw(data, options);
-  }
+}
+
+// Đảm bảo rằng Google Charts đã tải xong rồi mới vẽ biểu đồ
+google.charts.setOnLoadCallback(drawChart1);
+
 
   function drawChart2() {
     const data = google.visualization.arrayToDataTable([

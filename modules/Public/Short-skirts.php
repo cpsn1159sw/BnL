@@ -44,7 +44,7 @@ if (!isLogin()) {
 						<div class="col-md-4">
 							<div class="product-item">
 								<div class="product-thumb">
-									<img class="img-responsive" src="<?php echo _WEB_HOST_TEMPLATES . $item['image-url']; ?>" alt="product-img" />
+									<img class="img-responsive" src="<?php echo _WEB_HOST_TEMPLATES . $item['imageURL']; ?>" alt="product-img" />
 									<div class="preview-meta">
 										<ul>
 											<li>
@@ -85,7 +85,7 @@ if (!isLogin()) {
 											<div class="row">
 												<div class="col-md-8 col-sm-6 col-xs-12">
 													<div class="modal-image">
-														<img class="img-responsive" src="<?php echo _WEB_HOST_TEMPLATES . $item['image-url']; ?>" alt="product-img" />
+														<img class="img-responsive" src="<?php echo _WEB_HOST_TEMPLATES . $item['imageURL']; ?>" alt="product-img" />
 													</div>
 												</div>
 												<div class="col-md-4 col-sm-6 col-xs-12">

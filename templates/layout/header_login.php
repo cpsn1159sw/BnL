@@ -28,9 +28,52 @@
 
 	<!-- Main Stylesheet -->
 	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
-	
-</head>
 
+</head>
+<style>
+	.search-dropdown {
+		padding: 20px;
+		background-color: #f7f7f7;
+		border: 1px solid #ddd;
+		width: 300px;
+	}
+
+	.search-dropdown input[type="text"] {
+		width: 100%;
+		padding: 10px;
+		margin-bottom: 10px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+
+	.search-dropdown button[type="submit"] {
+		display: none;
+	}
+
+	.search-result-item {
+		display: flex;
+		align-items: center;
+		padding: 10px 0;
+		border-bottom: 1px solid #ddd;
+	}
+
+	.search-result-item img {
+		width: 50px;
+		height: auto;
+		margin-right: 10px;
+	}
+
+	.search-result-item h4 {
+		margin: 0;
+		font-size: 14px;
+	}
+
+	.search-result-item p {
+		margin: 0;
+		font-size: 12px;
+		color: #888;
+	}
+</style>
 <header id="body">
 	<!-- Start Top Header Bar -->
 	<section class="top-header">
@@ -57,30 +100,76 @@
 							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="tf-ion-android-cart"></i>Cart</a>
 							<div class="dropdown-menu cart-dropdown">
 								<!-- Cart Item -->
-								<div class="media">
-									<a class="pull-left" href="#!">
-										<img class="media-object" src="images/shop/cart/cart-1.jpg" alt="image" />
-									</a>
-									<div class="media-body">
-										<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
-										<div class="cart-price">
-											<span>1 x</span>
-											<span>1250.00</span>
-										</div>
-										<h5><strong>$1250.00</strong></h5> 
-									</div>
-									<a href="#!" class="remove"><i class="tf-ion-close"></i></a>
-								</div><!-- / Cart Item -->
-								<!-- Cart Item -->
+								<?php
+								$tokenLogin = getSession('logintokenc');
+								$cartlist = getRows("SELECT * FROM cart WHERE Token = '$tokenLogin'");
+								$total = oneRow("SELECT ROUND(SUM(Quantity * Price - (Price * Quantity * Discount / 100)), 2) AS Total
+													FROM cart WHERE Token = '$tokenLogin'");
+								$query = oneRow("SELECT CustomerID FROM logintokenc WHERE Token = '$tokenLogin'");
+
+								$groupedProducts = [];
+								foreach ($cartlist as $item) {
+									if (isset($groupedProducts[$item['ProductID']])) {
+										$groupedProducts[$item['ProductID']]['Quantity'] += $item['Quantity'];
+									} else {
+										$groupedProducts[$item['ProductID']] = $item;
+									}
+								}
+								if (!empty($groupedProducts)) :
+								?>
+									<?php foreach ($groupedProducts as $item) : ?>
+										<div class="media">
+											<a class="pull-left" href="#!">
+												<img class="media-object" src="<?php echo _WEB_HOST_TEMPLATES . $item['Image']; ?>" alt="image" />
+											</a>
+											<div class="media-body">
+												<h4 class="media-heading"><a href="#!">
+
+													</a></h4>
+												<div class="cart-price">
+													<h4 name="quantity[<?php echo $item['ProductID']; ?>]" type="number" value="<?php echo $item['Quantity']; ?>" min="1">Quantity: <?php echo $item['Quantity']; ?></h4>
+													<h4>Price: $<?php echo $item['Price']; ?></h4>
+												</div>
+
+											</div>
+											<a class="remove" onclick="return confirm('Are you sure you want to remove?')" href="cart-remove?id=<?php echo $item['ProductID']; ?>"><i class="tf-ion-close"></i></a>
+										</div><!-- / Cart Item -->
+										<!-- Cart Item -->
+								<?php
+									endforeach;
+								endif; ?>
+								<h4>Total: <?php echo $total['Total']; ?>$</h4>
 
 								<div class="cart-summary">
 									<span></span>
 									<span class="total-price"></span>
 								</div>
 								<ul class="text-center cart-buttons">
-									<li><a href="/BnL/public/cart" class="btn btn-small">View Cart</a></li>
-									<li><a href="/BnL/public/checkout" class="btn btn-small btn-solid-border">Checkout</a></li>
-								</ul>
+    <li><a href="/BnL/public/cart" class="btn btn-small">View Cart</a></li>
+    <?php
+    // Kiểm tra người dùng đã đăng nhập và có giỏ hàng không
+    if (isLogin()) {
+        $tokenLogin = getSession('logintokenc');
+        $countCart = countRows("SELECT * FROM cart WHERE Token = '$tokenLogin'");
+
+        // Chỉ hiển thị nút "Checkout" nếu giỏ hàng có sản phẩm
+        if ($countCart > 0) {
+            // Lấy thông tin khách hàng (ví dụ)
+            $customerID = isset($query['CustomerID']) ? $query['CustomerID'] : ''; // Phải kiểm tra isset để tránh lỗi khi không có CustomerID
+
+            // Hiển thị nút "Checkout" với đường dẫn chứa thông tin khách hàng
+            echo '<li><a href="checkout?id=' . $customerID . '" class="btn btn-small btn-solid-border">Checkout</a></li>';
+        }
+    } else {
+        // Nếu người dùng chưa đăng nhập, đưa họ đến trang đăng nhập
+        setFlashData('smg', 'You need to log in to your account first');
+        setFlashData('smg_type', 'danger');
+        redirect('/BnL/user/login');
+    }
+    ?>
+</ul>
+
+
 							</div>
 
 						</li><!-- / Cart -->
@@ -90,10 +179,76 @@
 							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="tf-ion-ios-search-strong"></i> Search</a>
 							<ul class="dropdown-menu search-dropdown">
 								<li>
-									<form action="post"><input type="search" class="form-control" placeholder="Search..."></form>
+									<form method="post">
+										<p>
+											<input type="text" name="search" class="form-control" placeholder="Search..." required>
+											<button type="submit" name="btn"><i class="tf-ion-ios-search-strong"></i></button>
+										</p>
+									</form>
+									<?php
+									// Khởi tạo biến query là một mảng rỗng ban đầu để tránh lỗi undefined variable
+									$query = [];
+
+									// Kiểm tra nếu form đã được gửi đi và nút tìm kiếm được nhấn
+									if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn'])) {
+										$noidung = $_POST['search'];
+
+										// Nếu có từ khóa tìm kiếm, thực hiện truy vấn để tìm sản phẩm
+										if (!empty($noidung)) {
+											$searchQuery = "SELECT * FROM products WHERE Name LIKE '%$noidung%'";
+											$query = getRows($searchQuery);
+
+											// Kiểm tra kết quả của truy vấn tìm kiếm
+											if (!empty($query)) {
+												foreach ($query as $item) :
+									?>
+													<div class="search-result-item">
+														<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"]; ?>">
+															<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img" />
+														</a>
+														<div class="media-body">
+															<h4><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></h4>
+															<p class="price">Price: $<?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></p>
+														</div>
+													</div>
+											<?php
+												endforeach;
+											} else {
+												// Nếu không có kết quả tìm kiếm
+												echo '<p>No products found.</p>';
+											}
+										}
+									} else {
+										// Trường hợp mặc định khi chưa thực hiện tìm kiếm
+										$defaultQuery = "SELECT p.ProductID AS ProductID, p.Name AS Name, p.Price AS Price, p.imageURL AS imageURL, SUM(od.Quantity) AS TotalQuantity
+                                FROM OrderDetails od
+                                INNER JOIN products p ON p.ProductID = od.ProductID
+                                INNER JOIN Orders o ON o.OrderID = od.OrderID
+                                WHERE o.Status = 'Delivered'
+                                GROUP BY p.ProductID, p.Name, p.Price, p.imageURL
+                                ORDER BY TotalQuantity DESC
+                                LIMIT 5";
+										$query = getRows($defaultQuery);
+
+										// Hiển thị kết quả mặc định
+										foreach ($query as $item) :
+											?>
+											<div class="search-result-item">
+												<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"]; ?>">
+													<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img" />
+												</a>
+												<div class="media-body">
+													<h4><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></h4>
+													<p class="price">Price: $<?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></p>
+												</div>
+											</div>
+									<?php
+										endforeach;
+									}
+									?>
 								</li>
 							</ul>
-						</li><!-- / Search -->
+						</li>
 						<!-- Login -->
 						<li class="dropdown dropdown-slide">
 							<?php
@@ -192,7 +347,7 @@
 						<li class="dropdown dropdown-slide">
 							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Utility <span class="tf-ion-ios-arrow-down"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="/BnL/user/order-user">Order History</a></li>
+								<li><a href="/BnL/user/order">Order History</a></li>
 								<li><a href="/BnL/user/reset_login">Reset Password</a></li>
 								<li><a href="/BnL/user/forgot">Forget Password</a></li>
 								<li><a href="/BnL/user/logout">Logout</a></li>

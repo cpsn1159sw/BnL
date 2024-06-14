@@ -20,8 +20,10 @@ if (!isLogin()) {
             if (!empty($info)) {
                 $tokenLogin = getSession('logintokenc');
                 $queryToken = oneRow("SELECT Token FROM logintokenc WHERE token = '$tokenLogin'");
+                
+                // Kiểm tra xem sản phẩm đã có trong giỏ hàng hay chưa
                 $cart = getRows("SELECT * FROM cart WHERE token = '$tokenLogin' AND ProductID = '$productId'");
-                if($cart>1) {
+                if(count($cart) > 0) {
                     setFlashData('smg', 'This product has already been added');
                     setFlashData('smg_type', 'info');
                 } else {
@@ -62,10 +64,8 @@ if (!isLogin()) {
 }
 ?>
 <script>
-        window.onload = function() {
-            // Thêm một chút thời gian để người dùng có thể thấy trang trước khi nó đóng
-            setTimeout(function() {
-                window.close();
-            }, -100000); 
-        }
-    </script>
+    // Script này sẽ đóng cửa sổ sau khi tải xong
+    window.onload = function() {
+        window.close();
+    };
+</script>
