@@ -73,7 +73,7 @@ mysqli_close($connection);
 							<!-- me art lab slider -->
 							<div class='carousel-inner '>
 								<div class='item active'>
-									<img src='<?php echo _WEB_HOST_TEMPLATES . $product['image-url']; ?>' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
+									<img src='<?php echo _WEB_HOST_TEMPLATES . $product['imageURL']; ?>' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
 								</div>
 							</div>
 							<!-- sag sol -->
@@ -88,7 +88,7 @@ mysqli_close($connection);
 						<!-- thumb -->
 						<ol class='carousel-indicators mCustomScrollbar meartlab'>
 							<li data-target='#carousel-custom' data-slide-to='0' class='active'>
-								<img src='<?php echo _WEB_HOST_TEMPLATES . $product['image-url']; ?>' alt='' />
+								<img src='<?php echo _WEB_HOST_TEMPLATES . $product['imageURL']; ?>' alt='' />
 							</li>
 						</ol>
 					</div>

@@ -28,7 +28,50 @@
 
 	<!-- Main Stylesheet -->
 	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
-	
+	<style>
+		.search-dropdown {
+			padding: 20px;
+			background-color: #f7f7f7;
+			border: 1px solid #ddd;
+			width: 300px;
+		}
+
+		.search-dropdown input[type="text"] {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.search-dropdown button[type="submit"] {
+			display: none;
+		}
+
+		.search-result-item {
+			display: flex;
+			align-items: center;
+			padding: 10px 0;
+			border-bottom: 1px solid #ddd;
+		}
+
+		.search-result-item img {
+			width: 50px;
+			height: auto;
+			margin-right: 10px;
+		}
+
+		.search-result-item h4 {
+			margin: 0;
+			font-size: 14px;
+		}
+
+		.search-result-item p {
+			margin: 0;
+			font-size: 12px;
+			color: #888;
+		}
+	</style>
 </head>
 
 <header id="body">
@@ -57,21 +100,45 @@
 							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="tf-ion-android-cart"></i>Cart</a>
 							<div class="dropdown-menu cart-dropdown">
 								<!-- Cart Item -->
-								<div class="media">
-									<a class="pull-left" href="#!">
-										<img class="media-object" src="images/shop/cart/cart-1.jpg" alt="image" />
-									</a>
-									<div class="media-body">
-										<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
-										<div class="cart-price">
-											<span>1 x</span>
-											<span>1250.00</span>
-										</div>
-										<h5><strong>$1250.00</strong></h5> 
-									</div>
-									<a href="#!" class="remove"><i class="tf-ion-close"></i></a>
-								</div><!-- / Cart Item -->
-								<!-- Cart Item -->
+								<?php
+								$tokenLogin = getSession('logintokenc');
+								$cartlist = getRows("SELECT * FROM cart WHERE Token = '$tokenLogin'");
+								$total = oneRow("SELECT ROUND(SUM(Quantity * Price - (Price * Quantity * Discount / 100)), 2) AS Total
+													FROM cart WHERE Token = '$tokenLogin'");
+								$query = oneRow("SELECT CustomerID FROM logintokenc WHERE Token = '$tokenLogin'");
+
+								$groupedProducts = [];
+								foreach ($cartlist as $item) {
+									if (isset($groupedProducts[$item['ProductID']])) {
+										$groupedProducts[$item['ProductID']]['Quantity'] += $item['Quantity'];
+									} else {
+										$groupedProducts[$item['ProductID']] = $item;
+									}
+								}
+								if (!empty($groupedProducts)) :
+								?>
+									<?php foreach ($groupedProducts as $item) : ?>
+										<div class="media">
+											<a class="pull-left" href="#!">
+												<img class="media-object" src="<?php echo _WEB_HOST_TEMPLATES . $item['Image']; ?>" alt="image" />
+											</a>
+											<div class="media-body">
+												<h4 class="media-heading"><a href="#!">
+
+													</a></h4>
+												<div class="cart-price">
+													<h4 name="quantity[<?php echo $item['ProductID']; ?>]" type="number" value="<?php echo $item['Quantity']; ?>" min="1">Quantity: <?php echo $item['Quantity']; ?></h4>
+													<h4>Price: $<?php echo $item['Price']; ?></h4>
+												</div>
+
+											</div>
+											<a class="remove" onclick="return confirm('Are you sure you want to remove?')" href="cart-remove?id=<?php echo $item['ProductID']; ?>"><i class="tf-ion-close"></i></a>
+										</div><!-- / Cart Item -->
+										<!-- Cart Item -->
+								<?php
+									endforeach;
+								endif; ?>
+								<h4>Total: <?php echo $total['Total']; ?>$</h4>
 
 								<div class="cart-summary">
 									<span></span>
@@ -79,7 +146,7 @@
 								</div>
 								<ul class="text-center cart-buttons">
 									<li><a href="/BnL/public/cart" class="btn btn-small">View Cart</a></li>
-									<li><a href="/BnL/public/checkout" class="btn btn-small btn-solid-border">Checkout</a></li>
+									<li><a href="checkout?id=<?php echo $query['CustomerID']; ?>" class="btn btn-small btn-solid-border">Checkout</a></li>
 								</ul>
 							</div>
 
@@ -90,7 +157,42 @@
 							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="tf-ion-ios-search-strong"></i> Search</a>
 							<ul class="dropdown-menu search-dropdown">
 								<li>
-									<form action="post"><input type="search" class="form-control" placeholder="Search..."></form>
+									<form method="post">
+										<p>
+											<input type="text" name="search" class="form-control" placeholder="Search..." require><button type="submit" name="btn"></button>
+											<button type="submit" name="btn"></button>
+										</p>
+									</form>
+									<?php
+									if (isset($_POST['btn'])) {
+										$noidung = $_POST['search'];
+									} else {
+										echo $noidung = false;
+									}
+									if ($noidung) {
+										$query = getRows("SELECT * FROM products WHERE Name LIKE '%$noidung%' ");
+									}
+									?>
+									<?php
+									$query = getRows("SELECT * FROM products WHERE Name LIKE '%$noidung%' ");
+									if (!empty($query)) {
+										foreach ($query as $item) :
+									?>
+											<div class="search-result-item">
+												<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"]; ?>">
+													<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img" />
+												</a>
+												<div class="media-body">
+													<h4><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></h4>
+													<p class="price">Price: $<?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></p>
+												</div>
+											</div>
+									<?php
+										endforeach;
+									} else {
+										echo '<p>No products found.</p>';
+									}
+									?>
 								</li>
 							</ul>
 						</li><!-- / Search -->

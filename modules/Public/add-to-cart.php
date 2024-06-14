@@ -26,7 +26,7 @@ if (!isLogin()) {
                     $dataInsert = [
                         'Name' => $item['Name'],
                         'Price' => $item['Price'],
-                        'Image' => $item['image-url'],
+                        'Image' => $item['imageURL'],
                         'Quantity' => 1, // Số lượng mặc định khi thêm vào giỏ hàng
                         'Discount' => $item['Discount'],
                         'Token' => $queryToken['Token'],
