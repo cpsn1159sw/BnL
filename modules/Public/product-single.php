@@ -105,7 +105,21 @@ if (isset($_GET['ProductID'])) {
 					<div class="product-quantity">
 						<span>Quantity:</span> <input id="product-quantity" type="number" value="1" name="" max="1" min="1">
 					</div>
+<<<<<<< HEAD
 					<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" target="_blank" class="btn btn-main mt-20">Add To Cart</a>
+=======
+					<?php
+					if (!isLogin()) {
+					?>
+						<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>"><i class="btn btn-main mt-20" aria-hidden="true">Add To Cart</i></a>
+					<?php
+					} else {
+					?>
+						<a href="/BnL/public/add-to-cart&id=<?php echo $product["ProductID"]; ?>" target="_blank"><i class="tbtn btn-main mt-20" aria-hidden="true">Add To Cart</i></a>
+					<?php
+					}
+					?>
+>>>>>>> 484c3e3313192b8690ba72c01e9708e841061a67
 				</div>
 			</div>
 		</div>

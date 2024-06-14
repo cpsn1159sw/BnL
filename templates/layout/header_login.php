@@ -158,8 +158,8 @@
 										<ul>
 											<li class=" ">Bags</li>
 											<li role=" " class="divider"></li>
-											<li><a href="/BnL/public/Tote-bag">Tote Bags</a></li>
-											<li><a href="/BnL/public/Satchel-bag">Satchel Bags</a></li>
+											<li><a href="/BnL/public/Tote-bags">Tote Bags</a></li>
+											<li><a href="/BnL/public/Satchel-bags">Satchel Bags</a></li>
 											<li><a href="/BnL/public/Women-Backpacks">Women's Backpacks</a></li>
 										</ul>
 									</div>
@@ -170,7 +170,7 @@
 											<li class=" ">Accessories</li>
 											<li role=" " class="divider"></li>
 											<li><a href="/BnL/public/Sunglasses">Sunglasses</a></li>
-											<li><a href="/BnL/public/Hat">Hats</a></li>
+											<li><a href="/BnL/public/Hats">Hats</a></li>
 										</ul>
 									</div>
 
@@ -192,6 +192,7 @@
 						<li class="dropdown dropdown-slide">
 							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350" role="button" aria-haspopup="true" aria-expanded="false">Utility <span class="tf-ion-ios-arrow-down"></span></a>
 							<ul class="dropdown-menu">
+								<li><a href="/BnL/user/order-user">Order History</a></li>
 								<li><a href="/BnL/user/reset_login">Reset Password</a></li>
 								<li><a href="/BnL/user/forgot">Forget Password</a></li>
 								<li><a href="/BnL/user/logout">Logout</a></li>
