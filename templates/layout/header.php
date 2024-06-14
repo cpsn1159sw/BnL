@@ -2,7 +2,11 @@
 <html lang="en">
 
 <head>
-	<title><?php echo !empty($data['pageTitle']) ? $data['pageTitle'] : 'BnL - Home'; ?></title>
+	<title><?php echo !empty($data['pageTitle']) ? $data['pageTitle'] : 'BnL - Home';
+			$search = '';
+			if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+				$search = $_POST['search'];
+			} ?></title>
 	<meta charset="utf-8">
 	<!-- Mobile Specific Metas
   ================================================== -->
@@ -175,6 +179,8 @@
 											<div class="search-result-item">
 												<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"]; ?>">
 													<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img" />
+												<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"]; ?>">
+													<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img" />
 												</a>
 												<div class="media-body">
 													<h4><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></h4>
@@ -184,6 +190,7 @@
 									<?php
 										endforeach;
 									}
+									?>
 									?>
 								</li>
 							</ul>

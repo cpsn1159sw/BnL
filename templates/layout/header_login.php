@@ -28,7 +28,7 @@
 
 	<!-- Main Stylesheet -->
 	<link rel="stylesheet" href="<?php echo _WEB_HOST_TEMPLATES ?>/css/style.css">
-
+	
 </head>
 <style>
 	.search-dropdown {
@@ -145,31 +145,9 @@
 									<span class="total-price"></span>
 								</div>
 								<ul class="text-center cart-buttons">
-    <li><a href="/BnL/public/cart" class="btn btn-small">View Cart</a></li>
-    <?php
-    // Kiểm tra người dùng đã đăng nhập và có giỏ hàng không
-    if (isLogin()) {
-        $tokenLogin = getSession('logintokenc');
-        $countCart = countRows("SELECT * FROM cart WHERE Token = '$tokenLogin'");
-
-        // Chỉ hiển thị nút "Checkout" nếu giỏ hàng có sản phẩm
-        if ($countCart > 0) {
-            // Lấy thông tin khách hàng (ví dụ)
-            $customerID = isset($query['CustomerID']) ? $query['CustomerID'] : ''; // Phải kiểm tra isset để tránh lỗi khi không có CustomerID
-
-            // Hiển thị nút "Checkout" với đường dẫn chứa thông tin khách hàng
-            echo '<li><a href="checkout?id=' . $customerID . '" class="btn btn-small btn-solid-border">Checkout</a></li>';
-        }
-    } else {
-        // Nếu người dùng chưa đăng nhập, đưa họ đến trang đăng nhập
-        setFlashData('smg', 'You need to log in to your account first');
-        setFlashData('smg_type', 'danger');
-        redirect('/BnL/user/login');
-    }
-    ?>
-</ul>
-
-
+									<li><a href="/BnL/public/cart" class="btn btn-small">View Cart</a></li>
+									<li><a href="/BnL/public/checkout" class="btn btn-small btn-solid-border">Checkout</a></li>
+								</ul>
 							</div>
 
 						</li><!-- / Cart -->
@@ -179,73 +157,7 @@
 							<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="tf-ion-ios-search-strong"></i> Search</a>
 							<ul class="dropdown-menu search-dropdown">
 								<li>
-									<form method="post">
-										<p>
-											<input type="text" name="search" class="form-control" placeholder="Search..." required>
-											<button type="submit" name="btn"><i class="tf-ion-ios-search-strong"></i></button>
-										</p>
-									</form>
-									<?php
-									// Khởi tạo biến query là một mảng rỗng ban đầu để tránh lỗi undefined variable
-									$query = [];
-
-									// Kiểm tra nếu form đã được gửi đi và nút tìm kiếm được nhấn
-									if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn'])) {
-										$noidung = $_POST['search'];
-
-										// Nếu có từ khóa tìm kiếm, thực hiện truy vấn để tìm sản phẩm
-										if (!empty($noidung)) {
-											$searchQuery = "SELECT * FROM products WHERE Name LIKE '%$noidung%'";
-											$query = getRows($searchQuery);
-
-											// Kiểm tra kết quả của truy vấn tìm kiếm
-											if (!empty($query)) {
-												foreach ($query as $item) :
-									?>
-													<div class="search-result-item">
-														<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"]; ?>">
-															<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img" />
-														</a>
-														<div class="media-body">
-															<h4><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></h4>
-															<p class="price">Price: $<?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></p>
-														</div>
-													</div>
-											<?php
-												endforeach;
-											} else {
-												// Nếu không có kết quả tìm kiếm
-												echo '<p>No products found.</p>';
-											}
-										}
-									} else {
-										// Trường hợp mặc định khi chưa thực hiện tìm kiếm
-										$defaultQuery = "SELECT p.ProductID AS ProductID, p.Name AS Name, p.Price AS Price, p.imageURL AS imageURL, SUM(od.Quantity) AS TotalQuantity
-                                FROM OrderDetails od
-                                INNER JOIN products p ON p.ProductID = od.ProductID
-                                INNER JOIN Orders o ON o.OrderID = od.OrderID
-                                WHERE o.Status = 'Delivered'
-                                GROUP BY p.ProductID, p.Name, p.Price, p.imageURL
-                                ORDER BY TotalQuantity DESC
-                                LIMIT 5";
-										$query = getRows($defaultQuery);
-
-										// Hiển thị kết quả mặc định
-										foreach ($query as $item) :
-											?>
-											<div class="search-result-item">
-												<a class="pull-left" href="product-single&ProductID=<?php echo $item["ProductID"]; ?>">
-													<img src="<?php echo htmlspecialchars(_WEB_HOST_TEMPLATES . $item['imageURL'], ENT_QUOTES, 'UTF-8'); ?>" alt="product-img" />
-												</a>
-												<div class="media-body">
-													<h4><?php echo htmlspecialchars($item['Name'], ENT_QUOTES, 'UTF-8'); ?></h4>
-													<p class="price">Price: $<?php echo htmlspecialchars($item['Price'], ENT_QUOTES, 'UTF-8'); ?></p>
-												</div>
-											</div>
-									<?php
-										endforeach;
-									}
-									?>
+									<form action="post"><input type="search" class="form-control" placeholder="Search..."></form>
 								</li>
 							</ul>
 						</li>
